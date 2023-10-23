@@ -1,0 +1,59 @@
+<header>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+  <style>
+    .container {
+      display: flex;
+    }
+
+    .left,
+    .right {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .CodeMirror {
+      width: 400;
+    }
+
+    #result {
+      white-space: pre-line;
+    }
+  </style>
+</header>
+
+<body>
+  <div class="container">
+    <div class="left" id="code-editor">
+      <button id="run-button">Run</button>
+    </div>
+    <div class="right">
+      <p id="result"></p>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+    let c = {{code | tojson}};
+    var myCodeMirror = CodeMirror(document.getElementById("code-editor"), {
+      value: c,
+      mode: "python",
+      lineWrapping: true,
+    });
+
+    document.getElementById('run-button').onclick = function () {
+      var code = myCodeMirror.getValue();
+      fetch('/run', {
+        method: 'POST',
+        body: code
+      })
+        .then(response => response.text())
+        .then(result => document.getElementById("result").innerHTML = result)
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    };
+  </script>
+
+</body>

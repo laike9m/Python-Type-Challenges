@@ -1,0 +1,24 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "laike9m", email = "laike9m@gmail.com"},
+]
+dependencies = [
+    "mypy>=1.6.1",
+    "flask>=3.0.0",
+    "libcst>=1.1.0",
+    "gunicorn>=21.2.0",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.scripts]
+devserver = "flask --app server/app run --debug"
+startserver = "flask --app server/app run --host=0.0.0.0"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
