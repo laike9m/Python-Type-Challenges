@@ -17,7 +17,6 @@ license = {text = "MIT"}
 
 [tool.pdm.scripts]
 devserver = "flask --app app run --debug"
-startserver = "flask --app app run --host=0.0.0.0"
 
 [tool.pyright]
 venvPath = "."

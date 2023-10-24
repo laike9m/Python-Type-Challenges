@@ -5,16 +5,47 @@
   <style>
     .container {
       display: flex;
+      flex-direction: row;
     }
 
     .left,
     .right {
       flex: 1;
-      padding: 20px;
+      padding: 10px;
+    }
+
+    .codemirror-container,
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    #run-button {
+      width: 100px;
+    }
+
+    /* 当视口宽度小于 600px 时，更改布局为单列 */
+    @media (max-width: 700px) {
+      .container {
+        flex-direction: column;
+      }
     }
 
     .CodeMirror {
-      width: 400;
+      width: 500;
+    }
+
+    .CodeMirror {
+      border: 2px solid orange
+    }
+
+    .CodeMirror.CodeMirror-focused {
+      border: 2px solid blue
+    }
+
+    .result-container {
+      display: flex;
+      justify-content: center;
     }
 
     #result {
@@ -26,17 +57,22 @@
 <body>
   <div class="container">
     <div class="left" id="code-editor">
-      <button id="run-button">Run</button>
+      <div class="codemirror-container">
+        <div id="codemirror"></div>
+      </div>
+      <div class="button-container">
+        <button id="run-button">Run</button>
+      </div>
     </div>
     <div class="right">
-      <p id="result"></p>
+      <div class="result-container">
+        <p id="result"></p>
+      </div>
     </div>
   </div>
-
-
   <script type="text/javascript">
     let c = {{code | tojson}};
-    var myCodeMirror = CodeMirror(document.getElementById("code-editor"), {
+    var myCodeMirror = CodeMirror(document.getElementById("codemirror"), {
       value: c,
       mode: "python",
       lineWrapping: true,
