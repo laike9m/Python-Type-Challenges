@@ -16,8 +16,8 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [tool.pdm.scripts]
-devserver = "flask --app server/app run --debug"
-startserver = "flask --app server/app run --host=0.0.0.0"
+devserver = "flask --app app run --debug"
+startserver = "flask --app app run --host=0.0.0.0"
 
 [tool.pyright]
 venvPath = "."

@@ -1,28 +1,27 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Blueprint, render_template, request
 
-from utils import (
+from .utils import (
     load_challenges,
     type_check_with_mypy,
     trim_function_from_code,
     preprocess_code,
 )
 
-app = Flask(__name__)
-
+app_views = Blueprint("app_views", __name__)
 challenges = load_challenges()
 
 
-@app.route("/")
+@app_views.route("/")
 def hello(name=None):
     return render_template("index.html")
 
 
-@app.route("/challenges/<name>", methods=["GET"])
+@app_views.route("/challenges/<name>", methods=["GET"])
 def get_challenge(name):
     return render_template("challenge.html", code=challenges[name])
 
 
-@app.route("/run", methods=["POST"])
+@app_views.route("/run", methods=["POST"])
 def run_challenge():
     code_should_pass_type_check, code_should_fail_type_check = preprocess_code(
         request.get_data(as_text=True)
