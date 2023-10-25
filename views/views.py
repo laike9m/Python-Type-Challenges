@@ -18,7 +18,9 @@ def hello(name=None):
 
 @app_views.route("/challenges/<name>", methods=["GET"])
 def get_challenge(name):
-    return render_template("challenge.html", code=challenges[name])
+    return render_template(
+        "challenge.html", challenge_names=list(challenges.keys()), code=challenges[name]
+    )
 
 
 @app_views.route("/run", methods=["POST"])

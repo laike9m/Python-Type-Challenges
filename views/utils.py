@@ -10,14 +10,14 @@ import libcst as cst
 ROOT_DIR = Path(__file__).parent.parent
 
 
-def load_challenges():
+def load_challenges() -> dict[str, str]:
     challenge_dict = {}
     for filename in glob.glob(f"{ROOT_DIR}/challenges/*/code.py"):
         dir_name = os.path.basename(os.path.dirname(filename))
-        key = dir_name.split("-")[1]
+        challenge_name = dir_name.split("-")[1]
         with open(filename, "r") as file:
-            content = file.read()
-        challenge_dict[key] = content
+            code = file.read()
+        challenge_dict[challenge_name] = code
 
     return challenge_dict
 
