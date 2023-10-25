@@ -12,7 +12,7 @@ ROOT_DIR = Path(__file__).parent.parent
 
 def load_challenges() -> dict[str, str]:
     challenge_dict = {}
-    for filename in glob.glob(f"{ROOT_DIR}/challenges/*/code.py"):
+    for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
         dir_name = os.path.basename(os.path.dirname(filename))
         challenge_name = dir_name.split("-")[1]
         with open(filename, "r") as file:

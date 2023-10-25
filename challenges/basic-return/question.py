@@ -1,5 +1,7 @@
 """
-TODO: foo should return an integer parameter.
+TODO:
+
+foo should return an integer argument.
 """
 
 
