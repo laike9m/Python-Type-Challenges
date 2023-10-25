@@ -1,7 +1,8 @@
-from typing import Iterator
+"""
+TODO: foo should accept an integer parameter.
+"""
 
 
-# TODO: foo accepts one integer parameter.
 def foo(x):
     pass
 
