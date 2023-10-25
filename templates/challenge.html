@@ -49,8 +49,8 @@
     <div class="navigation-container" style="width: 100px;">
       <p>Challenges</p>
       <ol style="padding-left: 20px;">
-        {% for name in challenge_names %}
-        <li><a href="/challenges/{{ name }}">{{ name }}</a></li>
+        {% for name in challenge_names | sort(attribute='1') %}
+        <li><a href="/challenges/{{ name.0 }}">{{ name.0 }}</a></li>
         {% endfor %}
       </ol>
     </div>

@@ -21,3 +21,4 @@ devserver = "flask --app app run --debug"
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+pythonVersion = "3.12"

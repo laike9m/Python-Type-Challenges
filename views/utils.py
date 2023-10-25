@@ -1,25 +1,49 @@
 import os
 import glob
-from mypy import api
-from pathlib import Path
 from dataclasses import dataclass
+from enum import IntEnum
+from pathlib import Path
+from typing import TypeAlias, Literal
+from typing_extensions import DefaultDict
 
 import libcst as cst
+from mypy import api
 
 
 ROOT_DIR = Path(__file__).parent.parent
 
 
-def load_challenges() -> dict[str, str]:
-    challenge_dict = {}
+type ChallengeName = str
+difficulty_to_order = {
+    "basic": 0,
+    "intermediate": 1,
+    "advanced": 2
+}
+
+
+@dataclass
+class Challenge:
+    name: ChallengeName
+    difficulty: str
+    code: str
+    display_order: int
+
+
+def load_challenges() -> dict[ChallengeName, Challenge]:
+    challenges = {}
     for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
         dir_name = os.path.basename(os.path.dirname(filename))
-        challenge_name = dir_name.split("-")[1]
+        difficulty, challenge_name = dir_name.split("-")
         with open(filename, "r") as file:
             code = file.read()
-        challenge_dict[challenge_name] = code
+        challenges[challenge_name] = Challenge(
+            name=challenge_name,
+            difficulty=difficulty,
+            display_order=difficulty_to_order[difficulty],
+            code=code,
+        )
 
-    return challenge_dict
+    return challenges
 
 
 def preprocess_code(code: str) -> tuple[str, str]:

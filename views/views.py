@@ -8,7 +8,10 @@ from .utils import (
 )
 
 app_views = Blueprint("app_views", __name__)
+
+# TODO: wrap this in a class.
 challenges = load_challenges()
+challenge_list = [(name, c.display_order) for name, c in challenges.items()]
 
 
 @app_views.route("/")
@@ -19,7 +22,7 @@ def hello(name=None):
 @app_views.route("/challenges/<name>", methods=["GET"])
 def get_challenge(name):
     return render_template(
-        "challenge.html", challenge_names=list(challenges.keys()), code=challenges[name]
+        "challenge.html", challenge_names=challenge_list, code=challenges[name].code
     )
 
 
