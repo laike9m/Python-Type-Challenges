@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 
 from .utils import (
     load_challenges,
@@ -21,8 +21,12 @@ def index():
 
 @app_views.route("/challenges/<name>", methods=["GET"])
 def get_challenge(name):
-    return render_template(
-        "challenge.html", challenge_names=challenge_list, code=challenges[name].code
+    return (
+        render_template(
+            "challenge.html", challenge_names=challenge_list, code=challenges[name].code
+        )
+        if name in challenges
+        else redirect("/")
     )
 
 
