@@ -13,12 +13,8 @@ from mypy import api
 ROOT_DIR = Path(__file__).parent.parent
 
 
-type ChallengeName = str
-difficulty_to_order = {
-    "basic": 0,
-    "intermediate": 1,
-    "advanced": 2
-}
+ChallengeName: TypeAlias = str
+difficulty_to_order = {"basic": 0, "intermediate": 1, "advanced": 2}
 
 
 @dataclass
@@ -46,15 +42,27 @@ def load_challenges() -> dict[ChallengeName, Challenge]:
     return challenges
 
 
-def preprocess_code(code: str) -> tuple[str, str]:
-    code_should_pass_type_check = trim_function_from_code(code, "should_fail")
-    code_should_fail_type_check = trim_function_from_code(code, "should_pass")
-    return code_should_pass_type_check, code_should_fail_type_check
+@dataclass
+class PreprocessResult:
+    error: str | None = None
+    code_should_pass_type_check: str | None = None
+    code_should_fail_type_check: str | None = None
 
 
-def trim_function_from_code(code: str, func_name: str) -> str:
-    module = cst.parse_module(code)
+def preprocess_code(code: str) -> PreprocessResult:
+    try:
+        module = cst.parse_module(code)
+    except cst.ParserSyntaxError as e:
+        return PreprocessResult(
+            error=f'<b style="color:red;">Your code has syntax error(s):</b>\n\n{e.message}'
+        )
+    return PreprocessResult(
+        code_should_pass_type_check=trim_function_from_code(module, "should_fail"),
+        code_should_fail_type_check=trim_function_from_code(module, "should_pass"),
+    )
 
+
+def trim_function_from_code(module: cst.Module, func_name: str) -> str:
     # TODO: replace with empty lines to keep lineno unchanged.
     class RemoveShouldFailTransformer(cst.CSTTransformer):
         def leave_FunctionDef(self, original_node, updated_node):

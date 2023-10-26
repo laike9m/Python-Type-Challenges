@@ -31,11 +31,14 @@ def get_challenge(name):
 
 
 @app_views.route("/run", methods=["POST"])
-def run_challenge():
-    code_should_pass_type_check, code_should_fail_type_check = preprocess_code(
-        request.get_data(as_text=True)
+def run_challenge() -> str:
+    preprocess_result = preprocess_code(code=request.get_data(as_text=True))
+    if preprocess_result.error:
+        return preprocess_result.error
+
+    result_should_pass = type_check_with_mypy(
+        preprocess_result.code_should_pass_type_check
     )
-    result_should_pass = type_check_with_mypy(code_should_pass_type_check)
     result = (
         "❌ challenge failed"
         if result_should_pass.code != 0
@@ -45,7 +48,9 @@ def run_challenge():
         f"<b>should_pass</b>\n{result_should_pass.stdout}{result_should_pass.stderr}"
     )
 
-    result_should_fail = type_check_with_mypy(code_should_fail_type_check)
+    result_should_fail = type_check_with_mypy(
+        preprocess_result.code_should_fail_type_check
+    )
     if result_should_fail.code == 0:
         message += "\n\n<b>should_fail</b>\nType check should fail but passed."
         result = "❌ challenge failed"
