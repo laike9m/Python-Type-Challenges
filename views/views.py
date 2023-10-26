@@ -15,7 +15,7 @@ challenge_list = [(name, c.display_order) for name, c in challenges.items()]
 
 
 @app_views.route("/")
-def hello(name=None):
+def index():
     return render_template("index.html")
 
 
