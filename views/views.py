@@ -68,6 +68,4 @@ def run_challenge() -> str:
             + result_should_fail.stderr
         )
 
-    print(f"{result_should_pass} \n {result_should_fail}")
-
     return f"{result}\n\n{message}"

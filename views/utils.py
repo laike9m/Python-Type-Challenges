@@ -7,6 +7,7 @@ from typing import TypeAlias, Literal
 from typing_extensions import DefaultDict
 
 import libcst as cst
+from libcst.metadata import MetadataWrapper, WhitespaceInclusivePositionProvider
 from mypy import api
 
 
@@ -60,14 +61,25 @@ def preprocess_code(code: str) -> PreprocessResult:
 
 
 def trim_function_from_code(module: cst.Module, func_name: str) -> str:
-    # TODO: replace with empty lines to keep lineno unchanged.
-    class RemoveShouldFailTransformer(cst.CSTTransformer):
+    class RemoveTargetFunctionTransformer(cst.CSTTransformer):
+        METADATA_DEPENDENCIES = (WhitespaceInclusivePositionProvider,)
+
         def leave_FunctionDef(self, original_node, updated_node):
             if original_node.name.value == func_name:
-                return cst.RemoveFromParent()
+                line_count = (
+                    self.get_metadata(
+                        WhitespaceInclusivePositionProvider, original_node
+                    ).end.line
+                    - self.get_metadata(
+                        WhitespaceInclusivePositionProvider, original_node
+                    ).start.line
+                )
+                placeholder = "\n" * line_count
+                return cst.SimpleString(f'"""{placeholder}"""')
             return updated_node
 
-    modified_module = module.visit(RemoveShouldFailTransformer())
+    wrapper = MetadataWrapper(module)
+    modified_module = wrapper.visit(RemoveTargetFunctionTransformer())
     return modified_module.code
 
 
