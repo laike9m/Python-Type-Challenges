@@ -1,7 +1,7 @@
 """
 TODO:
 
-`Foo.return_self`'s return value should have the same type as the current enclosed class (i.e. `Foo`)
+`return_self` should return an instance of the same type as the current enclosed class.
 """
 
 
