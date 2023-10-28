@@ -1,5 +1,8 @@
 <header>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css"
+  />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <style>
@@ -30,11 +33,11 @@
     .CodeMirror {
       width: 500;
       height: 500;
-      border: 2px solid orange
+      border: 2px solid orange;
     }
 
     .CodeMirror.CodeMirror-focused {
-      border: 2px solid blue
+      border: 2px solid blue;
     }
 
     .result-container {
@@ -45,8 +48,9 @@
 </header>
 
 <body>
+  {% include 'github_ribbon.html' %}
   <div class="container">
-    <div class="navigation-container" style="width: 100px;">
+    <div class="navigation-container" style="width: 100px">
       {% include 'challenge_list.html' %}
     </div>
     <div class="left" id="code-editor">
@@ -54,12 +58,12 @@
         <div id="codemirror"></div>
       </div>
       <div class="button-container">
-        <button id="run-button" style="width: 100px;">Run</button>
+        <button id="run-button" style="width: 100px">Run</button>
       </div>
     </div>
     <div class="right">
       <div class="result-container">
-        <p id="result" style="white-space: pre-line;"></p>
+        <p id="result" style="white-space: pre-line"></p>
       </div>
     </div>
   </div>
@@ -85,5 +89,4 @@
         });
     };
   </script>
-
 </body>
