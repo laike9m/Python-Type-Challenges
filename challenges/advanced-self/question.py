@@ -1,7 +1,7 @@
 """
 TODO:
 
-foo should accept a argument that's either a string or integer.
+`Foo.return_self`'s return value should have the same type as the current enclosed class (i.e. `Foo`)
 """
 
 
@@ -21,4 +21,4 @@ def should_pass():
 
 
 def should_fail():
-    sf: int = Foo().return_self()
+    sf: SubclassOfFoo = Foo().return_self()
