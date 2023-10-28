@@ -1,3 +1,4 @@
+from collections import namedtuple
 from flask import Blueprint, render_template, request, redirect
 
 from .utils import (
@@ -11,19 +12,25 @@ app_views = Blueprint("app_views", __name__)
 
 # TODO: wrap this in a class.
 challenges = load_challenges()
-challenge_list = [(name, c.display_order) for name, c in challenges.items()]
+ChallengeInfo = namedtuple("ChallengeInfo", ["name", "difficulty"])
+challenge_names = [
+    ChallengeInfo(name=name, difficulty=c.difficulty) for name, c in challenges.items()
+]
 
 
 @app_views.route("/")
 def index():
-    return render_template("index.html", challenge_names=challenge_list)
+    print(challenge_names)
+    return render_template("index.html", challenge_names=challenge_names)
 
 
 @app_views.route("/challenges/<name>", methods=["GET"])
 def get_challenge(name):
     return (
         render_template(
-            "challenge.html", challenge_names=challenge_list, code=challenges[name].code
+            "challenge.html",
+            challenge_names=challenge_names,
+            code=challenges[name].code,
         )
         if name in challenges
         else redirect("/")

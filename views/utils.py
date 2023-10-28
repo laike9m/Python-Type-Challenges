@@ -14,7 +14,6 @@ ROOT_DIR = Path(__file__).parent.parent
 
 
 ChallengeName: TypeAlias = str
-difficulty_to_order = {"basic": 0, "intermediate": 1, "advanced": 2}
 
 
 @dataclass
@@ -22,7 +21,6 @@ class Challenge:
     name: ChallengeName
     difficulty: str
     code: str
-    display_order: int
 
 
 def load_challenges() -> dict[ChallengeName, Challenge]:
@@ -35,7 +33,6 @@ def load_challenges() -> dict[ChallengeName, Challenge]:
         challenges[challenge_name] = Challenge(
             name=challenge_name,
             difficulty=difficulty,
-            display_order=difficulty_to_order[difficulty],
             code=code,
         )
 
@@ -81,7 +78,7 @@ class TypeCheckResult:
     code: int
 
 
-def type_check_with_mypy(code):
+def type_check_with_mypy(code) -> TypeCheckResult:
     raw_result = api.run(["--check-untyped-defs", "-c", code])
     return TypeCheckResult(
         stdout=raw_result[0], stderr=raw_result[1], code=raw_result[2]
