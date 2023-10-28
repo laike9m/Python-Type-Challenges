@@ -41,31 +41,29 @@ def get_challenge(name):
 def run_challenge() -> str:
     preprocess_result = preprocess_code(code=request.get_data(as_text=True))
     if preprocess_result.error:
-        return preprocess_result.error
+        return preprocess_result.error  # e.g. syntax error
 
     result_should_pass = type_check_with_mypy(
         preprocess_result.code_should_pass_type_check
     )
-    result = (
-        "❌ challenge failed"
-        if result_should_pass.code != 0
-        else "✅ challenge completed"
-    )
-    message = (
-        f"<b>should_pass</b>\n{result_should_pass.stdout}{result_should_pass.stderr}"
-    )
-
     result_should_fail = type_check_with_mypy(
         preprocess_result.code_should_fail_type_check
     )
-    if result_should_fail.code == 0:
-        message += "\n\n<b>should_fail</b>\nType check should fail but passed."
-        result = "❌ challenge failed"
-    else:
-        message += (
-            f"\n\n<b>should_fail</b><br>"
-            + result_should_fail.stdout
-            + result_should_fail.stderr
+    if result_should_pass.passed and not result_should_fail.passed:
+        return "<h2>✅ Congratulations! You completed the challenge 🎉</h2>"
+
+    # Constructing error message.
+    error_message = "<h2>❌ Challenge failed 😢\n\n</h2>"
+    if not result_should_pass.passed:
+        error_message += (
+            '<b>Test case <code style="background-color: #FFFFCC;">should_pass</code>'
+            " didn't pass type check.</b>"
+            f"\nError:\n{result_should_pass.stdout}{result_should_pass.stderr}\n\n"
+        )
+    if result_should_fail.passed:
+        error_message += (
+            f'<b>Test case <code style="background-color: #FFFFCC;">should_fail</code>'
+            " should fail type check, but it passed.</b>"
         )
 
-    return f"{result}\n\n{message}"
+    return error_message

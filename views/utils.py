@@ -64,6 +64,9 @@ def trim_function_from_code(module: cst.Module, func_name: str) -> str:
     class RemoveTargetFunctionTransformer(cst.CSTTransformer):
         METADATA_DEPENDENCIES = (WhitespaceInclusivePositionProvider,)
 
+        # Replace should_pass or should_fail with empty lines, before sending to mypy.
+        # Keep line count the same, so that the lineno in mypy's error message
+        # makes sense.
         def leave_FunctionDef(self, original_node, updated_node):
             if original_node.name.value == func_name:
                 line_count = (
@@ -87,11 +90,11 @@ def trim_function_from_code(module: cst.Module, func_name: str) -> str:
 class TypeCheckResult:
     stdout: str
     stderr: str
-    code: int
+    passed: bool
 
 
 def type_check_with_mypy(code) -> TypeCheckResult:
     raw_result = api.run(["--check-untyped-defs", "-c", code])
     return TypeCheckResult(
-        stdout=raw_result[0], stderr=raw_result[1], code=raw_result[2]
+        stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
     )
