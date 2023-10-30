@@ -104,7 +104,7 @@ class ChallengeManager:
         challenges = {}
         for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
             dir_name = os.path.basename(os.path.dirname(filename))
-            difficulty, challenge_name = dir_name.split("-")
+            difficulty, challenge_name = dir_name.split("-", maxsplit=1)
             with open(filename, "r") as file:
                 code = file.read()
             challenges[challenge_name] = Challenge(

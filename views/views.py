@@ -44,7 +44,7 @@ def run_challenge(name) -> str:
     result_should_pass, result_should_fail = challenge_manager.run_challenge(
         code_under_test=code, name=name
     )
-
+    print(result_should_fail)
     if result_should_pass.passed and not result_should_fail.passed:
         return "<h2>✅ Congratulations! You completed the challenge 🎉</h2>"
 
