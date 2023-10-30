@@ -92,8 +92,6 @@ class ChallengeManager:
         challenge = self.get_challenge(name)
         code_should_pass_type_check = code_under_test + challenge.test_code_should_pass
         code_should_fail_type_check = code_under_test + challenge.test_code_should_fail
-        print(f"{code_should_pass_type_check=}")
-        print(f"{code_should_fail_type_check=}")
         return (
             self._type_check_with_mypy(code_should_pass_type_check),
             self._type_check_with_mypy(code_should_fail_type_check),
