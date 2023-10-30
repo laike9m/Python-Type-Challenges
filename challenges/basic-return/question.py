@@ -9,7 +9,6 @@ def foo():
     return 1
 
 
-# Test cases
 def should_pass():
     i: int = foo()
 

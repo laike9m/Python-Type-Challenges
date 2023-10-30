@@ -22,68 +22,46 @@ class Challenge:
     name: ChallengeName
     difficulty: str
     code: str
+    code_under_test: str = ""
+    test_code: str = ""
+    test_code_should_pass: str = ""
+    test_code_should_fail: str = ""
 
+    def __post_init__(self):
+        self.parse_code()
 
-def load_challenges() -> dict[ChallengeName, Challenge]:
-    challenges = {}
-    for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
-        dir_name = os.path.basename(os.path.dirname(filename))
-        difficulty, challenge_name = dir_name.split("-")
-        with open(filename, "r") as file:
-            code = file.read()
-        challenges[challenge_name] = Challenge(
-            name=challenge_name,
-            difficulty=difficulty,
-            code=code,
-        )
+    def parse_code(self):
+        start_lineno = 0
+        module = cst.parse_module(self.code)
+        challenge = self
 
-    return challenges
+        class RemoveTargetFunctionTransformer(cst.CSTTransformer):
+            METADATA_DEPENDENCIES = (WhitespaceInclusivePositionProvider,)
+
+            def visit_FunctionDef(self, node: cst.FunctionDef):
+                if node.name.value == "should_pass":
+                    challenge.test_code_should_pass = module.code_for_node(node)
+                    test_start_lineno = self.get_metadata(
+                        WhitespaceInclusivePositionProvider, node
+                    ).start.line
+                    code_lines = challenge.code.split(os.linesep)
+                    challenge.code_under_test = os.linesep.join(
+                        code_lines[:test_start_lineno]
+                    )
+                    challenge.test_code = os.linesep.join(
+                        code_lines[test_start_lineno + 1 :]
+                    )
+                if node.name.value == "should_fail":
+                    challenge.test_code_should_fail = module.code_for_node(node)
+
+        wrapper = MetadataWrapper(module)
+        modified_module = wrapper.visit(RemoveTargetFunctionTransformer())
 
 
 @dataclass
-class PreprocessResult:
-    error: str | None = None
-    code_should_pass_type_check: str | None = None
-    code_should_fail_type_check: str | None = None
-
-
-def preprocess_code(code: str) -> PreprocessResult:
-    try:
-        module = cst.parse_module(code)
-    except cst.ParserSyntaxError as e:
-        return PreprocessResult(
-            error=f'<b style="color:red;">Your code has syntax error(s):</b>\n\n{e.message}'
-        )
-    return PreprocessResult(
-        code_should_pass_type_check=trim_function_from_code(module, "should_fail"),
-        code_should_fail_type_check=trim_function_from_code(module, "should_pass"),
-    )
-
-
-def trim_function_from_code(module: cst.Module, func_name: str) -> str:
-    class RemoveTargetFunctionTransformer(cst.CSTTransformer):
-        METADATA_DEPENDENCIES = (WhitespaceInclusivePositionProvider,)
-
-        # Replace should_pass or should_fail with empty lines, before sending to mypy.
-        # Keep line count the same, so that the lineno in mypy's error message
-        # makes sense.
-        def leave_FunctionDef(self, original_node, updated_node):
-            if original_node.name.value == func_name:
-                line_count = (
-                    self.get_metadata(
-                        WhitespaceInclusivePositionProvider, original_node
-                    ).end.line
-                    - self.get_metadata(
-                        WhitespaceInclusivePositionProvider, original_node
-                    ).start.line
-                )
-                placeholder = "\n" * line_count
-                return cst.SimpleString(f'"""{placeholder}"""')
-            return updated_node
-
-    wrapper = MetadataWrapper(module)
-    modified_module = wrapper.visit(RemoveTargetFunctionTransformer())
-    return modified_module.code
+class ChallengeInfo:
+    name: str
+    difficulty: str
 
 
 @dataclass
@@ -93,8 +71,56 @@ class TypeCheckResult:
     passed: bool
 
 
-def type_check_with_mypy(code) -> TypeCheckResult:
-    raw_result = api.run(["--check-untyped-defs", "-c", code])
-    return TypeCheckResult(
-        stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
-    )
+class ChallengeManager:
+    def __init__(self):
+        self.challenges = self._load_challenges()
+        self.challenge_names = [
+            ChallengeInfo(name=name, difficulty=c.difficulty)
+            for name, c in self.challenges.items()
+        ]
+
+    def has_challenge(self, name: str) -> bool:
+        return name in self.challenges
+
+    def get_challenge(self, name: str) -> Challenge:
+        return self.challenges[name]
+
+    # returns (result_should_pass, result_should_fail)
+    def run_challenge(
+        self, name: str, code_under_test: str
+    ) -> tuple[TypeCheckResult, TypeCheckResult]:
+        challenge = self.get_challenge(name)
+        code_should_pass_type_check = code_under_test + challenge.test_code_should_pass
+        code_should_fail_type_check = code_under_test + challenge.test_code_should_fail
+        print(f"{code_should_pass_type_check=}")
+        print(f"{code_should_fail_type_check=}")
+        return (
+            self._type_check_with_mypy(code_should_pass_type_check),
+            self._type_check_with_mypy(code_should_fail_type_check),
+        )
+
+    @staticmethod
+    def _load_challenges() -> dict[ChallengeName, Challenge]:
+        challenges = {}
+        for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
+            dir_name = os.path.basename(os.path.dirname(filename))
+            difficulty, challenge_name = dir_name.split("-")
+            with open(filename, "r") as file:
+                code = file.read()
+            challenges[challenge_name] = Challenge(
+                name=challenge_name,
+                difficulty=difficulty,
+                code=code,
+            )
+
+        return challenges
+
+    @staticmethod
+    def _type_check_with_mypy(code) -> TypeCheckResult:
+        raw_result = api.run(["--check-untyped-defs", "-c", code])
+        return TypeCheckResult(
+            stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
+        )
+
+
+challenge_manager = ChallengeManager()

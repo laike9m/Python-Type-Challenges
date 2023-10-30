@@ -11,16 +11,16 @@
       flex-direction: row;
     }
 
-    .left,
-    .right,
     .navigation-container {
       padding: 10px;
     }
 
-    .codemirror-container,
-    .button-container {
+    .codemirror-container {
+      padding: 10px;
       display: flex;
       justify-content: flex-end;
+      flex-direction: column;
+      width: 500;
     }
 
     /* 当视口宽度小于 800px 时，更改布局为单列 */
@@ -31,8 +31,7 @@
     }
 
     .CodeMirror {
-      width: 500;
-      height: 500;
+      height: auto;
       border: 2px solid orange;
     }
 
@@ -53,32 +52,43 @@
     <div class="navigation-container" style="width: 100px">
       {% include 'challenge_list.html' %}
     </div>
-    <div class="left" id="code-editor">
-      <div class="codemirror-container">
-        <div id="codemirror"></div>
-      </div>
-      <div class="button-container">
-        <button id="run-button" style="width: 100px">Run</button>
-      </div>
+    <div class="codemirror-container">
+      <p>
+        Complete code following the instructions below, so that
+        <code style="background-color: #ffffcc">should_pass</code> passes type
+        check, <code style="background-color: #ffffcc">should_fail</code> fails
+        type check.
+      </p>
+      <div id="editor"></div>
+      <p>Test cases</p>
+      <div id="tests"></div>
+      <button id="run-button" style="width: 100px">Run</button>
     </div>
-    <div class="right">
-      <div class="result-container">
-        <p id="result" style="white-space: pre-line"></p>
-      </div>
+    <div class="result-container">
+      <p id="result" style="white-space: pre-line"></p>
     </div>
   </div>
   <script type="text/javascript">
-    let c = {{code | tojson}};
-    var myCodeMirror = CodeMirror(document.getElementById("codemirror"), {
-      value: c,
+    let code_under_test = {{code_under_test | tojson}};
+    console.log(code_under_test);
+    var myCodeMirror = CodeMirror(document.getElementById("editor"), {
+      value: code_under_test,
       mode: "python",
       lineWrapping: true,
       lineNumbers: true,
     });
+    let test_code = {{test_code | tojson}};
+    CodeMirror(document.getElementById("tests"), {
+      value: test_code,
+      mode: "python",
+      lineWrapping: true,
+      lineNumbers: true,
+      readOnly: "nocursor"
+    });
 
     document.getElementById('run-button').onclick = function () {
       var code = myCodeMirror.getValue();
-      fetch('/run', {
+      fetch('/run/{{name}}', {
         method: 'POST',
         body: code
       })

@@ -9,7 +9,6 @@ def foo(x):
     pass
 
 
-# Test cases
 def should_pass():
     foo({"foo": "bar"})
 

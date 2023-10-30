@@ -4,12 +4,13 @@ TODO:
 foo should accept an argument of arbitrary type.
 """
 
+import typing
+
 
 def foo(x):
     pass
 
 
-# Test cases
 def should_pass():
     foo(1)
     foo("10")

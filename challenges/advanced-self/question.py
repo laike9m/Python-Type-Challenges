@@ -4,6 +4,8 @@ TODO:
 `return_self` should return an instance of the same type as the current enclosed class.
 """
 
+import typing
+
 
 class Foo:
     def return_self(self):
@@ -14,7 +16,6 @@ class SubclassOfFoo(Foo):
     pass
 
 
-# Test cases
 def should_pass():
     f: Foo = Foo().return_self()
     sf: SubclassOfFoo = SubclassOfFoo().return_self()
