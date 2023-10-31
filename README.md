@@ -2,7 +2,7 @@
 
 Learn Python 🐍 typing (type hints) by completing online challenges.
 
-🌟🌟 Click **[HERE](python-type-challenges.zeabur.app)** to start 🌟🌟
+🌟🌟 Click **[HERE](https://python-type-challenges.zeabur.app)** to start 🌟🌟
 
 Happy typing!
 
