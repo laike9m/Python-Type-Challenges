@@ -1,4 +1,5 @@
 <header>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css"
@@ -6,6 +7,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <style>
+    html {
+      font-size: 1.2rem;
+    }
+
     .container {
       display: flex;
       flex-direction: row;
@@ -13,6 +18,7 @@
 
     .navigation-container {
       padding: 10px;
+      flex: 1;
     }
 
     .codemirror-container {
@@ -20,11 +26,18 @@
       display: flex;
       justify-content: flex-end;
       flex-direction: column;
-      width: 500;
+      flex: 4;
+    }
+
+    .result-container {
+      flex: 4;
+      display: flex;
+      justify-content: start;
+      margin-left: 10px;
     }
 
     /* 当视口宽度小于 800px 时，更改布局为单列 */
-    @media (max-width: 800px) {
+    @media only screen and (max-width: 800px) {
       .container {
         flex-direction: column;
       }
@@ -39,10 +52,8 @@
       border: 2px solid blue;
     }
 
-    .result-container {
-      display: flex;
-      justify-content: center;
-      margin-left: 10px;
+    .code {
+      background-color: #ffffcc;
     }
   </style>
 </header>
@@ -50,16 +61,14 @@
 <body>
   {% include 'github_ribbon.html' %}
   <div class="container">
-    <div class="navigation-container" style="width: 100px">
-      {% include 'challenge_list.html' %}
-    </div>
+    <div class="navigation-container">{% include 'challenge_list.html' %}</div>
     <div class="codemirror-container">
       <h2>Challenge - {{name}}</h2>
-      <p style="margin-top: 0">
+      <p style="margin-top: 0; line-height: 1.5">
         Complete code following the instructions below, so that
-        <code style="background-color: #ffffcc">should_pass</code> passes type
-        check, <code style="background-color: #ffffcc">should_fail</code> fails
-        type check. Hit the "Run" button to see result.
+        <code>should_pass</code> passes type check,
+        <code>should_fail</code> fails type check. Hit the "Run" button to see
+        result.
       </p>
       <div id="editor"></div>
       <div style="display: flex; justify-content: flex-end">
