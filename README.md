@@ -4,6 +4,8 @@ Learn Python 🐍 typing (type hints) by completing online challenges.
 
 🌟🌟 Click **[HERE](https://python-type-challenges.zeabur.app)** to start 🌟🌟
 
+![](docs/images/usage.gif)
+
 Happy typing!
 
 ## How to Contribute
