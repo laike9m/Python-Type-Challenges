@@ -1,7 +1,5 @@
 # Python Type Challenges
 
----
-
 Learn Python 🐍 typing (type hints) by completing online challenges.
 
 🌟🌟 Click **[HERE](python-type-challenges.zeabur.app)** to start 🌟🌟
@@ -20,7 +18,7 @@ All existing [challenges](https://github.com/laike9m/Python-Type-Challenges/tree
 
 3. Create a new directory under `challenges/`. The new directory's name should follow the pattern `[basic|intermediate|advanced]-name`.
 
-   For example, say you want to add a new challenge about [Protocols](https://mypy.readthedocs.io/en/stable/protocols.html). Clearly this is an advanced topic, so you may name this directory `advanced-protocol`.
+   For example, say you want to add a new challenge about [Protocols](https://mypy.readthedocs.io/en/stable/protocols.html). Clearly this is an advanced topic, so you may name the directory `advanced-protocol`.
 
 4. Put a `question.py` in the new directory. Here's an example:
    ```python
@@ -42,8 +40,8 @@ All existing [challenges](https://github.com/laike9m/Python-Type-Challenges/tree
 
    You want to include several things in `question.py`
 
-   - Describe the challenge, make sure people understand what they need to accomplish.
-   - Add two functions `should_pass` and `should_fail` as test cases. The function names are mandatory. If users write correct code, `should_pass` should pass type check, and `should_fail` should fail type check.
+   - Describe the challenge, make sure people understand what they need to accomplish (the `TODO:` part)
+   - Add two functions `should_pass` and `should_fail` as test cases. The **function names are mandatory**. With correct code, `should_pass` should pass type check, and `should_fail` should fail type check.
 
    Using the above challenge as an example, the correct answer is `def foo(x: dict[str: str]): pass`.
 
