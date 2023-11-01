@@ -114,5 +114,17 @@
           console.error('Error:', error);
         });
     };
+
+    // If window size is > 800, expand the challenge list.
+    function checkWidth() {
+      var detailsElement = document.getElementById('challenge-list');
+      if (window.innerWidth < 800) {
+        detailsElement.removeAttribute('open');
+      } else {
+        detailsElement.setAttribute('open', '');
+      }
+    }
+    checkWidth();  // Check the width initially
+    window.addEventListener('resize', checkWidth);
   </script>
 </body>

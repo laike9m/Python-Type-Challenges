@@ -3,12 +3,19 @@
     html {
       font-size: 1.5rem;
     }
+    #challenge-list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30%;
+      margin: auto;
+    }
   </style>
 </header>
 
 <body>
-  <h1>Welcome to Python Type Challenges!</h1>
-  {% include 'github_ribbon.html' %}
-
-  <center>{% include 'challenge_list.html' %}</center>
+  <center>
+    <h1>Welcome to Python Type Challenges!</h1>
+  </center>
+  {% include 'github_ribbon.html' %} {% include 'challenge_list.html' %}
 </body>
