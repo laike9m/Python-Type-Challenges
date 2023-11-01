@@ -22,4 +22,4 @@ If you met issues or want to suggest a new feature/improvement, feel free to [op
 
 ## Credits
 
-This project is inspired [Type Exercise in Rust](https://github.com/skyzh/type-exercise-in-rust/) by @skyzh, and [type-challenges](https://github.com/type-challenges/type-challenges/) by @antfu.
+This project is inspired [Type Exercise in Rust](https://github.com/skyzh/type-exercise-in-rust/) by [@skyzh](https://github.com/skyzh), and [type-challenges](https://github.com/type-challenges/type-challenges/) by [@antfu](https://github.com/antfu).
