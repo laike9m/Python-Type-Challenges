@@ -3,9 +3,10 @@
 
 [metadata]
 groups = ["default"]
-strategy = ["cross_platform"]
-lock_version = "4.4"
-content_hash = "sha256:34538982ce4a365db7af293b5423a796c8273078355706a87ef2103d426d4e36"
+cross_platform = true
+static_urls = false
+lock_version = "4.3"
+content_hash = "sha256:93954ad3feb9633563484ace917052902a4293dd697624915df706537c0f527f"
 
 [[package]]
 name = "blinker"

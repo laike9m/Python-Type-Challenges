@@ -10,7 +10,6 @@ dependencies = [
     "flask>=3.0.0",
     "libcst>=1.1.0",
     "gunicorn>=21.2.0",
-    "typing-extensions>=4.8.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
@@ -23,7 +22,3 @@ devserver = "flask --app app run --debug"
 venvPath = "."
 venv = ".venv"
 pythonVersion = "3.12"
-
-[tool.mypy]
-check_untyped_defs = true
-warn_no_return = false
