@@ -12,7 +12,7 @@ Happy typing!
 
 You're more than welcome to contribute new challenges!
 
-All challenges live under the [`challenges/`](https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges) directory, and it's pretty easy to add a new one: you only need to create a new folder, add a `question.py`, and that's it. See [here](docs/Contribute.md) for a detailed guidance.
+All challenges live under the [`challenges/`](https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges) directory, and it's pretty easy to add a new one: **you only need to create a new folder, add a `question.py`, and that's it**. See [here](docs/Contribute.md) for a detailed guidance.
 
 ## Got Questions?
 
