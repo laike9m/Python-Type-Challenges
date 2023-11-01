@@ -19,3 +19,7 @@ All challenges live under the [`challenges/`](https://github.com/laike9m/Python-
 For general questions, you can post them in [Discussions](https://github.com/laike9m/Python-Type-Challenges/discussions).
 
 If you met issues or want to suggest a new feature/improvement, feel free to [open a new issue](https://github.com/laike9m/Python-Type-Challenges/issues/new).
+
+## Credits
+
+This project is inspired [Type Exercise in Rust](https://github.com/skyzh/type-exercise-in-rust/) by @skyzh, and [type-challenges](https://github.com/type-challenges/type-challenges/) by @antfu.
