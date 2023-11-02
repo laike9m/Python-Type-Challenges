@@ -26,7 +26,7 @@ def get_challenge(name):
         name=name,
         challenge_names=challenge_manager.challenge_names,
         code_under_test=challenge.user_code,
-        test_code=challenge.fixture_code,
+        test_code=challenge.test_code,
         python_info=platform.python_version(),
     )
 

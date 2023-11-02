@@ -26,13 +26,13 @@ class Challenge:
     difficulty: str
     code: str
     user_code: str = field(default="", init=False)
-    fixture_code: str = field(default="", init=False)
+    test_code: str = field(default="", init=False)
 
     def __post_init__(self):
         self.parse_code()
 
     def parse_code(self):
-        self.user_code, _, self.fixture_code = self.code.partition(CODE_SPLITTER)
+        self.user_code, _, self.test_code = self.code.partition(CODE_SPLITTER)
 
 
 @dataclass(frozen=True, slots=True)
@@ -64,7 +64,7 @@ class ChallengeManager:
 
     def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(name)
-        code = f"{user_code}\n{challenge.fixture_code}"
+        code = f"{user_code}\n{challenge.test_code}"
         buffer = io.StringIO(code)
         tokens = list(tokenize.generate_tokens(buffer.readline))
         expect_error_lines = [
