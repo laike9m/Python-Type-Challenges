@@ -16,15 +16,16 @@ def constructor_parameter():
 
 def should_pass():
     @constructor_parameter(Foo)
-    def func(foo: Foo) -> None:
+    def func(foo: Foo) -> list:
         ...
 
-    func(1, "2")
+    res = func(1, "2")
+    res.append(1)
 
 
 def should_fail():
     @constructor_parameter(Foo)
-    def func(foo: Foo) -> None:
+    def func(foo: Foo) -> list:
         ...
 
     func("1", "2")
