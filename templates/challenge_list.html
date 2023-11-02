@@ -1,19 +1,40 @@
+<style>
+  #challenge-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #challenge-list ol {
+    padding-left: 20px;
+    list-style: none;
+    line-height: 1.2;
+  }
+
+  #challenge-list ol li {
+    padding-left: 10px;
+  }
+</style>
+
+
 <details id="challenge-list" open="true">
   <summary>Challenges</summary>
-  <ol style="padding-left: 20px; list-style: none; line-height: 1.2">
-    <b>Basic</b>
+  <ol>
+    <strong>Basic</strong>
     {% for challenge in challenge_names | selectattr("difficulty", "equalto",
     "basic") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
     <br />
-    <b>Intermediate</b>
+
+    <strong>Intermediate</strong>
     {% for challenge in challenge_names | selectattr("difficulty", "equalto",
     "intermediate") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
     <br />
-    <b>Advanced</b>
+
+    <strong>Advanced</strong>
     {% for challenge in challenge_names | selectattr("difficulty", "equalto",
     "advanced") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>

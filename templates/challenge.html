@@ -1,47 +1,71 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     html {
       font-size: 1.2rem;
+      height: 100%;
+      width: 100%;
     }
 
     .container {
       display: flex;
-      flex-direction: row;
+      padding: 1rem 2rem;
       justify-content: center;
       margin: 0 auto;
     }
 
     .navigation-container {
-      padding: 10px;
-      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: fit-content;
+      margin-right: 2rem;
+    }
+
+    .challenge-area {
+      display: flex;
+      flex-direction: column;
+      max-width: 50%;
     }
 
     .codemirror-container {
-      padding: 10px;
       display: flex;
-      justify-content: flex-end;
       flex-direction: column;
-      flex: 4;
+      gap: 10px;
+    }
+
+    #run-button {
+      align-self: flex-end;
+      width: 100px;
+      padding: 2px 4px;
+      border-radius: 4px;
     }
 
     .result-container {
-      flex: 4;
       display: flex;
       justify-content: start;
-      margin-left: 10px;
+      margin-top: 20px;
     }
 
     /* 当视口宽度小于 800px 时，更改布局为单列 */
     @media only screen and (max-width: 800px) {
       .container {
         flex-direction: column;
+        align-items: center;
+      }
+
+      .navigation-container {
+        margin-right: 0;
+        margin-bottom: 2rem;
       }
     }
 
@@ -63,49 +87,52 @@
 <body>
   {% include 'github_ribbon.html' %}
   <div class="container">
-    <div class="navigation-container">{% include 'challenge_list.html' %}</div>
-    <div class="codemirror-container">
-      <h2>Challenge - {{name}}</h2>
-      <p style="margin-top: 0; line-height: 1.5">
-        Complete code following the instructions below, so that
-        <code>should_pass</code> passes type check,
-        <code>should_fail</code> fails type check. Hit the "Run" button to see
-        result.
-      </p>
-      <div id="editor"></div>
-      <div style="display: flex; justify-content: flex-end">
-        <button id="run-button" style="width: 100px; margin-top: 10px">
+    <div class="navigation-container">
+      {% include 'challenge_list.html' %}
+    </div>
+
+    <div class="challenge-area">
+      <div class="codemirror-container">
+        <h2>Challenge - {{name}}</h2>
+        <p>
+          Complete code following the instructions below, so that
+          <code>should_pass</code> passes type check,
+          <code>should_fail</code> fails type check. Hit the "Run" button to see
+          result.
+        </p>
+        <div id="editor"></div>
+        <button id="run-button">
           ▶️ Run
         </button>
+        <h3>Test cases</h3>
+        <div id="tests"></div>
       </div>
-      <p style="margin-top: 0">Test cases</p>
-      <div id="tests"></div>
-    </div>
-    <div class="result-container">
-      <p id="result" style="white-space: pre-line"></p>
+      <div class="result-container">
+        <p id="result" style="white-space: pre-line"></p>
+      </div>
     </div>
   </div>
+
   <script type="text/javascript">
-    let code_under_test = {{code_under_test | tojson}};
-    console.log(code_under_test);
-    var myCodeMirror = CodeMirror(document.getElementById("editor"), {
-      value: code_under_test,
+    let codeMirrorShared = {
       mode: "python",
       lineWrapping: true,
       lineNumbers: true,
-      indentUnit: 4
+    }
+    let code_under_test = {{ code_under_test | tojson }};
+    let myCodeMirror = CodeMirror(document.getElementById("editor"), {
+      value: code_under_test,
+      ...codeMirrorShared,
     });
-    let test_code = {{test_code | tojson}};
+    let test_code = {{ test_code | tojson }};
     CodeMirror(document.getElementById("tests"), {
       value: test_code,
-      mode: "python",
-      lineWrapping: true,
-      lineNumbers: true,
-      readOnly: "nocursor"
+      readOnly: "nocursor",
+      ...codeMirrorShared,
     });
 
     document.getElementById('run-button').onclick = function () {
-      var code = myCodeMirror.getValue();
+      let code = myCodeMirror.getValue();
       fetch('/run/{{name}}', {
         method: 'POST',
         body: code
@@ -119,7 +146,7 @@
 
     // If window size is > 800, expand the challenge list.
     function checkWidth() {
-      var detailsElement = document.getElementById('challenge-list');
+      let detailsElement = document.getElementById('challenge-list');
       if (window.innerWidth < 800) {
         detailsElement.removeAttribute('open');
       } else {
