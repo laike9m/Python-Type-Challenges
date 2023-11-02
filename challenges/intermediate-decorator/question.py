@@ -14,7 +14,12 @@ def should_pass():
     def foo(a: int, *, b: str) -> None:
         ...
 
+    @decorator
+    def bar(c: int, d: str) -> None:
+        ...
+
     foo(1, b="2")
+    bar(c=1, d="2")
 
 
 def should_fail():
