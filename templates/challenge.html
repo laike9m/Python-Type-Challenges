@@ -1,32 +1,23 @@
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <title>Python Type Challenge - {{ name }}</title>
 
-    html {
-      font-size: 1.2rem;
-      height: 100%;
-      width: 100%;
-    }
-
+  <style type="text/css">
     .container {
       display: flex;
       padding: 1rem 2rem;
       justify-content: center;
       margin: 0 auto;
+      max-width: calc(100% * 11/12);
     }
 
     .navigation-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       max-width: fit-content;
       margin-right: 2rem;
     }
@@ -78,17 +69,13 @@
       border: 2px solid blue;
     }
 
-    .code {
-      background-color: #ffffcc;
-    }
   </style>
-</head>
+{% endblock %}
 
-<body>
-  {% include 'github_ribbon.html' %}
+{% block content %}
   <div class="container">
     <div class="navigation-container">
-      {% include 'challenge_list.html' %}
+      {% include 'components/challenge_list.html' %}
     </div>
 
     <div class="challenge-area">
@@ -156,4 +143,4 @@
     checkWidth();  // Check the width initially
     window.addEventListener('resize', checkWidth);
   </script>
-</body>
+{% endblock %}
