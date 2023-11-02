@@ -1,12 +1,15 @@
 """
 TODO:
 
-is_string is a function that returns a boolean result. If the result is True,
-the argument passed in will be constrained to a certain type, namely type guard.
+is_string is a function that takes an argument value of arbitrary type, and returns a boolean.
+You should make is_string be able to narrow the type of the argument based on its return value:
+when it's true, narrow value's type to str.
+Basically, it should work like `isinstance(value, str)` from the perspective of a type checker.
 """
+from typing import Any
 
 
-def is_string(value):
+def is_string(value: Any):
     ...
 
 

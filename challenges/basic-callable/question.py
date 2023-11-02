@@ -1,16 +1,11 @@
 """
 TODO:
-    Define a callable type that accepts a string parameter and returns None.
-    *The parameter name can be any.*
 
-HINT: Use Protocol
+Define a callable type that accepts a string parameter and returns None.
+*The parameter name can be any.*
 """
 
-from typing import Protocol
-
-
-class SingleStringInput(Protocol):
-    ...
+SingleStringInput = ...
 
 
 def should_pass():
