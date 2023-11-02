@@ -1,17 +1,15 @@
-import os
 import glob
+import os
 from dataclasses import dataclass
-from enum import IntEnum
 from pathlib import Path
-from typing import TypeAlias, Literal
-from typing_extensions import DefaultDict
+from typing import TypeAlias
 
 import libcst as cst
 from libcst.metadata import MetadataWrapper, WhitespaceInclusivePositionProvider
 from mypy import api
 
-
 ROOT_DIR = Path(__file__).parent.parent
+MYPY_CONFIG = ROOT_DIR / "pyproject.toml"
 
 
 ChallengeName: TypeAlias = str
@@ -115,7 +113,7 @@ class ChallengeManager:
 
     @staticmethod
     def _type_check_with_mypy(code) -> TypeCheckResult:
-        raw_result = api.run(["--check-untyped-defs", "-c", code])
+        raw_result = api.run(["--config-file", str(MYPY_CONFIG), "-c", code])
         return TypeCheckResult(
             stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
         )
