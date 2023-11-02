@@ -5,7 +5,9 @@ foo is a function that returns an interger when called specified Foo[int], retur
 """
 from typing import TypeVar, Generic
 
-class Foo(Generic[T]): ...
+T = TypeVar('T')
+
+class Foo(Generic[T]):
     a: T
 
 def foo(value: Foo):
