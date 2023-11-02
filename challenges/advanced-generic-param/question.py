@@ -1,7 +1,8 @@
 """
 TODO:
 
-Define a wrapper type with generic parameter.
+Define a wrapper type `Box` with generic parameter.
+It is initialized with an object of the wrapped type and has a method to retrieve the wrapped value.
 """
 
 

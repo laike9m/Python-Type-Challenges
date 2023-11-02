@@ -1,7 +1,7 @@
 """
 TODO:
 
-Define a function that accepts two parameters of the same type and returns the same type.
+The function `add` accepts two parameters of the same type and returns the same type.
 """
 
 
