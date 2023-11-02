@@ -17,7 +17,11 @@ license = {text = "MIT"}
 
 [tool.pdm.scripts]
 devserver = "flask --app app run --debug"
-export = "pdm export --pyproject -o requirements.txt"
+
+[[tool.pdm.autoexport]]
+filename = "requirements.txt"
+groups = ["default"]
+without-hashes = true
 
 [tool.pyright]
 venvPath = "."
