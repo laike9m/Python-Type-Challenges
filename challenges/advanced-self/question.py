@@ -12,6 +12,7 @@ class Foo:
         return self
 
 
+## End of your code ##
 class SubclassOfFoo(Foo):
     pass
 
@@ -22,4 +23,4 @@ def should_pass():
 
 
 def should_fail():
-    sf: SubclassOfFoo = Foo().return_self()
+    sf: SubclassOfFoo = Foo().return_self()  # expect-type-error

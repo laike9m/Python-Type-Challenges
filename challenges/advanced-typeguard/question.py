@@ -13,13 +13,11 @@ def is_string(value: Any):
     ...
 
 
-def should_pass():
-    a: str | None = "hello"
-    if is_string(a):
-        a.strip()
+## End of your code ##
+from typing import assert_type
 
-
-def should_fail():
-    a: str | None = "hello"
-    if not is_string(a):
-        a.strip()
+a: str | None = "hello"
+if is_string(a):
+    assert_type(a, str)
+else:
+    assert_type(a, type(None))

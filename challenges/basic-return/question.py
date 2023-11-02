@@ -9,9 +9,8 @@ def foo():
     return 1
 
 
-def should_pass():
-    i: int = foo()
+## End of your code ##
+from typing import assert_type
 
-
-def should_fail():
-    i: str = foo()
+assert_type(foo(), int)
+assert_type(foo(), str)  # expect-type-error

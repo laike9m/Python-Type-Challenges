@@ -9,11 +9,9 @@ def foo(direction):
     ...
 
 
-def should_pass():
-    foo("left")
-    foo("right")
+## End of your code ##
+foo("left")
+foo("right")
 
-
-def should_fail():
-    a = "left"
-    foo(a)
+a = "left"
+foo(a)  # expect-type-error

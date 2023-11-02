@@ -3,29 +3,29 @@ TODO:
 
 Define a decorator that wraps a function and returns a function with the same signature.
 """
+from typing import Callable, TypeVar
+
+T = TypeVar("T", bound=Callable)
 
 
-def decorator(func):
+def decorator(func: T) -> T:
+    return func
+
+
+## End of your code ##
+@decorator
+def foo(a: int, *, b: str) -> None:
     ...
 
 
-def should_pass():
-    @decorator
-    def foo(a: int, *, b: str) -> None:
-        ...
-
-    @decorator
-    def bar(c: int, d: str) -> None:
-        ...
-
-    foo(1, b="2")
-    bar(c=1, d="2")
+@decorator
+def bar(c: int, d: str) -> None:
+    ...
 
 
-def should_fail():
-    @decorator
-    def foo(c: int, *, d: str) -> None:
-        ...
+foo(1, b="2")
+bar(c=1, d="2")
 
-    foo(1, "2")
-    foo(c=1, e="2")
+foo(1, "2")  # expect-type-error
+foo(a=1, e="2")  # expect-type-error
+decorator(1)  # expect-type-error

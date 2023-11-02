@@ -1,11 +1,12 @@
 import glob
+import io
 import os
-from dataclasses import dataclass
+import re
+import tokenize
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TypeAlias
 
-import libcst as cst
-from libcst.metadata import MetadataWrapper, WhitespaceInclusivePositionProvider
 from mypy import api
 
 ROOT_DIR = Path(__file__).parent.parent
@@ -13,6 +14,10 @@ MYPY_CONFIG = ROOT_DIR / "pyproject.toml"
 
 
 ChallengeName: TypeAlias = str
+CODE_SPLITTER = "\n## End of your code ##\n"
+EXPECT_ERROR_COMMENT = "expect-type-error"
+
+MYPY_MESSAGE_REGEX = r"^(?:.+?):(\d+):(\s*error:.+)$"
 
 
 @dataclass
@@ -20,49 +25,23 @@ class Challenge:
     name: ChallengeName
     difficulty: str
     code: str
-    code_under_test: str = ""
-    test_code: str = ""
-    test_code_should_pass: str = ""
-    test_code_should_fail: str = ""
+    user_code: str = field(default="", init=False)
+    fixture_code: str = field(default="", init=False)
 
     def __post_init__(self):
         self.parse_code()
 
     def parse_code(self):
-        start_lineno = 0
-        module = cst.parse_module(self.code)
-        challenge = self
-
-        class RemoveTargetFunctionTransformer(cst.CSTTransformer):
-            METADATA_DEPENDENCIES = (WhitespaceInclusivePositionProvider,)
-
-            def visit_FunctionDef(self, node: cst.FunctionDef):
-                if node.name.value == "should_pass":
-                    challenge.test_code_should_pass = module.code_for_node(node)
-                    test_start_lineno = self.get_metadata(
-                        WhitespaceInclusivePositionProvider, node
-                    ).start.line
-                    code_lines = challenge.code.split(os.linesep)
-                    challenge.code_under_test = os.linesep.join(
-                        code_lines[:test_start_lineno]
-                    )
-                    challenge.test_code = os.linesep.join(
-                        code_lines[test_start_lineno + 1 :]
-                    )
-                if node.name.value == "should_fail":
-                    challenge.test_code_should_fail = module.code_for_node(node)
-
-        wrapper = MetadataWrapper(module)
-        modified_module = wrapper.visit(RemoveTargetFunctionTransformer())
+        self.user_code, _, self.fixture_code = self.code.partition(CODE_SPLITTER)
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class ChallengeInfo:
     name: str
     difficulty: str
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class TypeCheckResult:
     stdout: str
     stderr: str
@@ -83,16 +62,42 @@ class ChallengeManager:
     def get_challenge(self, name: str) -> Challenge:
         return self.challenges[name]
 
-    # returns (result_should_pass, result_should_fail)
-    def run_challenge(
-        self, name: str, code_under_test: str
-    ) -> tuple[TypeCheckResult, TypeCheckResult]:
+    def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(name)
-        code_should_pass_type_check = code_under_test + challenge.test_code_should_pass
-        code_should_fail_type_check = code_under_test + challenge.test_code_should_fail
-        return (
-            self._type_check_with_mypy(code_should_pass_type_check),
-            self._type_check_with_mypy(code_should_fail_type_check),
+        code = f"{user_code}\n{challenge.fixture_code}"
+        buffer = io.StringIO(code)
+        tokens = list(tokenize.generate_tokens(buffer.readline))
+        expect_error_lines = [
+            token.start[0]
+            for token in tokens
+            if token.type == tokenize.COMMENT
+            and token.string[1:].strip() == EXPECT_ERROR_COMMENT
+        ]
+        raw_result = self._type_check_with_mypy(code)
+        mypy_outputs: list[str] = []
+
+        for line in raw_result.stdout.splitlines():
+            m = re.match(MYPY_MESSAGE_REGEX, line)
+            if m is None:
+                continue
+            line_number = int(m.group(1))
+            message = m.group(2)
+            if line_number in expect_error_lines:
+                expect_error_lines.remove(line_number)
+                continue
+            mypy_outputs.append(f"{line_number}:{message}")
+
+        if expect_error_lines:
+            for line_number in expect_error_lines:
+                mypy_outputs.append(f"Expected type error on line: {line_number}")
+
+        passed = len(mypy_outputs) == 0
+        if passed:
+            mypy_outputs.append("\nAll tests passed")
+        else:
+            mypy_outputs.append(f"\nFound {len(mypy_outputs)} errors")
+        return TypeCheckResult(
+            stdout="\n".join(mypy_outputs), stderr=raw_result.stderr, passed=passed
         )
 
     @staticmethod
@@ -112,7 +117,7 @@ class ChallengeManager:
         return challenges
 
     @staticmethod
-    def _type_check_with_mypy(code) -> TypeCheckResult:
+    def _type_check_with_mypy(code: str) -> TypeCheckResult:
         raw_result = api.run(["--config-file", str(MYPY_CONFIG), "-c", code])
         return TypeCheckResult(
             stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
