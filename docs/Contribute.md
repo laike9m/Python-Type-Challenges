@@ -36,7 +36,7 @@
    This will pass type check:
 
    ```python
-   def foo(x: dict[str: str]):
+   def foo(x: dict[str, str]):
        pass
 
    def should_pass():
@@ -46,7 +46,7 @@
    This will fail type check
 
    ```python
-   def foo(x: dict[str: str]):
+   def foo(x: dict[str, str]):
        pass
 
    def should_fail():
