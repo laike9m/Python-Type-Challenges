@@ -1,10 +1,9 @@
-import os
-from collections import namedtuple
-from flask import Blueprint, render_template, request, redirect
+import platform
+
 import libcst as cst
+from flask import Blueprint, redirect, render_template, request
 
 from .utils import challenge_manager
-
 
 app_views = Blueprint("app_views", __name__)
 
@@ -28,6 +27,7 @@ def get_challenge(name):
         challenge_names=challenge_manager.challenge_names,
         code_under_test=challenge.code_under_test,
         test_code=challenge.test_code,
+        python_info=platform.python_version(),
     )
 
 
@@ -56,7 +56,7 @@ def run_challenge(name) -> str:
         )
     if result_should_fail.passed:
         error_message += (
-            f'<b>Test case <code style="background-color: #FFFFCC;">should_fail</code>'
+            '<b>Test case <code style="background-color: #FFFFCC;">should_fail</code>'
             " should fail type check, but it passed.</b>"
         )
 
