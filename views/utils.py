@@ -17,6 +17,8 @@ ChallengeName: TypeAlias = str
 CODE_SPLITTER = "\n## End of your code ##\n"
 EXPECT_ERROR_COMMENT = "expect-type-error"
 
+# Each mypy error should look like: `<filename>:<line_number>: <error|note>: <message>`
+# Here we only capture the error messages and line numbers
 MYPY_MESSAGE_REGEX = r"^(?:.+?):(\d+):(\s*error:.+)$"
 
 
@@ -67,6 +69,7 @@ class ChallengeManager:
         code = f"{user_code}\n{challenge.test_code}"
         buffer = io.StringIO(code)
         tokens = list(tokenize.generate_tokens(buffer.readline))
+        # Find all lines that are followed by a comment # expect-type-error
         expect_error_lines = [
             token.start[0]
             for token in tokens
@@ -74,7 +77,7 @@ class ChallengeManager:
             and token.string[1:].strip() == EXPECT_ERROR_COMMENT
         ]
         raw_result = self._type_check_with_mypy(code)
-        mypy_outputs: list[str] = []
+        error_lines: list[str] = []
 
         for line in raw_result.stdout.splitlines():
             m = re.match(MYPY_MESSAGE_REGEX, line)
@@ -83,21 +86,24 @@ class ChallengeManager:
             line_number = int(m.group(1))
             message = m.group(2)
             if line_number in expect_error_lines:
+                # Each reported error should be attached to a specific line,
+                # If it is commented with # expect-type-error, let it pass.
                 expect_error_lines.remove(line_number)
                 continue
-            mypy_outputs.append(f"{line_number}:{message}")
+            error_lines.append(f"{line_number}:{message}")
 
-        if expect_error_lines:
-            for line_number in expect_error_lines:
-                mypy_outputs.append(f"Expected type error on line: {line_number}")
+        # If there are any lines that are expected to fail but not reported by mypy,
+        # they should be considered as errors.
+        for line_number in expect_error_lines:
+            error_lines.append(f"Expected type error on line: {line_number}")
 
-        passed = len(mypy_outputs) == 0
+        passed = len(error_lines) == 0
         if passed:
-            mypy_outputs.append("\nAll tests passed")
+            error_lines.append("\nAll tests passed")
         else:
-            mypy_outputs.append(f"\nFound {len(mypy_outputs)} errors")
+            error_lines.append(f"\nFound {len(error_lines)} errors")
         return TypeCheckResult(
-            stdout="\n".join(mypy_outputs), stderr=raw_result.stderr, passed=passed
+            stdout="\n".join(error_lines), stderr=raw_result.stderr, passed=passed
         )
 
     @staticmethod
