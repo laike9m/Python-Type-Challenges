@@ -118,7 +118,13 @@
       ...codeMirrorShared,
     });
 
-    document.getElementById('run-button').onclick = function () {
+    let runButton = document.getElementById('run-button')
+    runButton.onclick = function () {
+      // set button spinner
+      let rawInnerText = runButton.innerText;
+      runButton.ariaBusy = true;
+      runButton.innerText = ""
+
       let code = myCodeMirror.getValue();
       fetch('/run/{{name}}', {
         method: 'POST',
@@ -128,6 +134,11 @@
         .then(result => document.getElementById("result").innerHTML = result)
         .catch((error) => {
           console.error('Error:', error);
+        })
+        .finally(() => {
+          // reset button spinner
+          runButton.ariaBusy = false;
+          runButton.innerText = rawInnerText;
         });
     };
 
