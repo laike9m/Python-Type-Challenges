@@ -67,44 +67,7 @@ class ChallengeManager:
     def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(name)
         code = f"{user_code}\n{challenge.test_code}"
-        buffer = io.StringIO(code)
-        tokens = list(tokenize.generate_tokens(buffer.readline))
-        # Find all lines that are followed by a comment # expect-type-error
-        expect_error_lines = [
-            token.start[0]
-            for token in tokens
-            if token.type == tokenize.COMMENT
-            and token.string[1:].strip() == EXPECT_ERROR_COMMENT
-        ]
-        raw_result = self._type_check_with_mypy(code)
-        error_lines: list[str] = []
-
-        for line in raw_result.stdout.splitlines():
-            m = re.match(MYPY_MESSAGE_REGEX, line)
-            if m is None:
-                continue
-            line_number = int(m.group(1))
-            message = m.group(2)
-            if line_number in expect_error_lines:
-                # Each reported error should be attached to a specific line,
-                # If it is commented with # expect-type-error, let it pass.
-                expect_error_lines.remove(line_number)
-                continue
-            error_lines.append(f"{line_number}:{message}")
-
-        # If there are any lines that are expected to fail but not reported by mypy,
-        # they should be considered as errors.
-        for line_number in expect_error_lines:
-            error_lines.append(f"Expected type error on line: {line_number}")
-
-        passed = len(error_lines) == 0
-        if passed:
-            error_lines.append("\nAll tests passed")
-        else:
-            error_lines.append(f"\nFound {len(error_lines)} errors")
-        return TypeCheckResult(
-            stdout="\n".join(error_lines), stderr=raw_result.stderr, passed=passed
-        )
+        return self._type_check_with_mypy(code)
 
     @staticmethod
     def _load_challenges() -> dict[ChallengeName, Challenge]:
@@ -124,9 +87,43 @@ class ChallengeManager:
 
     @staticmethod
     def _type_check_with_mypy(code: str) -> TypeCheckResult:
+        buffer = io.StringIO(code)
+        tokens = list(tokenize.generate_tokens(buffer.readline))
+        # Find all lines that are followed by a comment # expect-type-error
+        expect_error_lines = [
+            token.start[0]
+            for token in tokens
+            if token.type == tokenize.COMMENT
+            and token.string[1:].strip() == EXPECT_ERROR_COMMENT
+        ]
         raw_result = api.run(["--config-file", str(MYPY_CONFIG), "-c", code])
+        error_lines: list[str] = []
+
+        for line in raw_result[0].splitlines():
+            m = re.match(MYPY_MESSAGE_REGEX, line)
+            if m is None:
+                continue
+            line_number = int(m.group(1))
+            message = m.group(2)
+            if line_number in expect_error_lines:
+                # Each reported error should be attached to a specific line,
+                # If it is commented with # expect-type-error, let it pass.
+                expect_error_lines.remove(line_number)
+                continue
+            error_lines.append(f"{line_number}:{message}")
+
+        # If there are any lines that are expected to fail but not reported by mypy,
+        # they should be considered as errors.
+        for line_number in expect_error_lines:
+            error_lines.append(f"{line_number}: error: Expected type error")
+
+        passed = len(error_lines) == 0
+        if passed:
+            error_lines.append("\nAll tests passed")
+        else:
+            error_lines.append(f"\nFound {len(error_lines)} errors")
         return TypeCheckResult(
-            stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
+            stdout="\n".join(error_lines), stderr=raw_result[1], passed=passed
         )
 
 

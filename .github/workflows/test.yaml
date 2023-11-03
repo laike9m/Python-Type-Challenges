@@ -1,0 +1,22 @@
+name: Unit Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: 3.12
+          cache: true
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Run tests
+        run: pdm run pytest

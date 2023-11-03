@@ -21,6 +21,11 @@ plugins = ["pdm-autoexport"]
 [tool.pdm.scripts]
 devserver = "flask --app app run --debug"
 
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.3",
+]
+
 [[tool.pdm.autoexport]]
 filename = "requirements.txt"
 groups = ["default"]
