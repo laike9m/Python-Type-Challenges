@@ -8,7 +8,7 @@
 
    For example, say you want to add a new challenge about [Protocols](https://mypy.readthedocs.io/en/stable/protocols.html). Since this is an advanced topic, you may name the directory `advanced-protocol`.
 
-4. Put a `question.py` in the new directory. Here's an example:
+4. Put a `question.py` and a `solution.py` in the new directory. Here's an example:
    ```python
    """
    TODO:
@@ -48,6 +48,24 @@
    ```python
    def foo(x: dict[str, str]):
        pass
+
+   def should_fail():
+       foo({"foo": 1})
+   ```
+
+   And the `solution.py` shall look like the same as `question.py`, except that it has a solution provided.
+
+   ```python
+   """
+   TODO:
+
+   foo should accept a dict argument, both keys and values are string.
+   """
+
+   def foo(x: dict[str, str]): pass
+
+   def should_pass():
+       foo({"foo": "bar"})
 
    def should_fail():
        foo({"foo": 1})
