@@ -31,7 +31,7 @@
    - Describe the challenge, make sure people understand what they need to accomplish (the `TODO:` part)
    - Add two functions `should_pass` and `should_fail` as test cases. The **function names are mandatory**. With correct code, `should_pass` should pass type check, and `should_fail` should fail type check.
 
-   Using the above challenge as an example, the correct answer is `def foo(x: dict[str: str]): pass`.
+   Using the above challenge as an example, the correct answer is `def foo(x: dict[str, str]): pass`.
 
    This will pass type check:
 
