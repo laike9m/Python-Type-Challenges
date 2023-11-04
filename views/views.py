@@ -1,7 +1,8 @@
+import gc
 import platform
 
 import libcst as cst
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, Response
 
 from .utils import challenge_manager
 
@@ -32,7 +33,7 @@ def get_challenge(name):
 
 
 @app_views.route("/run/<name>", methods=["POST"])
-def run_challenge(name) -> str:
+def run_challenge(name):
     code = request.get_data(as_text=True)
     try:
         module = cst.parse_module(code)
@@ -60,4 +61,12 @@ def run_challenge(name) -> str:
             " should fail type check, but it passed.</b>"
         )
 
-    return error_message
+    response = Response(error_message)
+
+    # See https://twitter.com/Manjusaka_Lee/status/1720506781577937304
+    # Call gc after returning the response, so that it's off the critical path.
+    @response.call_on_close
+    def cleanup_mypy_objects():
+        gc.collect()
+
+    return response

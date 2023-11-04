@@ -1,5 +1,4 @@
 import glob
-import gc
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -115,7 +114,6 @@ class ChallengeManager:
     @staticmethod
     def _type_check_with_mypy(code) -> TypeCheckResult:
         raw_result = api.run(["--config-file", str(MYPY_CONFIG), "-c", code])
-        gc.collect()
         return TypeCheckResult(
             stdout=raw_result[0], stderr=raw_result[1], passed=raw_result[2] == 0
         )
