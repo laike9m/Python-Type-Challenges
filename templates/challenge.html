@@ -26,7 +26,6 @@
     .codemirror-container {
       padding: 10px;
       display: flex;
-      justify-content: flex-end;
       flex-direction: column;
       flex: 4;
     }
@@ -65,7 +64,16 @@
   <div class="container">
     <div class="navigation-container">{% include 'challenge_list.html' %}</div>
     <div class="codemirror-container">
-      <h2>Challenge - {{name}}</h2>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h2>Challenge - {{name}}</h2>
+        <p>Python version: {{ python_info }}</p>
+      </div>
       <p style="margin-top: 0; line-height: 1.5">
         Complete code following the instructions below, so that
         <code>should_pass</code> passes type check,

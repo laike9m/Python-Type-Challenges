@@ -16,8 +16,16 @@ requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
 
+[tool.pdm]
+plugins = ["pdm-autoexport"]
+
 [tool.pdm.scripts]
 devserver = "flask --app app run --debug"
+
+[[tool.pdm.autoexport]]
+filename = "requirements.txt"
+groups = ["default"]
+without-hashes = true
 
 [tool.pyright]
 venvPath = "."
