@@ -17,10 +17,7 @@ class SubclassOfFoo(Foo):
     pass
 
 
-def should_pass():
-    f: Foo = Foo().return_self()
-    sf: SubclassOfFoo = SubclassOfFoo().return_self()
+f: Foo = Foo().return_self()
+sf: SubclassOfFoo = SubclassOfFoo().return_self()
 
-
-def should_fail():
-    sf: SubclassOfFoo = Foo().return_self()  # expect-type-error
+sf: SubclassOfFoo = Foo().return_self()  # expect-type-error
