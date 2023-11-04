@@ -5,22 +5,25 @@ foo is a function that returns an interger when called with Foo[int], returns a 
 """
 from typing import TypeVar, Generic
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class Foo(Generic[T]):
     a: T
+
 
 def foo(value: Foo):
     ...
 
 
-def should_pass():
-    foo(Foo[int]()).bit_length()
-    foo(Foo[str]()).upper()
-    foo(Foo[list]()).a.append(1)
+## End of your code ##
 
 
-def should_fail():
-    foo(Foo[int]()).upper()
-    foo(Foo[str]()).bit_length()
-    foo(Foo[list]()).bit_length()
+foo(Foo[int]()).bit_length()
+foo(Foo[str]()).upper()
+foo(Foo[list]()).a.append(1)
+
+
+foo(Foo[int]()).upper()  # expect-type-error
+foo(Foo[str]()).bit_length()  # expect-type-error
+foo(Foo[list]()).bit_length()  # expect-type-error

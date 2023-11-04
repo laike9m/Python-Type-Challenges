@@ -90,11 +90,13 @@ class ChallengeManager:
     @classmethod
     def _type_check_with_mypy(cls, code: str) -> TypeCheckResult:
         buffer = io.StringIO(code)
+
         # This produces a stream of TokenInfos, example:
         # TokenInfo(type=4 (NEWLINE), string='\n', start=(4, 3), end=(4, 4), line='"""\n'),
         # TokenInfo(type=62 (NL), string='\n', start=(5, 0), end=(5, 1), line='\n')
         # See https://docs.python.org/3/library/tokenize.html#tokenize.tokenize for more details
         tokens = list(tokenize.generate_tokens(buffer.readline))
+
         # Find all lines that are followed by a comment # expect-type-error
         expect_error_line_numbers = [
             token.start[0]
