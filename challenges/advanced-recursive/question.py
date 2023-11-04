@@ -4,19 +4,20 @@ TODO:
 Define a `Tree` type. `Tree` is a dictionary, whose keys are string, values are also `Tree`.
 """
 
+Tree = ...
 
+
+## End of your code ##
 def f(t: Tree):
     pass
 
 
-def should_pass():
-    f({})
-    f({"foo": {}})
-    f({"foo": {"bar": {}}})
-    f({"foo": {"bar": {"baz": {}}}})
+f({})
+f({"foo": {}})
+f({"foo": {"bar": {}}})
+f({"foo": {"bar": {"baz": {}}}})
 
 
-def should_fail():
-    f(1)
-    f({"foo": []})
-    f({"foo": {1: {}}})
+f(1)  # expect-type-error
+f({"foo": []})  # expect-type-error
+f({"foo": {1: {}}})  # expect-type-error

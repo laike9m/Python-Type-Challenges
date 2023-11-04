@@ -9,11 +9,9 @@ def foo(x):
     pass
 
 
-def should_pass():
-    foo(("foo", 1))
+## End of your code ##
+foo(("foo", 1))
 
-
-def should_fail():
-    foo((1, 2))
-    foo(("foo", "bar"))
-    foo((1, "foo"))
+foo((1, 2))  # expect-type-error
+foo(("foo", "bar"))  # expect-type-error
+foo((1, "foo"))  # expect-type-error

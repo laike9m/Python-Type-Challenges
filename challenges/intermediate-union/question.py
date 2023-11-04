@@ -8,10 +8,8 @@ def foo(x):
     pass
 
 
-def should_pass():
-    foo("foo")
-    foo(1)
+## End of your code ##
+foo("foo")
+foo(1)
 
-
-def should_fail():
-    foo([])
+foo([])  # expect-type-error

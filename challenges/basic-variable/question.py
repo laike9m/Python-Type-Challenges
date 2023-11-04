@@ -3,16 +3,11 @@ TODO:
 
 `a` should be an integer.
 """
+from typing import Any
+
+a: Any
 
 
-a
-
-
-def should_pass():
-    global a
-    a = 2
-
-
-def should_fail():
-    global a
-    a = "1"
+## End of your code ##
+a = 2
+a = "1"  # expect-type-error

@@ -8,7 +8,6 @@ authors = [
 dependencies = [
     "mypy>=1.6.1",
     "flask>=3.0.0",
-    "libcst>=1.1.0",
     "gunicorn>=21.2.0",
     "typing-extensions>=4.8.0",
 ]
@@ -21,6 +20,11 @@ plugins = ["pdm-autoexport"]
 
 [tool.pdm.scripts]
 devserver = "flask --app app run --debug"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.3",
+]
 
 [[tool.pdm.autoexport]]
 filename = "requirements.txt"
