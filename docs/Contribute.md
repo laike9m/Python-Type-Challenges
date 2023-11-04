@@ -2,9 +2,9 @@
 
 1. Fork this project if you haven't done so
 
-2. Determine how difficult the challenge is. There are 3 levels: **basic**, **intermediate**, and **advanced**.
+2. Determine how difficult the challenge is. There are 4 levels: **basic**, **intermediate**, **advanced**, and **extreme**.
 
-3. Create a new directory under [`challenges/`](https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges). The new directory's name should follow the pattern `[basic|intermediate|advanced]-name`.
+3. Create a new directory under [`challenges/`](https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges). The new directory's name should follow the pattern `[basic|intermediate|advanced|extreme]-name`.
 
    For example, say you want to add a new challenge about [Protocols](https://mypy.readthedocs.io/en/stable/protocols.html). Since this is an advanced topic, you may name the directory `advanced-protocol`.
 
