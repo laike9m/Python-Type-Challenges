@@ -46,14 +46,14 @@
       max-width: 50%;
     }
 
-    .challenge-area-header {
+    .challenge-header__title {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
     }
 
-    .challenge-area-header > span:nth-child(1) {
+    .challenge-header__title > span:nth-child(1) {
       font-size: 30px;
       font-weight: bold;
     }
@@ -115,11 +115,13 @@
     </div>
 
     <div class="challenge-area">
-      <div class="challenge-area-header">
+      <!-- Challenge Header Area-->
+      <div class="challenge-header">
+        <div class="challenge-header__title">
         <span>Challenge - {{name}}</span>
         <span>Python version: {{ python_info }}</span>
       </div>
-      <p style="margin-top: 0; line-height: 1.5">
+        <p class="challenge-header__exerpt" style="margin-top: 0; line-height: 1.5">
         Complete code following the instructions below, so that there are no type errors
         throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
         You don't need to implement the function, just add type annotations.
