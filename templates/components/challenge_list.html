@@ -25,6 +25,7 @@
     "basic") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
+
     <br />
 
     <strong>Intermediate</strong>
@@ -32,11 +33,19 @@
     "intermediate") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
+
     <br />
 
     <strong>Advanced</strong>
     {% for challenge in challenge_names | selectattr("difficulty", "equalto",
     "advanced") %}
+    <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
+    {% endfor %}
+
+    <br />
+    <b>Extreme</b>
+    {% for challenge in challenge_names | selectattr("difficulty", "equalto",
+    "extreme") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
   </ol>

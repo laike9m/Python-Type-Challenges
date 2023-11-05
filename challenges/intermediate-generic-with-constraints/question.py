@@ -6,17 +6,15 @@ The type can only be str or int.
 """
 
 
-from typing import List
-
-
 def add(a, b):
     return a
 
 
-def should_pass():
-    c: int = add(1, 2)
-    d: str = add("1", "2")
+## End of your code ##
+from typing import assert_type
 
+assert_type(add(1, 2), int)
+assert_type(add("1", "2"), str)
 
-def should_fail():
-    e: List[str] = add(["1"], ["2"])
+add(["1"], ["2"])  # expect-type-error
+add("1", 2)  # expect-type-error

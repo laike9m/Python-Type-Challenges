@@ -12,14 +12,12 @@ class Foo:
         return self
 
 
+## End of your code ##
 class SubclassOfFoo(Foo):
     pass
 
 
-def should_pass():
-    f: Foo = Foo().return_self()
-    sf: SubclassOfFoo = SubclassOfFoo().return_self()
+f: Foo = Foo().return_self()
+sf: SubclassOfFoo = SubclassOfFoo().return_self()
 
-
-def should_fail():
-    sf: SubclassOfFoo = Foo().return_self()
+sf: SubclassOfFoo = Foo().return_self()  # expect-type-error

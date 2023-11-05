@@ -15,11 +15,8 @@ class Box:
         return self.value
 
 
-def should_pass(w: Box[str]):
-    a: str = w.unwrap()
-    b: int = Box(1).unwrap()
+## End of your code ##
+from typing import assert_type
 
-
-def should_fail(w: Box[str]):
-    a: int = w.unwrap()
-    b: str = Box(1).unwrap()
+assert_type(w.unwrap(), str)
+assert_type(Box(1).unwrap(), int)
