@@ -39,10 +39,23 @@
       border-top: 1px solid hsl(205, 20%, 94%);
     }
 
+    /* Challenge Area */
     .challenge-area {
       display: flex;
       flex-direction: column;
       max-width: 50%;
+    }
+
+    .challenge-area-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-area-header > span:nth-child(1) {
+      font-size: 30px;
+      font-weight: bold;
     }
 
     .codemirror-container {
@@ -102,15 +115,9 @@
     </div>
 
     <div class="challenge-area">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <h2>Challenge - {{name}}</h2>
-        <p>Python version: {{ python_info }}</p>
+      <div class="challenge-area-header">
+        <span>Challenge - {{name}}</span>
+        <span>Python version: {{ python_info }}</span>
       </div>
       <p style="margin-top: 0; line-height: 1.5">
         Complete code following the instructions below, so that there are no type errors
