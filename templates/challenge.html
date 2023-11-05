@@ -18,9 +18,25 @@
       max-width: calc(100% * 11/12);
     }
 
-    .navigation-container {
-      max-width: fit-content;
+    .sidebar-container {
+      display: flex;
+      flex-direction: column;
       margin-right: 2rem;
+    }
+
+    .sidebar-container .sidebar-challenge-list {
+      overflow-y: auto;
+      height: 100%;
+      max-width: fit-content;
+    }
+
+    .sidebar-container .sidebar-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid hsl(205, 20%, 94%);
     }
 
     .challenge-area {
@@ -55,7 +71,7 @@
         align-items: center;
       }
 
-      .navigation-container {
+      .sidebar-container {
         margin-right: 0;
         margin-bottom: 2rem;
       }
@@ -75,8 +91,14 @@
 
 {% block content %}
   <div class="container">
-    <div class="navigation-container">
-      {% include 'components/challenge_list.html' %}
+    <!-- Left Sidebar -->
+    <div class="sidebar-container">
+      <div class="sidebar-challenge-list">
+        {% include 'components/challenge_list.html' %}
+      </div>
+      <div class="sidebar-actions">
+        {% include 'components/darkmode.html' %}
+      </div>
     </div>
 
     <div class="challenge-area">
