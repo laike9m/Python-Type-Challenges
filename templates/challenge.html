@@ -166,7 +166,7 @@
       <div class="challenge-header">
         <div class="challenge-header__title">
           <span>Challenge - {{ name }}</span>
-          <span>Python version: {{ python_info }}</span>
+          {%include 'components/badge.html' with context %}
         </div>
         <p class="challenge-header__exerpt" style="margin-top: 0; line-height: 1.5">
         Complete code following the instructions below, so that there are no type errors
