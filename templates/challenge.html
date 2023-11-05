@@ -9,30 +9,32 @@
   <title>Python Type Challenge - {{ name }}</title>
 
   <style type="text/css">
-    .container {
+    .challenge-container {
       display: flex;
       padding: 1rem 2rem;
       justify-content: center;
       max-height: 100vh;
-      margin: 0 auto;
-      max-width: calc(100% * 11/12);
+      width: max(80vw, 80%);
     }
 
+    /* Sidebar Area */
     .sidebar-container {
       display: flex;
       flex-direction: column;
+      align-items: center;
       margin-right: 2rem;
     }
 
     .sidebar-container .sidebar-challenge-list {
       overflow-y: auto;
-      height: 100%;
       max-width: fit-content;
+      min-width: 100px;
     }
 
     .sidebar-container .sidebar-actions {
       display: flex;
       justify-content: center;
+      width: 100%;
       align-items: center;
       margin-top: 8px;
       padding-top: 8px;
@@ -43,12 +45,10 @@
     .challenge-area {
       display: flex;
       flex-direction: column;
-      max-width: 50%;
     }
 
     .challenge-header__title {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
     }
@@ -56,37 +56,83 @@
     .challenge-header__title > span:nth-child(1) {
       font-size: 30px;
       font-weight: bold;
+      margin-right: 20px;
     }
 
-    .codemirror-container {
+    .challenge-main {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    /* Code Editor Area */
+    .challenge-main .codemirror-container {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 16px;
+      width: 50%;
     }
 
-    #run-button {
+    .codemirror-container #run-button {
       align-self: flex-end;
       width: 100px;
       padding: 2px 4px;
       border-radius: 4px;
     }
 
-    .result-container {
+    .tests-result-container {
       display: flex;
-      justify-content: start;
-      margin-top: 20px;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 50%;
+      gap: 16px;
+    }
+
+    .test-result-container #tests {
+      width: 50%;
     }
 
     /* 当视口宽度小于 800px 时，更改布局为单列 */
     @media only screen and (max-width: 800px) {
-      .container {
+      .challenge-container {
         flex-direction: column;
         align-items: center;
+        margin-top: 20px;
+        height: 100%;
+        width: 100%;
       }
 
       .sidebar-container {
+        overflow-y: auto;
         margin-right: 0;
         margin-bottom: 2rem;
+        min-height: 100px;
+      }
+
+      .sidebar-container .sidebar-challenge-list {
+        height: 100%;
+      }
+
+      .challenge-header__title {
+        justify-content: space-between;
+        font-size: 14px;
+      }
+
+      .challenge-header__title > span:nth-child(1) {
+        margin-right: auto;
+        font-size: 20px;
+      }
+
+      .challenge-main {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+      }
+      
+      .challenge-main .codemirror-container,
+      .challenge-main .tests-result-container {
+        width: 100%;
       }
     }
 
@@ -103,8 +149,8 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <!-- Left Sidebar -->
+  <div class="challenge-container container-fluid">
+    <!-- Left/Top Sidebar -->
     <div class="sidebar-container">
       <div class="sidebar-challenge-list">
         {% include 'components/challenge_list.html' %}
@@ -114,29 +160,35 @@
       </div>
     </div>
 
+    <!-- Right/Bottom Challenge Area-->
     <div class="challenge-area">
       <!-- Challenge Header Area-->
       <div class="challenge-header">
         <div class="challenge-header__title">
-        <span>Challenge - {{name}}</span>
-        <span>Python version: {{ python_info }}</span>
-      </div>
+          <span>Challenge - {{ name }}</span>
+          <span>Python version: {{ python_info }}</span>
+        </div>
         <p class="challenge-header__exerpt" style="margin-top: 0; line-height: 1.5">
         Complete code following the instructions below, so that there are no type errors
         throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
         You don't need to implement the function, just add type annotations.
         Hit the "Run" button to see result.
       </p>
+      </div>
+      
+      <div class="challenge-main">
+        <!-- Code Editor Area -->
       <div class="codemirror-container">
         <div id="editor"></div>
         <button id="run-button">
           ▶️ Run
         </button>
-        <h3>Test cases</h3>
-        <div id="tests"></div>
-      </div>
-      <div class="result-container">
-        <p id="result" style="white-space: pre-line"></p>
+        </div>
+        <!-- Test Cases and Result Area -->
+        <div class="tests-result-container">
+          <div id="tests"></div>
+          <div id="result" style="white-space: pre-line"></div>
+        </div>
       </div>
     </div>
   </div>

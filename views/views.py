@@ -39,8 +39,8 @@ def run_challenge(name):
     if result.passed:
         return "<h2>✅ Congratulations! You completed the challenge 🎉</h2>"
 
-    error_message = "<h2>❌ Challenge failed 😢\n\n</h2>"
-    error_message += f"\nError:\n{result.stdout}{result.stderr}\n\n"
+    error_message = "<h2>❌ Challenge failed 😢</h2>"
+    error_message += f"<p>Error:\n{result.stdout}{result.stderr}</p>"
 
     response = make_response(error_message)
 
