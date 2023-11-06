@@ -200,11 +200,13 @@
   </div>
 
   <script type="text/javascript">
+    let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
     let codeMirrorShared = {
       mode: "python",
       lineWrapping: true,
       lineNumbers: true,
       indentUnit: 4,
+      theme: initTheme,
     }
     let code_under_test = {{ code_under_test | tojson }};
     let myCodeMirror = CodeMirror(document.getElementById("editor"), {
