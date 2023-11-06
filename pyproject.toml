@@ -19,6 +19,7 @@ plugins = ["pdm-autoexport"]
 
 [tool.pdm.scripts]
 devserver = "flask --app app run --debug"
+activate = "eval $(pdm venv activate)"
 
 [tool.pdm.dev-dependencies]
 dev = [
