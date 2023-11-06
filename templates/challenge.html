@@ -59,6 +59,11 @@
       margin-right: 20px;
     }
 
+    .challenge-header__exerpt {
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+
     .challenge-main {
       display: flex;
       justify-content: space-between;
@@ -168,7 +173,7 @@
           <span>Challenge - {{ name }}</span>
           {%include 'components/badge.html' with context %}
         </div>
-        <p class="challenge-header__exerpt" style="margin-top: 0; line-height: 1.5">
+        <p class="challenge-header__exerpt">
         Complete code following the instructions below, so that there are no type errors
         throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
         You don't need to implement the function, just add type annotations.
