@@ -5,7 +5,7 @@ foo can accept either an integer argument or no argument.
 """
 
 
-def foo(x=0):
+def foo(x):
     pass
 
 
