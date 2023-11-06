@@ -1,24 +1,20 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block head %}
-  {{ super() }}
-
-  <title>Python Type Challenges</title>
-  <style type="text/css">
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 10px auto;
-    }
-  </style>
+    {{ super() }}
+    <title>Python Type Challenges</title>
+    <style type="text/css">
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 10px auto;
+      }
+    </style>
 {% endblock %}
-
 {% block content %}
-  <div class="container">
-    <h1 style="text-align: center;">Welcome to Python Type Challenges!</h1>
-    {% include 'components/challenge_list.html' %}
-  </div>
-{% endblock%}
+    <div class="container">
+        <h1 style="text-align: center;">Welcome to Python Type Challenges!</h1>
+        {% include "components/challenge_list.html" %}
+    </div>
+{% endblock %}

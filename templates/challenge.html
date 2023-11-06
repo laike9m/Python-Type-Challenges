@@ -1,250 +1,239 @@
 {% extends "base.html" %}
-
 {% block head %}
-  {{ super() }}
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
-  <title>Python Type Challenge - {{ name }}</title>
-
-  <style type="text/css">
-    .challenge-container {
-      display: flex;
-      padding: 1rem 2rem;
-      justify-content: center;
-      max-height: 100vh;
-      width: max(80vw, 80%);
-    }
-
-    /* Sidebar Area */
-    .sidebar-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-right: 2rem;
-    }
-
-    .sidebar-container .sidebar-challenge-list {
-      overflow-y: auto;
-      max-width: fit-content;
-      min-width: 100px;
-    }
-
-    .sidebar-container .sidebar-actions {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      align-items: center;
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid hsl(205, 20%, 94%);
-    }
-
-    /* Challenge Area */
-    .challenge-area {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .challenge-header__title {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .challenge-header__title > span:nth-child(1) {
-      font-size: 30px;
-      font-weight: bold;
-      margin-right: 20px;
-    }
-
-    .challenge-main {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    /* Code Editor Area */
-    .challenge-main .codemirror-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      width: 50%;
-    }
-
-    .codemirror-container #run-button {
-      align-self: flex-end;
-      width: 100px;
-      padding: 2px 4px;
-      border-radius: 4px;
-    }
-
-    .tests-result-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 50%;
-      gap: 16px;
-    }
-
-    .test-result-container #tests {
-      width: 50%;
-    }
-
-    /* 当视口宽度小于 800px 时，更改布局为单列 */
-    @media only screen and (max-width: 800px) {
+    {{ super() }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+    <title>Python Type Challenge - {{ name }}</title>
+    <style type="text/css">
       .challenge-container {
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px;
-        height: 100%;
-        width: 100%;
+        display: flex;
+        padding: 1rem 2rem;
+        justify-content: center;
+        max-height: 100vh;
+        width: max(80vw, 80%);
       }
 
+      /* Sidebar Area */
       .sidebar-container {
-        overflow-y: auto;
-        margin-right: 0;
-        margin-bottom: 2rem;
-        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 2rem;
       }
 
       .sidebar-container .sidebar-challenge-list {
-        height: 100%;
+        overflow-y: auto;
+        max-width: fit-content;
+        min-width: 100px;
+      }
+
+      .sidebar-container .sidebar-actions {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid hsl(205, 20%, 94%);
+      }
+
+      /* Challenge Area */
+      .challenge-area {
+        display: flex;
+        flex-direction: column;
       }
 
       .challenge-header__title {
-        justify-content: space-between;
-        font-size: 14px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
       }
 
-      .challenge-header__title > span:nth-child(1) {
-        margin-right: auto;
-        font-size: 20px;
+      .challenge-header__title>span:nth-child(1) {
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 20px;
       }
 
       .challenge-main {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      /* Code Editor Area */
+      .challenge-main .codemirror-container {
+        display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0;
+        gap: 16px;
+        width: 50%;
       }
-      
-      .challenge-main .codemirror-container,
-      .challenge-main .tests-result-container {
-        width: 100%;
+
+      .codemirror-container #run-button {
+        align-self: flex-end;
+        width: 100px;
+        padding: 2px 4px;
+        border-radius: 4px;
       }
-    }
 
-    .CodeMirror {
-      height: auto;
-      border: 2px solid orange;
-    }
+      .tests-result-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50%;
+        gap: 16px;
+      }
 
-    .CodeMirror.CodeMirror-focused {
-      border: 2px solid blue;
-    }
+      .test-result-container #tests {
+        width: 50%;
+      }
 
-  </style>
+      /* 当视口宽度小于 800px 时，更改布局为单列 */
+      @media only screen and (max-width: 800px) {
+        .challenge-container {
+          flex-direction: column;
+          align-items: center;
+          margin-top: 20px;
+          height: 100%;
+          width: 100%;
+        }
+
+        .sidebar-container {
+          overflow-y: auto;
+          margin-right: 0;
+          margin-bottom: 2rem;
+          min-height: 100px;
+        }
+
+        .sidebar-container .sidebar-challenge-list {
+          height: 100%;
+        }
+
+        .challenge-header__title {
+          justify-content: space-between;
+          font-size: 14px;
+        }
+
+        .challenge-header__title>span:nth-child(1) {
+          margin-right: auto;
+          font-size: 20px;
+        }
+
+        .challenge-main {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 0;
+        }
+
+        .challenge-main .codemirror-container,
+        .challenge-main .tests-result-container {
+          width: 100%;
+        }
+      }
+
+      .CodeMirror {
+        height: auto;
+        border: 2px solid orange;
+      }
+
+      .CodeMirror.CodeMirror-focused {
+        border: 2px solid blue;
+      }
+    </style>
 {% endblock %}
-
 {% block content %}
-  <div class="challenge-container container-fluid">
-    <!-- Left/Top Sidebar -->
-    <div class="sidebar-container">
-      <div class="sidebar-challenge-list">
-        {% include 'components/challenge_list.html' %}
-      </div>
-      <div class="sidebar-actions">
-        {% include 'components/darkmode.html' %}
-      </div>
+    <div class="challenge-container container-fluid">
+        <!-- Left/Top Sidebar -->
+        <div class="sidebar-container">
+            <div class="sidebar-challenge-list">{% include "components/challenge_list.html" %}</div>
+            <div class="sidebar-actions">{% include "components/darkmode.html" %}</div>
+        </div>
+        <!-- Right/Bottom Challenge Area-->
+        <div class="challenge-area">
+            <!-- Challenge Header Area-->
+            <div class="challenge-header">
+                <div class="challenge-header__title">
+                    <span>Challenge - {{ name }}</span>
+                    {% include "components/badge.html" with context %}
+                </div>
+                <p class="challenge-header__exerpt"
+                   style="margin-top: 0;
+                          line-height: 1.5">
+                    Complete code following the instructions below, so that there are no type errors
+                    throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
+                    You don't need to implement the function, just add type annotations.
+                    Hit the "Run" button to see result.
+                </p>
+            </div>
+            <div class="challenge-main">
+                <!-- Code Editor Area -->
+                <div class="codemirror-container">
+                    <div id="editor"></div>
+                    <button id="run-button">▶️ Run</button>
+                </div>
+                <!-- Test Cases and Result Area -->
+                <div class="tests-result-container">
+                    <div id="tests"></div>
+                    <div id="result" style="white-space: pre-line"></div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Right/Bottom Challenge Area-->
-    <div class="challenge-area">
-      <!-- Challenge Header Area-->
-      <div class="challenge-header">
-        <div class="challenge-header__title">
-          <span>Challenge - {{ name }}</span>
-          {%include 'components/badge.html' with context %}
-        </div>
-        <p class="challenge-header__exerpt" style="margin-top: 0; line-height: 1.5">
-        Complete code following the instructions below, so that there are no type errors
-        throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
-        You don't need to implement the function, just add type annotations.
-        Hit the "Run" button to see result.
-      </p>
-      </div>
-      
-      <div class="challenge-main">
-        <!-- Code Editor Area -->
-      <div class="codemirror-container">
-        <div id="editor"></div>
-        <button id="run-button">
-          ▶️ Run
-        </button>
-        </div>
-        <!-- Test Cases and Result Area -->
-        <div class="tests-result-container">
-          <div id="tests"></div>
-          <div id="result" style="white-space: pre-line"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script type="text/javascript">
-    let codeMirrorShared = {
-      mode: "python",
-      lineWrapping: true,
-      lineNumbers: true,
-    }
-    let code_under_test = {{ code_under_test | tojson }};
-    let myCodeMirror = CodeMirror(document.getElementById("editor"), {
-      value: code_under_test,
-      ...codeMirrorShared,
-    });
-    let test_code = {{ test_code | tojson }};
-    CodeMirror(document.getElementById("tests"), {
-      value: test_code,
-      readOnly: "nocursor",
-      ...codeMirrorShared,
-    });
-
-    let runButton = document.getElementById('run-button')
-    runButton.onclick = function () {
-      // set button spinner
-      let rawInnerText = runButton.innerText;
-      runButton.ariaBusy = true;
-      runButton.innerText = ""
-
-      let code = myCodeMirror.getValue();
-      fetch('/run/{{name}}', {
-        method: 'POST',
-        body: code
-      })
-        .then(response => response.text())
-        .then(result => document.getElementById("result").innerHTML = result)
-        .catch((error) => {
-          console.error('Error:', error);
-        })
-        .finally(() => {
-          // reset button spinner
-          runButton.ariaBusy = false;
-          runButton.innerText = rawInnerText;
-        });
-    };
-
-    // If window size is > 800, expand the challenge list.
-    function checkWidth() {
-      let detailsElement = document.getElementById('challenge-list');
-      if (window.innerWidth < 800) {
-        detailsElement.removeAttribute('open');
-      } else {
-        detailsElement.setAttribute('open', '');
+    <script type="text/javascript">
+      let codeMirrorShared = {
+        mode: "python",
+        lineWrapping: true,
+        lineNumbers: true,
       }
-    }
-    checkWidth();  // Check the width initially
-    window.addEventListener('resize', checkWidth);
-  </script>
+      let code_under_test = {{ code_under_test | tojson }};
+      let myCodeMirror = CodeMirror(document.getElementById("editor"), {
+        value: code_under_test,
+        ...codeMirrorShared,
+      });
+      let test_code = {{ test_code | tojson }};
+      CodeMirror(document.getElementById("tests"), {
+        value: test_code,
+        readOnly: "nocursor",
+        ...codeMirrorShared,
+      });
+
+      let runButton = document.getElementById('run-button')
+      runButton.onclick = function() {
+        // set button spinner
+        let rawInnerText = runButton.innerText;
+        runButton.ariaBusy = true;
+        runButton.innerText = ""
+
+        let code = myCodeMirror.getValue();
+        fetch('/run/{{name}}', {
+            method: 'POST',
+            body: code
+          })
+          .then(response => response.text())
+          .then(result => document.getElementById("result").innerHTML = result)
+          .catch((error) => {
+            console.error('Error:', error);
+          })
+          .finally(() => {
+            // reset button spinner
+            runButton.ariaBusy = false;
+            runButton.innerText = rawInnerText;
+          });
+      };
+
+      // If window size is > 800, expand the challenge list.
+      function checkWidth() {
+        let detailsElement = document.getElementById('challenge-list');
+        if (window.innerWidth < 800) {
+          detailsElement.removeAttribute('open');
+        } else {
+          detailsElement.setAttribute('open', '');
+        }
+      }
+      checkWidth(); // Check the width initially
+      window.addEventListener('resize', checkWidth);
+    </script>
 {% endblock %}

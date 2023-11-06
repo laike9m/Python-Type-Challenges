@@ -21,6 +21,7 @@ plugins = ["pdm-autoexport"]
 devserver = "flask --app app run --debug"
 activate = "eval $(pdm venv activate)"
 test = "pytest"
+format = "djlint . --reformat"
 
 [tool.pdm.dev-dependencies]
 dev = [
@@ -37,3 +38,13 @@ without-hashes = true
 venvPath = "."
 venv = ".venv"
 pythonVersion = "3.12"
+
+[tool.djlint]
+profile = "jinja"
+format_css = true
+# djlint doesn't support array type for ignore yet. Only string is supported.
+# See: https://github.com/Riverside-Healthcare/djLint/issues/776
+ignore="J018,T003,H016,H030,H031"
+
+[tool.djlint.css]
+indent_size=2
