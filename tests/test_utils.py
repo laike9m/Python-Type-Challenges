@@ -1,7 +1,7 @@
 from views.utils import ChallengeManager
 
 
-def test_run_type_check_with_mypy():
+def test_run_type_check_with_pyright():
     code = """\
 a: int = 1
 b: str = "2"  # expect-type-error
@@ -12,7 +12,7 @@ e: list[str] = [
     for i in range(10)
 ]
 """
-    result = ChallengeManager._type_check_with_mypy(code)
+    result = ChallengeManager._type_check_with_pyright(code)
     assert result.passed is False
     errors = [line for line in result.stdout.splitlines() if line]
     assert len(errors) == 3

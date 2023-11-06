@@ -6,10 +6,9 @@ authors = [
     {name = "laike9m", email = "laike9m@gmail.com"},
 ]
 dependencies = [
-    "mypy>=1.6.1",
     "flask>=3.0.0",
-    "gunicorn>=21.2.0",
     "typing-extensions>=4.8.0",
+    "pyright>=1.1.334",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
@@ -35,7 +34,3 @@ without-hashes = true
 venvPath = "."
 venv = ".venv"
 pythonVersion = "3.12"
-
-[tool.mypy]
-check_untyped_defs = true
-warn_no_return = false
