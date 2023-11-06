@@ -4,6 +4,7 @@
   {{ super() }}
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <title>Python Type Challenge - {{ name }}</title>
@@ -211,11 +212,17 @@
       ...codeMirrorShared,
     });
     let test_code = {{ test_code | tojson }};
-    CodeMirror(document.getElementById("tests"), {
+    let testCodeMirror = CodeMirror(document.getElementById("tests"), {
       value: test_code,
       readOnly: "nocursor",
       ...codeMirrorShared,
     });
+
+    window.addEventListener('themeSwitch', function (event) {
+      let theme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+      myCodeMirror.setOption("theme", theme);
+      testCodeMirror.setOption("theme", theme);
+    })
 
     let runButton = document.getElementById('run-button')
     runButton.onclick = function () {

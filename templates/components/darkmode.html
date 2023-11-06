@@ -54,6 +54,8 @@
                 themeSwitch.checked = true;
             }
         }
+
+        let themeSwitchEvt = new Event('themeSwitch');
         themeSwitch.addEventListener('change', function (event) {
             if (event.target.checked) {
                 document.documentElement.setAttribute('data-theme', 'dark');
@@ -62,6 +64,8 @@
                 document.documentElement.setAttribute('data-theme', 'light');
                 localStorage.setItem('theme', 'light');
             }
+            // dispatch the event used to update the code mirror theme
+            window.dispatchEvent(themeSwitchEvt);
         });
     </script>
 </div>
