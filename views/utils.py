@@ -130,7 +130,9 @@ class ChallengeManager:
         # If there are any lines that are expected to fail but not reported by pyright,
         # they should be considered as errors.
         for line_number in expect_error_line_numbers:
-            error_lines.append(f"{line_number}: error: Expected type error")
+            error_lines.append(
+                f"{line_number}: error: Expected type error but instead passed"
+            )
 
         passed = len(error_lines) == 0
         if passed:
