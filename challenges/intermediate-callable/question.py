@@ -2,7 +2,7 @@
 TODO:
 
 Define a callable type that accepts a string parameter and returns None.
-*The parameter name can be any.*
+*The parameter name can be arbitrary.*
 """
 
 SingleStringInput = ...
