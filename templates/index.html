@@ -1,21 +1,24 @@
-<head>
-  <style>
-    html {
-      font-size: 1.5rem;
-    }
-    #challenge-list {
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+
+  <title>Python Type Challenges</title>
+  <style type="text/css">
+
+    .container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 30%;
-      margin: auto;
+      margin: 10px auto;
     }
   </style>
-</head>
+{% endblock %}
 
-<body>
-  <center>
-    <h1>Welcome to Python Type Challenges!</h1>
-  </center>
-  {% include 'github_ribbon.html' %} {% include 'challenge_list.html' %}
-</body>
+{% block content %}
+  <div class="container">
+    <h1 style="text-align: center;">Welcome to Python Type Challenges!</h1>
+    {% include 'components/challenge_list.html' %}
+  </div>
+{% endblock%}
