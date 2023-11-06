@@ -13,6 +13,7 @@ Happy typing!
 This project use [PDM](https://pdm.fming.dev/latest/), a modern Python package and dependency manager, to manage dependencies. After you [have installed PDM](https://pdm.fming.dev/latest/#installation), you can run this project locally based on the following steps:
 
 ```bash
+pdm plugin add pdm-autoexport
 pdm install
 pdm run devserver
 ```

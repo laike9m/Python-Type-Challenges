@@ -2,15 +2,14 @@ import glob
 import io
 import os
 import re
+import subprocess
+import tempfile
 import tokenize
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import ClassVar, TypeAlias
 
-from mypy import api
-
 ROOT_DIR = Path(__file__).parent.parent
-MYPY_CONFIG = ROOT_DIR / "pyproject.toml"
 
 
 ChallengeName: TypeAlias = str
@@ -47,12 +46,6 @@ class TypeCheckResult:
 
 
 class ChallengeManager:
-    EXPECT_ERROR_COMMENT = "expect-type-error"
-
-    # Each mypy error should look like: `<filename>:<line_number>: <error|note>: <message>`
-    # Here we only capture the error messages and line numbers
-    MYPY_MESSAGE_REGEX = r"^(?:.+?):(\d+):(\s*error:.+)$"
-
     def __init__(self):
         self.challenges = self._load_challenges()
         self.challenge_names = [
@@ -69,7 +62,7 @@ class ChallengeManager:
     def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(name)
         code = f"{user_code}\n{challenge.test_code}"
-        return self._type_check_with_mypy(code)
+        return self._type_check_with_pyright(code)
 
     @staticmethod
     def _load_challenges() -> dict[ChallengeName, Challenge]:
@@ -87,8 +80,15 @@ class ChallengeManager:
 
         return challenges
 
+    EXPECT_ERROR_COMMENT = "expect-type-error"
+
+    # Pyright error messages look like:
+    # `<filename>:<line_no>:<col_no> - <error|warning|information>: <message>`
+    # Here we only capture the error messages and line numbers
+    PYRIGHT_MESSAGE_REGEX = r"^(?:.+?):(\d+):[\s\-\d]+(error:.+)$"
+
     @classmethod
-    def _type_check_with_mypy(cls, code: str) -> TypeCheckResult:
+    def _type_check_with_pyright(cls, code: str) -> TypeCheckResult:
         buffer = io.StringIO(code)
 
         # This produces a stream of TokenInfos, example:
@@ -104,11 +104,19 @@ class ChallengeManager:
             if token.type == tokenize.COMMENT
             and token.string[1:].strip() == cls.EXPECT_ERROR_COMMENT
         ]
-        raw_result = api.run(["--config-file", str(MYPY_CONFIG), "-c", code])
+
+        with tempfile.NamedTemporaryFile(suffix=".py") as temp:
+            temp.write(code.encode())
+            temp.flush()
+            # TODO: switch to json output to simplify output parsing.
+            # https://microsoft.github.io/pyright/#/command-line?id=json-output
+            raw_result = subprocess.run(
+                ["pyright", temp.name], capture_output=True, text=True
+            ).stdout
         error_lines: list[str] = []
 
-        for line in raw_result[0].splitlines():
-            m = re.match(cls.MYPY_MESSAGE_REGEX, line)
+        for line in raw_result.splitlines():
+            m = re.match(cls.PYRIGHT_MESSAGE_REGEX, line)
             if m is None:
                 continue
             line_number, message = int(m.group(1)), m.group(2)
@@ -119,10 +127,12 @@ class ChallengeManager:
                 continue
             error_lines.append(f"{line_number}:{message}")
 
-        # If there are any lines that are expected to fail but not reported by mypy,
+        # If there are any lines that are expected to fail but not reported by pyright,
         # they should be considered as errors.
         for line_number in expect_error_line_numbers:
-            error_lines.append(f"{line_number}: error: Expected type error")
+            error_lines.append(
+                f"{line_number}: error: Expected type error but instead passed"
+            )
 
         passed = len(error_lines) == 0
         if passed:

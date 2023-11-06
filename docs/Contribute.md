@@ -30,6 +30,6 @@
 
    `solution.py` contains the right solution, with everything else unchanged.
 
-5. Test with [`mypy`](https://mypy.readthedocs.io/) to make sure your new challenge works as expected.
+5. Test with [`pyright`](https://microsoft.github.io/pyright/#/installation?id=command-line) to make sure your new challenge works as expected.
 
 6. Create a Pull Request.

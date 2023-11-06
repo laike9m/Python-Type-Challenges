@@ -39,15 +39,6 @@ def run_challenge(name):
     if result.passed:
         return "<h2>✅ Congratulations! You completed the challenge 🎉</h2>"
 
-    error_message = "<h2>❌ Challenge failed 😢</h2>"
-    error_message += f"<p>Error:\n{result.stdout}{result.stderr}</p>"
-
-    response = make_response(error_message)
-
-    # See https://twitter.com/Manjusaka_Lee/status/1720506781577937304
-    # Call gc after returning the response, so that it's off the critical path.
-    @response.call_on_close
-    def cleanup_mypy_objects():
-        gc.collect()
-
-    return response
+    error_message = "<h2>❌ Challenge failed 😢\n\n</h2>"
+    error_message += f"\nError:\n{result.stdout}{result.stderr}\n\n"
+    return error_message
