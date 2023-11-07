@@ -8,9 +8,11 @@ from typing import TypeVar
 
 T = TypeVar("T", int, str)
 
-def add(a, b: T) -> T:
+def add(a: T, b: T) -> T:
     return a
 
+def add[T: (str,int)](a: T, b: T) -> T:
+    return a
 
 ## End of your code ##
 from typing import assert_type

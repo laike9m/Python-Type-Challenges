@@ -3,7 +3,7 @@ TODO:
 
 Define a decorator that wraps a function and returns a function with the same signature.
 """
-from typing import Callable, TypeVar
+from typing import Callable, TypeVar, cast
 from functools import wraps
 
 T = TypeVar("T", bound=Callable)
@@ -14,7 +14,7 @@ def decorator(func: T) -> T:
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
-    return wrapper
+    return cast(T, wrapper)
 
 ## End of your code ##
 @decorator

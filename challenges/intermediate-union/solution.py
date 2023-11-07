@@ -8,6 +8,8 @@ from typing import Union
 def foo(x: Union[str, int]) -> None:
     pass
 
+def foo(x: str|int) -> None:
+    pass
 
 ## End of your code ##
 foo("foo")
