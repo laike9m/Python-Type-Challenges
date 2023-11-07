@@ -23,6 +23,14 @@
         font-size: 14px;
         font-weight: lighter;
       }
+      .badge a {
+        color: white;
+      }
+
+      .badge span:nth-child(2),
+      .badge span a {
+          font-weight: lighter;
+      }
     </style>
 </head>
 <div class="badge">
@@ -37,4 +45,12 @@
         </svg>
     </span>
     <span>{{ python_info }}</span>
+</div>
+<div class="badge">
+  <span>type checker:&nbsp;<span>
+  <span>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/microsoft/pyright">
+     pyright
+    </a>
+  </span>
 </div>

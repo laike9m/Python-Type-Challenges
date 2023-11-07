@@ -64,14 +64,18 @@
           themeSwitch.checked = true;
         }
       }
-      themeSwitch.addEventListener('change', function(event) {
-        if (event.target.checked) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.setAttribute('data-theme', 'light');
-          localStorage.setItem('theme', 'light');
-        }
+
+      let themeSwitchEvt = new Event('themeSwitch');
+      themeSwitch.addEventListener('change', function (event) {
+          if (event.target.checked) {
+              document.documentElement.setAttribute('data-theme', 'dark');
+              localStorage.setItem('theme', 'dark');
+          } else {
+              document.documentElement.setAttribute('data-theme', 'light');
+              localStorage.setItem('theme', 'light');
+          }
+          // dispatch the event used to update the code mirror theme
+          window.dispatchEvent(themeSwitchEvt);
       });
     </script>
 </div>
