@@ -1,6 +1,6 @@
 import platform
 
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, jsonify, redirect, render_template, request
 
 from .utils import challenge_manager
 
@@ -36,8 +36,9 @@ def run_challenge(name):
 
     result = challenge_manager.run_challenge(user_code=code, name=name)
     if result.passed:
-        return "<h2>✅ Congratulations! You completed the challenge 🎉</h2>"
+        message = "<h2>✅ Congratulations! You passed the test 🎉</h2>"
+        return jsonify({"passed": True, "message": message})
 
     error_message = "<h2>❌ Challenge failed 😢</h2>"
     error_message += f"<p>Error:\n{result.stdout}{result.stderr}</p>"
-    return error_message
+    return jsonify({"passed": False, "message": error_message})
