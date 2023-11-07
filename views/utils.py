@@ -104,6 +104,10 @@ class ChallengeManager:
             if token.type == tokenize.COMMENT
             and token.string[1:].strip() == cls.EXPECT_ERROR_COMMENT
         ]
+        # Tracks whether an expected error has been reported by type checker.
+        error_line_seen_in_err_msg: dict[int, bool] = {
+            lineno: False for lineno in expect_error_line_numbers
+        }
 
         with tempfile.NamedTemporaryFile(suffix=".py") as temp:
             temp.write(code.encode())
@@ -122,19 +126,20 @@ class ChallengeManager:
             if m is None:
                 continue
             line_number, message = int(m.group(1)), m.group(2)
-            if line_number in expect_error_line_numbers:
+            if line_number in error_line_seen_in_err_msg:
                 # Each reported error should be attached to a specific line,
                 # If it is commented with # expect-type-error, let it pass.
-                expect_error_line_numbers.remove(line_number)
+                error_line_seen_in_err_msg[line_number] = True
                 continue
             error_lines.append(f"{line_number}:{message}")
 
         # If there are any lines that are expected to fail but not reported by pyright,
         # they should be considered as errors.
-        for line_number in expect_error_line_numbers:
-            error_lines.append(
-                f"{line_number}: error: Expected type error but instead passed"
-            )
+        for line_number, seen in error_line_seen_in_err_msg.items():
+            if not seen:
+                error_lines.append(
+                    f"{line_number}: error: Expected type error but instead passed"
+                )
 
         passed = len(error_lines) == 0
         if passed:
