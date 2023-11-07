@@ -88,7 +88,6 @@
       .tests-result-container {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         width: 50%;
         gap: 16px;
       }
@@ -119,13 +118,14 @@
         }
 
         .challenge-header__title {
-          justify-content: space-between;
           font-size: 14px;
+          flex-wrap: wrap;
         }
 
         .challenge-header__title>span:nth-child(1) {
-          margin-right: auto;
+          width: 100%;
           font-size: 20px;
+          margin-bottom: 8px;
         }
 
         .challenge-main {
@@ -166,9 +166,7 @@
                     <span>Challenge - {{ name }}</span>
                     {% include "components/badge.html" with context %}
                 </div>
-                <p class="challenge-header__exerpt"
-                   style="margin-top: 0;
-                          line-height: 1.5">
+                <p class="challenge-header__exerpt">
                     Complete code following the instructions below, so that there are no type errors
                     throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
                     You don't need to implement the function, just add type annotations.
