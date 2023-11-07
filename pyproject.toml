@@ -22,11 +22,13 @@ devserver = "flask --app app run --debug"
 activate = "eval $(pdm venv activate)"
 test = "pytest"
 format = "djlint . --reformat"
+post_install = "pre-commit install"
 
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=7.4.3",
     "djlint>=1.34.0",
+    "pre-commit>=3.5.0",
 ]
 
 [[tool.pdm.autoexport]]
@@ -40,7 +42,6 @@ venv = ".venv"
 pythonVersion = "3.12"
 
 [tool.djlint]
-profile = "jinja"
 format_css = true
 # djlint doesn't support array type for ignore yet. Only string is supported.
 # See: https://github.com/Riverside-Healthcare/djLint/issues/776
