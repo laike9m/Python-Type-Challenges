@@ -242,7 +242,6 @@
       })
         .then(response => response.json())
         .then(json => {
-          console.log(json)
           // add confetti effect when passed
           if (json.passed) {
             confetti.addConfetti()
