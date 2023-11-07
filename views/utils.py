@@ -111,7 +111,9 @@ class ChallengeManager:
             # TODO: switch to json output to simplify output parsing.
             # https://microsoft.github.io/pyright/#/command-line?id=json-output
             raw_result = subprocess.run(
-                ["pyright", temp.name], capture_output=True, text=True
+                ["pyright", "--pythonversion", "3.12", temp.name],
+                capture_output=True,
+                text=True,
             ).stdout
         error_lines: list[str] = []
 
