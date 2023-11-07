@@ -5,11 +5,12 @@
         align-items: center;
         justify-content: center;
         padding: 2px 4px;
+        margin-right: 4px;
         height: 30px;
         border-radius: 5px;
         background-color: #6cb8d4;
         color: white;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: bold;
       }
 
@@ -19,17 +20,13 @@
         margin-right: 5px;
       }
 
-      .badge span:nth-child(2) {
-        font-size: 14px;
-        font-weight: lighter;
-      }
       .badge a {
         color: white;
       }
 
       .badge span:nth-child(2),
       .badge span a {
-          font-weight: lighter;
+        font-weight: lighter;
       }
     </style>
 </head>
@@ -47,10 +44,10 @@
     <span>{{ python_info }}</span>
 </div>
 <div class="badge">
-  <span>type checker:&nbsp;<span>
-  <span>
-    <a target="_blank" rel="noopener noreferrer" href="https://github.com/microsoft/pyright">
-     pyright
-    </a>
-  </span>
+    <span>type checker:&nbsp;</span>
+    <span>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           href="https://github.com/microsoft/pyright">pyright</a>
+    </span>
 </div>

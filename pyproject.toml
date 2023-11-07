@@ -44,7 +44,7 @@ profile = "jinja"
 format_css = true
 # djlint doesn't support array type for ignore yet. Only string is supported.
 # See: https://github.com/Riverside-Healthcare/djLint/issues/776
-ignore="J018,T003,H016,H030,H031"
+ignore="J018,T003,H016,H021,H030,H031"
 
 [tool.djlint.css]
 indent_size=2
