@@ -4,6 +4,7 @@
   {{ super() }}
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <title>Python Type Challenge - {{ name }}</title>
@@ -57,6 +58,11 @@
       font-size: 30px;
       font-weight: bold;
       margin-right: 20px;
+    }
+
+    .challenge-header__exerpt {
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
     }
 
     .challenge-main {
@@ -168,7 +174,7 @@
           <span>Challenge - {{ name }}</span>
           {%include 'components/badge.html' with context %}
         </div>
-        <p class="challenge-header__exerpt" style="margin-top: 0; line-height: 1.5">
+        <p class="challenge-header__exerpt">
         Complete code following the instructions below, so that there are no type errors
         throughout the test code except for those lines followed by a <code># expect-type-error</code> comment.
         You don't need to implement the function, just add type annotations.
@@ -194,23 +200,31 @@
   </div>
 
   <script type="text/javascript">
-    let codeMirrorShared = {
+    let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+    let sharedCodeMirrorOptions = {
       mode: "python",
       lineWrapping: true,
       lineNumbers: true,
       indentUnit: 4,
+      theme: initTheme,
     }
     let code_under_test = {{ code_under_test | tojson }};
     let myCodeMirror = CodeMirror(document.getElementById("editor"), {
       value: code_under_test,
-      ...codeMirrorShared,
+      ...sharedCodeMirrorOptions,
     });
     let test_code = {{ test_code | tojson }};
-    CodeMirror(document.getElementById("tests"), {
+    let testCodeMirror = CodeMirror(document.getElementById("tests"), {
       value: test_code,
       readOnly: "nocursor",
-      ...codeMirrorShared,
+      ...sharedCodeMirrorOptions,
     });
+
+    window.addEventListener('themeSwitch', function (event) {
+      let theme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+      myCodeMirror.setOption("theme", theme);
+      testCodeMirror.setOption("theme", theme);
+    })
 
     let runButton = document.getElementById('run-button')
     runButton.onclick = function () {
