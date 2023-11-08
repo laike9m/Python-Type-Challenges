@@ -14,7 +14,6 @@
     .challenge-container {
       display: flex;
       padding: 1rem 2rem;
-      justify-content: center;
       max-height: 100vh;
       width: max(80vw, 80%);
     }
@@ -35,18 +34,19 @@
 
     .sidebar-container .sidebar-actions {
       display: flex;
-      justify-content: center;
-      width: 100%;
       align-items: center;
+      justify-content: center;
       margin-top: 8px;
       padding-top: 8px;
       border-top: 1px solid hsl(205, 20%, 94%);
+      width: 100%;
     }
 
     /* Challenge Area */
     .challenge-area {
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
 
     .challenge-header__title {
@@ -96,13 +96,12 @@
     .tests-result-container {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       width: 50%;
       gap: 16px;
     }
 
-    .test-result-container #tests {
-      width: 50%;
+    .tests-result-container #result {
+      white-space: pre-line
     }
 
     /* 当视口宽度小于 800px 时，更改布局为单列 */
@@ -127,13 +126,14 @@
       }
 
       .challenge-header__title {
-        justify-content: space-between;
         font-size: 14px;
+        flex-wrap: wrap;
       }
 
-      .challenge-header__title > span:nth-child(1) {
-        margin-right: auto;
+      .challenge-header__title>span:nth-child(1) {
+        width: 100%;
         font-size: 20px;
+        margin-bottom: 8px;
       }
 
       .challenge-main {
@@ -145,10 +145,6 @@
 
       .challenge-main .codemirror-container,
       .challenge-main .tests-result-container {
-        width: 100%;
-      }
-
-      .editor-actions {
         width: 100%;
       }
     }
@@ -209,7 +205,7 @@
         <!-- Test Cases and Result Area -->
         <div class="tests-result-container">
           <div id="tests"></div>
-          <div id="result" style="white-space: pre-line"></div>
+          <div id="result"></div>
         </div>
       </div>
     </div>
