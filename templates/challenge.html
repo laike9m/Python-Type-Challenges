@@ -80,11 +80,17 @@
       width: 50%;
     }
 
-    .codemirror-container #run-button {
+    .editor-actions {
+      display: flex;
+      justify-content: flex-end;
       align-self: flex-end;
-      width: 100px;
+      gap: 8px;
+    }
+
+    .editor-actions button {
       padding: 2px 4px;
       border-radius: 4px;
+            width: 100px;
     }
 
     .tests-result-container {
@@ -141,6 +147,10 @@
       .challenge-main .tests-result-container {
         width: 100%;
       }
+
+      .editor-actions {
+        width: 100%;
+      }
     }
 
     .CodeMirror {
@@ -187,9 +197,14 @@
         <!-- Code Editor Area -->
       <div class="codemirror-container">
         <div id="editor"></div>
-        <button id="run-button">
-          ▶️ Run
-        </button>
+        <div class="editor-actions">
+            <button id="reset-button" class="secondary">
+              Reset 
+            </button>
+            <button id="run-button">
+              ▶️ Run
+            </button>
+          </div>
         </div>
         <!-- Test Cases and Result Area -->
         <div class="tests-result-container">
@@ -256,6 +271,11 @@
           runButton.ariaBusy = false;
           runButton.innerText = rawInnerText;
         });
+    };
+
+    let resetButton = document.getElementById('reset-button')
+    resetButton.onclick = function () {
+      myCodeMirror.setValue(code_under_test);
     };
 
     // If window size is > 800, expand the challenge list.
