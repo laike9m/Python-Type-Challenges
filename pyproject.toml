@@ -18,13 +18,17 @@ license = {text = "MIT"}
 plugins = ["pdm-autoexport"]
 
 [tool.pdm.scripts]
+post_install = "pdm install --plugins; pre-commit install"
 devserver = "flask --app app run --debug"
 activate = "eval $(pdm venv activate)"
 test = "pytest"
+format = "djhtml --tabwidth 2 templates"
 
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=7.4.3",
+    "djhtml>=3.0.6",
+    "pre-commit>=3.5.0",
 ]
 
 [[tool.pdm.autoexport]]
