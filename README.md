@@ -18,24 +18,22 @@ pdm install
 pdm run devserver
 ```
 
-Optionally, the `requirements.txt` file is also provided for you if PDM doesn't exist in your environment.
-
-You can use traditional `pip` to install dependencies and run the project manually:
+Alternatively, you can install dependencies just using `pip`:
 
 ```bash
 pip install -r requirements.txt
-flask --app app run --debug
+flask run
 ```
 
 ## How to Contribute
 
-### Add a new challenge
+- **Add a new challenge**
 
-Adding a new challenge is pretty simple: **you only need to create a new folder, add a `question.py` and a `solution.py`, and that's it**. See [here](docs/Contribute.md) for a detailed guidance.
+  Adding a new challenge is pretty simple: **you only need to create a new folder, add a `question.py` and a `solution.py`, and that's it**. See [here](docs/Contribute.md) for a detailed guidance.
 
-### Making code changes
+- **Making code changes**
 
-If you want to fix a bug or add a new feature, follow the [guidance](docs/Development.md).
+  If you want to fix a bug or add a new feature, follow the [guidance](docs/Development.md).
 
 ## Got Questions?
 
