@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
   <title>Python Type Challenge - {{ name }}</title>
 
   <style type="text/css">
@@ -200,6 +201,7 @@
   </div>
 
   <script type="text/javascript">
+    let confetti = new JSConfetti();
     let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
     let sharedCodeMirrorOptions = {
       mode: "python",
@@ -238,8 +240,14 @@
         method: 'POST',
         body: code
       })
-        .then(response => response.text())
-        .then(result => document.getElementById("result").innerHTML = result)
+        .then(response => response.json())
+        .then(json => {
+          // add confetti effect when passed
+          if (json.passed) {
+            confetti.addConfetti()
+          }
+          document.getElementById("result").innerHTML = json.message;
+        })
         .catch((error) => {
           console.error('Error:', error);
         })
