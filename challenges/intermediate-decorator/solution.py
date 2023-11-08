@@ -9,12 +9,7 @@ from functools import wraps
 T = TypeVar("T", bound=Callable)
 
 def decorator(func: T) -> T:
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-
-    return cast(T, wrapper)
+    return func
 
 ## End of your code ##
 @decorator
