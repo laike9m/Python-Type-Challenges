@@ -11,6 +11,7 @@ T = TypeVar("T", int, str)
 def add(a: T, b: T) -> T:
     return a
 
+# For Python >= 3.12
 def add[T: (str,int)](a: T, b: T) -> T:
     return a
 
