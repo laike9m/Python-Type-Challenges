@@ -29,9 +29,13 @@ flask --app app run --debug
 
 ## How to Contribute
 
-You're more than welcome to contribute new challenges!
+### Add a new challenge
 
-All challenges live under the [`challenges/`](https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges) directory, and it's pretty easy to add a new one: **you only need to create a new folder, add a `question.py` and a `solution.py`, and that's it**. See [here](docs/Contribute.md) for a detailed guidance.
+Adding a new challenge is pretty simple: **you only need to create a new folder, add a `question.py` and a `solution.py`, and that's it**. See [here](docs/Contribute.md) for a detailed guidance.
+
+### Making code changes
+
+If you want to fix a bug or add a new feature, follow the [guidance](docs/Development.md).
 
 ## Got Questions?
 

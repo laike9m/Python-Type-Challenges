@@ -20,7 +20,6 @@ plugins = ["pdm-autoexport"]
 [tool.pdm.scripts]
 post_install = "pdm install --plugins; pre-commit install"
 devserver = "flask --app app run --debug"
-activate = "eval $(pdm venv activate)"
 test = "pytest"
 format = "djhtml --tabwidth 2 templates"
 
