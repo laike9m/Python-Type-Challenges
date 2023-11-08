@@ -6,7 +6,7 @@ Define a decorator that wraps a function and returns a function with the same si
 from typing import Callable, TypeVar
 
 
-def decorator(func: Callable) -> Callable:
+def decorator(func):
     return func
 
 
