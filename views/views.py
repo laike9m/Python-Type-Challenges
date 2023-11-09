@@ -1,5 +1,4 @@
 import platform
-from collections import OrderedDict
 
 from flask import Blueprint, jsonify, redirect, render_template, request
 
@@ -11,24 +10,9 @@ app_views = Blueprint("app_views", __name__)
 @app_views.route("/")
 def index():
     return render_template(
-        "index.html", challenge_names=challenge_manager.challenge_names
+        "index.html",
+        challenges_groupby_level=challenge_manager.challenges_groupby_level,
     )
-
-
-@app_views.route("/challenges", methods=["GET"])
-def get_all_challenges():
-    ordered_level = ["basic", "intermediate", "advanced", "extreme"]
-    data = {}
-
-    for challenge in challenge_manager.challenges.values():
-        data.setdefault(challenge.difficulty, []).append(challenge.name)
-
-    for names in data.values():
-        # sort name by alphabetical order
-        names.sort()
-
-    data = OrderedDict([(level, data[level]) for level in ordered_level])
-    return render_template("challenges.html", data=data)
 
 
 @app_views.route("/challenges/<name>", methods=["GET"])

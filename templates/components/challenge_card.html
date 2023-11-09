@@ -1,0 +1,37 @@
+<style>
+  .challenge-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  .challenge-card .challenge-card__difficulty {
+    margin-bottom: 1rem;
+    border-bottom: 1px dotted hsl(0, 0%, 80%);
+    font-size: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bolder;
+  }
+
+  .challenge-card .challenge-card__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
+
+<div class="challenge-card">
+  <h3 class="challenge-card__difficulty">{{difficulty}}</h3>
+  <div class="challenge-card__list">
+    {% for name in challenge_names %}
+      <a href="/challenges/{{ name }}">{{ name }}</a>
+    {% endfor %}
+  </div>
+</div>

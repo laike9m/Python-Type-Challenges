@@ -5,14 +5,17 @@ import re
 import subprocess
 import tempfile
 import tokenize
+from collections import OrderedDict
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
-from typing import ClassVar, TypeAlias
+from typing import ClassVar, Literal, TypeAlias
 
 ROOT_DIR = Path(__file__).parent.parent
 
 
 ChallengeName: TypeAlias = str
+Difficulty: TypeAlias = Literal["basic", "intermediate", "advanced", "extreme"]
 
 
 @dataclass
@@ -20,7 +23,7 @@ class Challenge:
     CODE_SPLITTER: ClassVar[str] = "\n## End of your code ##\n"
 
     name: ChallengeName
-    difficulty: str
+    difficulty: Difficulty
     code: str
     user_code: str = field(default="", init=False)
     test_code: str = field(default="", init=False)
@@ -34,8 +37,8 @@ class Challenge:
 
 @dataclass(frozen=True, slots=True)
 class ChallengeInfo:
-    name: str
-    difficulty: str
+    name: ChallengeName
+    difficulty: Difficulty
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,6 +55,23 @@ class ChallengeManager:
             ChallengeInfo(name=name, difficulty=c.difficulty)
             for name, c in self.challenges.items()
         ]
+
+    @property
+    @lru_cache
+    def challenges_groupby_level(self) -> dict[Difficulty, list[ChallengeName]]:
+        difficulty_levels = ["basic", "intermediate", "advanced", "extreme"]
+        groups = {}
+
+        for challenge in self.challenge_names:
+            groups.setdefault(challenge.difficulty, []).append(challenge.name)
+
+        # Sort name alphabetically
+        for names in groups.values():
+            names.sort()
+
+        # Use OrderedDict to keep the order of the level
+        groups = OrderedDict([(level, groups[level]) for level in difficulty_levels])
+        return groups
 
     def has_challenge(self, name: str) -> bool:
         return name in self.challenges

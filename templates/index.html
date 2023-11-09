@@ -1,29 +1,70 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block head %}
   {{ super() }}
-
   <title>Python Type Challenges</title>
-  <style type="text/css">
-
-    .container {
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;700&family=Poppins&display=swap"
+        rel="stylesheet">
+  <style>
+    .main-container {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 10px auto;
+      height: 100vh;
+      font-family: 'IBM Plex Mono', monospace;
     }
 
     .title {
       text-align: center;
       margin-bottom: 1.5rem;
+      font-family: inherit;
+    }
+
+    .challenges {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(280px, 1fr));
+      gap: 24px;
+      grid-template-rows: auto;
+      justify-items: center;
+    }
+
+    @media only screen and (max-width: 800px) {
+      .main-container {
+        height: 100%;
+        margin: 4rem auto;
+      }
+
+      .title {
+        width: 80%;
+      }
+
+      .challenges {
+        grid-template-columns: 1fr;
+        width: 80%;
+      }
+    }
+
+
+    @media only screen and (max-width: 1080px) and (min-width: 800px) {
+      .challenges {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 {% endblock %}
 
 {% block content %}
-  <div class="container">
+
+  <div class="main-container">
     <h1 class="title">Welcome to Python Type Challenges!</h1>
-    {% include 'components/challenge_list.html' %}
+    <div class="challenges">
+      {%for difficulty, challenge_names in challenges_groupby_level.items() %}
+        {%include 'components/challenge_card.html' with context %}
+      {%endfor%}
+    </div>
   </div>
-{% endblock%}
+
+{% endblock %}
