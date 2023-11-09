@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
   <title>Python Type Challenge - {{ name }}</title>
 
@@ -78,6 +79,20 @@
       flex-direction: column;
       gap: 16px;
       width: 50%;
+    }
+
+    #editor {
+      position: relative;
+    }
+
+    #playground-link {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px;
+      background: #f3f3f3;
+      border-bottom-left-radius: 5px;
+      z-index: 9999;
     }
 
     .editor-actions {
@@ -192,7 +207,11 @@
       <div class="challenge-main">
         <!-- Code Editor Area -->
         <div class="codemirror-container">
-          <div id="editor"></div>
+          <div id="editor">
+            <a id="playground-link" target="_blank" rel="noopener noreferrer">
+              Open Pyright playground
+            </a>
+          </div>
           <div class="editor-actions">
             <button id="reset-button" class="secondary">
               Reset
@@ -231,6 +250,12 @@
       value: test_code,
       readOnly: "nocursor",
       ...sharedCodeMirrorOptions,
+    });
+
+    let playgroundLink = document.getElementById("playground-link");
+    playgroundLink.addEventListener('click', function(event) {
+      const code = myCodeMirror.getValue();
+      this.href = "https://pyright-play.net/?code=" + LZString.compressToEncodedURIComponent(code);
     });
 
     window.addEventListener('themeSwitch', function (event) {
