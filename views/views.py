@@ -10,7 +10,8 @@ app_views = Blueprint("app_views", __name__)
 @app_views.route("/")
 def index():
     return render_template(
-        "index.html", challenge_names=challenge_manager.challenge_names
+        "index.html",
+        challenges_groupby_level=challenge_manager.challenges_groupby_level,
     )
 
 
