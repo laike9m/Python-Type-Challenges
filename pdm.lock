@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4"
-content_hash = "sha256:7e5afb16a40afe00d97e4f7de7f3130bd3158dcbaf5769a1ee7efc93ef64baa0"
+content_hash = "sha256:bd4efe3b14977c1259580786252e94f4e1e57d116cbe6ca0f0977a4e4d5206eb"
 
 [[package]]
 name = "blinker"
@@ -65,6 +65,16 @@ version = "3.0.6"
 summary = "Django/Jinja template indenter"
 files = [
     {file = "djhtml-3.0.6.tar.gz", hash = "sha256:abfc4d7b4730432ca6a98322fbdf8ae9d6ba254ea57ba3759a10ecb293bc57de"},
+]
+
+[[package]]
+name = "execnet"
+version = "2.0.2"
+requires_python = ">=3.7"
+summary = "execnet: rapid multi-Python deployment"
+files = [
+    {file = "execnet-2.0.2-py3-none-any.whl", hash = "sha256:88256416ae766bc9e8895c76a87928c0012183da3cc4fc18016e6f050e025f41"},
+    {file = "execnet-2.0.2.tar.gz", hash = "sha256:cc59bc4423742fd71ad227122eb0dd44db51efb3dc4095b45ac9a08c770096af"},
 ]
 
 [[package]]
@@ -243,6 +253,20 @@ dependencies = [
 files = [
     {file = "pytest-7.4.3-py3-none-any.whl", hash = "sha256:0d009c083ea859a71b76adf7c1d502e4bc170b80a8ef002da5806527b9591fac"},
     {file = "pytest-7.4.3.tar.gz", hash = "sha256:d989d136982de4e3b29dabcc838ad581c64e8ed52c11fbe86ddebd9da0818cd5"},
+]
+
+[[package]]
+name = "pytest-xdist"
+version = "3.3.1"
+requires_python = ">=3.7"
+summary = "pytest xdist plugin for distributed testing, most importantly across multiple CPUs"
+dependencies = [
+    "execnet>=1.1",
+    "pytest>=6.2.0",
+]
+files = [
+    {file = "pytest-xdist-3.3.1.tar.gz", hash = "sha256:d5ee0520eb1b7bcca50a60a518ab7a7707992812c578198f8b44fdfac78e8c93"},
+    {file = "pytest_xdist-3.3.1-py3-none-any.whl", hash = "sha256:ff9daa7793569e6a68544850fd3927cd257cc03a7ef76c95e86915355e82b5f2"},
 ]
 
 [[package]]
