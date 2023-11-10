@@ -19,7 +19,7 @@ def foo(value: Any, flag: Literal[2]) -> str:
 
 
 @overload
-def foo(value: Any, flag: Literal[3]) -> list:
+def foo(value: Any, flag: Literal[3]) -> list[Any]:
     ...
 
 
@@ -28,7 +28,7 @@ def foo(value: T, flag: Any) -> T:
     ...
 
 
-def foo(value, flag) -> Any:
+def foo(value: Any, flag: Any) -> Any:
     ...
 
 
