@@ -6,20 +6,17 @@ and return a wrapper function with the same signature as the constructor of Foo,
 and function decorated by `constructor_parameter` can be called with an instance of Foo.
 """
 
+def constructor_parameter():
+    ...
 
+
+## End of your code ##
 class Foo:
     a: int
     b: str
 
     def __init__(self, a: int, b: str) -> None:
         ...
-
-
-def constructor_parameter():
-    ...
-
-
-## End of your code ##
 
 
 @constructor_parameter(Foo)

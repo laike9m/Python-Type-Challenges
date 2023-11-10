@@ -12,3 +12,4 @@ class Foo:
 ## End of your code ##
 Foo.bar = 1
 Foo.bar = "1"  # expect-type-error
+Foo().bar = 1  # expect-type-error
