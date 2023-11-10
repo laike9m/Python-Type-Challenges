@@ -27,7 +27,7 @@ def foo(value: Foo[T]) -> Foo[T]:
     ...
 
 
-def foo(value: Foo) -> Any:
+def foo(value: Foo[Any]) -> Any:
     ...
 
 
