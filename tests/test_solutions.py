@@ -13,4 +13,4 @@ def test_solution_valid(solution_file: Path):
     with solution_file.open() as f:
         code = f.read()
     result = ChallengeManager._type_check_with_pyright(code)
-    assert result.passed, result.stdout
+    assert result.passed, result.message

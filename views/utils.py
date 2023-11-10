@@ -53,8 +53,7 @@ class ChallengeInfo:
 
 @dataclass(frozen=True, slots=True)
 class TypeCheckResult:
-    stdout: str
-    stderr: str
+    message: str
     passed: bool
 
 
@@ -174,9 +173,8 @@ class ChallengeManager:
             error_lines.append("\nAll tests passed")
         else:
             error_lines.append(f"\nFound {len(error_lines)} errors")
-        return TypeCheckResult(
-            stdout="\n".join(error_lines), stderr=raw_result[1], passed=passed
-        )
+
+        return TypeCheckResult(message="\n".join(error_lines), passed=passed)
 
 
 challenge_manager = ChallengeManager()

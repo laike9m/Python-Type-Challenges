@@ -16,7 +16,7 @@ def index():
 
 
 @app_views.route("/challenges/<name>", methods=["GET"])
-def get_challenge(name):
+def get_challenge(name: str):
     if not challenge_manager.has_challenge(name):
         return redirect("/")
 
@@ -32,7 +32,7 @@ def get_challenge(name):
 
 
 @app_views.route("/run/<name>", methods=["POST"])
-def run_challenge(name):
+def run_challenge(name: str):
     code = request.get_data(as_text=True)
 
     result = challenge_manager.run_challenge(user_code=code, name=name)
@@ -41,5 +41,5 @@ def run_challenge(name):
         return jsonify({"passed": True, "message": message})
 
     error_message = "<h2>❌ Challenge failed 😢</h2>"
-    error_message += f"<p>Error:\n{result.stdout}{result.stderr}</p>"
+    error_message += f"<p>Error:\n{result.message}</p>"
     return jsonify({"passed": False, "message": error_message})
