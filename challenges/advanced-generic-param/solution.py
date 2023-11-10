@@ -15,8 +15,10 @@ class Box(Generic[T]):
     def unwrap(self):
         # This should return the wrapped type
         return self.value
+
+
 ## End of your code ##
 from typing import assert_type
 
-assert_type(w.unwrap(), str)
+assert_type(Box("1").unwrap(), str)
 assert_type(Box(1).unwrap(), int)
