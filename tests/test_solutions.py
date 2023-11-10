@@ -12,5 +12,5 @@ ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution.py"))
 def test_solution_valid(solution_file: Path):
     with solution_file.open() as f:
         code = f.read()
-    result = ChallengeManager._type_check_with_pyright(code)
+    result = ChallengeManager._type_check_with_pyright(user_code="", test_code=code)
     assert result.passed, result.message

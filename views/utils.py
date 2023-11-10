@@ -88,8 +88,7 @@ class ChallengeManager:
 
     def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(name)
-        code = f"{user_code}\n{challenge.test_code}"
-        return self._type_check_with_pyright(code)
+        return self._type_check_with_pyright(user_code, challenge.test_code)
 
     @staticmethod
     def _load_challenges() -> dict[ChallengeName, Challenge]:
@@ -115,7 +114,10 @@ class ChallengeManager:
     PYRIGHT_MESSAGE_REGEX = r"^(?:.+?):(\d+):[\s\-\d]+(error:.+)$"
 
     @classmethod
-    def _type_check_with_pyright(cls, code: str) -> TypeCheckResult:
+    def _type_check_with_pyright(
+        cls, user_code: str, test_code: str
+    ) -> TypeCheckResult:
+        code = f"{user_code}{test_code}"
         buffer = io.StringIO(code)
 
         # This produces a stream of TokenInfos, example:
@@ -148,6 +150,9 @@ class ChallengeManager:
             ).stdout
         error_lines: list[str] = []
 
+        # Substract lineno in merged code by lineno_delta, so that the lineno in
+        # error message matches those in the test code editor. Fixed #20.
+        lineno_delta = len(user_code.splitlines())
         for line in raw_result.splitlines():
             m = re.match(cls.PYRIGHT_MESSAGE_REGEX, line)
             if m is None:
@@ -158,14 +163,17 @@ class ChallengeManager:
                 # If it is commented with # expect-type-error, let it pass.
                 error_line_seen_in_err_msg[line_number] = True
                 continue
-            error_lines.append(f"{line_number}:{message}")
+            # Error could be thrown from user code too, in which case delta shouldn't be applied.
+            error_lines.append(
+                f"{line_number if line_number <= lineno_delta else line_number - lineno_delta}:{message}"
+            )
 
         # If there are any lines that are expected to fail but not reported by pyright,
         # they should be considered as errors.
         for line_number, seen in error_line_seen_in_err_msg.items():
             if not seen:
                 error_lines.append(
-                    f"{line_number}: error: Expected type error but instead passed"
+                    f"{line_number - lineno_delta}: error: Expected type error but instead passed"
                 )
 
         passed = len(error_lines) == 0

@@ -11,7 +11,7 @@ e: list[str] = [  # expect-type-error
     i for i in range(10)
 ]
 """
-    result = ChallengeManager._type_check_with_pyright(code)
+    result = ChallengeManager._type_check_with_pyright(user_code="", test_code=code)
     assert result.passed is False
     assert result.message == (
         '4:error: Expression of type "Literal[4]" cannot be assigned to declared type "str"\n'
