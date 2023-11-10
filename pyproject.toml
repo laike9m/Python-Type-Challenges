@@ -38,3 +38,4 @@ without-hashes = true
 venvPath = "."
 venv = ".venv"
 pythonVersion = "3.12"
+reportUnknownParameterType = "error"
