@@ -18,5 +18,7 @@ class Box:
 ## End of your code ##
 from typing import assert_type
 
-assert_type(w.unwrap(), str)
+assert_type(Box("1").unwrap(), str)
 assert_type(Box(1).unwrap(), int)
+assert_type(Box("1").unwrap(), int)  # expect-type-error
+assert_type(Box(1).unwrap(), str)  # expect-type-error

@@ -8,6 +8,7 @@ from typing import TypeVar, Generic
 
 T = TypeVar("T")
 
+
 class Box(Generic[T]):
     def __init__(self, value: T):
         self.value = value
@@ -22,3 +23,5 @@ from typing import assert_type
 
 assert_type(Box("1").unwrap(), str)
 assert_type(Box(1).unwrap(), int)
+assert_type(Box("1").unwrap(), int)  # expect-type-error
+assert_type(Box(1).unwrap(), str)  # expect-type-error)
