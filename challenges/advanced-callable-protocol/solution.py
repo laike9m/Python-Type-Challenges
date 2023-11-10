@@ -9,7 +9,7 @@ from typing import Protocol
 
 
 class SingleStringInput(Protocol):
-    def __call__(self, name: str)->None:
+    def __call__(self, name: str) -> None:
         ...
 
 ## End of your code ##
