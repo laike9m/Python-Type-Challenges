@@ -6,13 +6,16 @@ The function `add` accepts two parameters of the same type and returns the same 
 
 from typing import TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
+
+
 def add(a: T, b: T) -> T:
     return a
 
+
 # For Python >= 3.12
-def add[T](a: T, b: T) -> T:
-    return a
+# def add[T](a: T, b: T) -> T:
+#     return a
 
 ## End of your code ##
 from typing import List, assert_type

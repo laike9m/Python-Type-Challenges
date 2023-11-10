@@ -13,5 +13,5 @@ def foo(direction):
 foo("left")
 foo("right")
 
-a = "left"
+a = "".join(["l", "e", "f", "t"])
 foo(a)  # expect-type-error
