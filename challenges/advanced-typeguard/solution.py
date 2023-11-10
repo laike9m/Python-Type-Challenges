@@ -20,4 +20,4 @@ a: str | None = "hello"
 if is_string(a):
     assert_type(a, str)
 else:
-    assert_type(a, type(None))
+    assert_type(a, type(None))  # expect-type-error

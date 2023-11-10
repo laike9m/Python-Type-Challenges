@@ -8,7 +8,7 @@ TODO:
 """
 
 
-def process(response):
+def process(response: int | bytes | None) -> str | None | tuple[int, str]:
     ...
 
 
