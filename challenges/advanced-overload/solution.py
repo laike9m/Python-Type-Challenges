@@ -13,7 +13,7 @@ def foo()->int:
 def foo(value: Any)->str:
     ...
 
-def foo(value: Union[None, Any]=None)-> Union[int, str]:
+def foo(value):
     ...
 
 
