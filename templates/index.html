@@ -61,9 +61,9 @@
   <div class="main-container">
     <h1 class="title">Welcome to Python Type Challenges!</h1>
     <div class="challenges">
-      {%for difficulty, challenge_names in challenges_groupby_level.items() %}
-        {%include 'components/challenge_card.html' with context %}
-      {%endfor%}
+      {% for difficulty, challenge_names in challenges_groupby_level.items() %}
+        {% include 'components/challenge_card.html' with context %}
+      {% endfor%}
     </div>
   </div>
 
