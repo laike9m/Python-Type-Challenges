@@ -9,7 +9,7 @@ Basically, it should work like `isinstance(value, str)` from the perspective of 
 from typing import Any, TypeGuard
 
 
-def is_string(value: Any)->TypeGuard[str]:
+def is_string(value: Any) -> TypeGuard[str]:
     return isinstance(value, str)
 
 
