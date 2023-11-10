@@ -7,15 +7,25 @@ import tempfile
 import tokenize
 from collections import OrderedDict
 from dataclasses import dataclass, field
+from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
-from typing import ClassVar, Literal, TypeAlias
+from typing import ClassVar, Literal, TypeAlias, get_args, cast
 
 ROOT_DIR = Path(__file__).parent.parent
 
 
 ChallengeName: TypeAlias = str
-Difficulty: TypeAlias = Literal["basic", "intermediate", "advanced", "extreme"]
+
+
+class Level(StrEnum):
+    BASIC = "basic"
+    INTERMEDIATE = "intermediate"
+    ADVANCED = "advanced"
+    EXTREME = "extreme"
+
+
+LEVELs = [l.value for l in Level]
 
 
 @dataclass
@@ -23,7 +33,7 @@ class Challenge:
     CODE_SPLITTER: ClassVar[str] = "\n## End of your code ##\n"
 
     name: ChallengeName
-    difficulty: Difficulty
+    level: Level
     code: str
     user_code: str = field(default="", init=False)
     test_code: str = field(default="", init=False)
@@ -38,7 +48,7 @@ class Challenge:
 @dataclass(frozen=True, slots=True)
 class ChallengeInfo:
     name: ChallengeName
-    difficulty: Difficulty
+    level: Level
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,26 +62,24 @@ class ChallengeManager:
     def __init__(self):
         self.challenges = self._load_challenges()
         self.challenge_names = [
-            ChallengeInfo(name=name, difficulty=c.difficulty)
+            ChallengeInfo(name=name, level=c.level)
             for name, c in self.challenges.items()
         ]
 
     @property
     @lru_cache
-    def challenges_groupby_level(self) -> dict[Difficulty, list[ChallengeName]]:
-        difficulty_levels = ["basic", "intermediate", "advanced", "extreme"]
+    def challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
         groups = {}
 
         for challenge in self.challenge_names:
-            groups.setdefault(challenge.difficulty, []).append(challenge.name)
+            groups.setdefault(challenge.level, []).append(challenge.name)
 
         # Sort name alphabetically
         for names in groups.values():
             names.sort()
 
         # Use OrderedDict to keep the order of the level
-        groups = OrderedDict([(level, groups[level]) for level in difficulty_levels])
-        return groups
+        return OrderedDict([(level, groups[level]) for level in LEVELs])
 
     def has_challenge(self, name: str) -> bool:
         return name in self.challenges
@@ -89,12 +97,12 @@ class ChallengeManager:
         challenges = {}
         for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
             dir_name = os.path.basename(os.path.dirname(filename))
-            difficulty, challenge_name = dir_name.split("-", maxsplit=1)
+            level, challenge_name = dir_name.split("-", maxsplit=1)
             with open(filename, "r") as file:
                 code = file.read()
             challenges[challenge_name] = Challenge(
                 name=challenge_name,
-                difficulty=difficulty,
+                level=Level(level),
                 code=code,
             )
 

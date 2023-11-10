@@ -9,7 +9,7 @@
     width: 100%;
   }
 
-  .challenge-card .challenge-card__difficulty {
+  .challenge-card .challenge-card__level {
     margin-bottom: 1rem;
     border-bottom: 1px dotted hsl(0, 0%, 80%);
     font-size: 32px;
@@ -28,7 +28,7 @@
 </style>
 
 <div class="challenge-card">
-  <h3 class="challenge-card__difficulty">{{difficulty}}</h3>
+  <h3 class="challenge-card__level">{{level}}</h3>
   <div class="challenge-card__list">
     {% for name in challenge_names %}
       <a href="/challenges/{{ name }}">{{ name }}</a>

@@ -24,7 +24,7 @@
   <summary>Challenges</summary>
   <ol>
     <strong>Basic</strong>
-    {% for challenge in challenge_names | selectattr("difficulty", "equalto",
+    {% for challenge in challenge_names | selectattr("level", "equalto",
     "basic") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
@@ -32,7 +32,7 @@
     <br />
 
     <strong>Intermediate</strong>
-    {% for challenge in challenge_names | selectattr("difficulty", "equalto",
+    {% for challenge in challenge_names | selectattr("level", "equalto",
     "intermediate") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
@@ -40,7 +40,7 @@
     <br />
 
     <strong>Advanced</strong>
-    {% for challenge in challenge_names | selectattr("difficulty", "equalto",
+    {% for challenge in challenge_names | selectattr("level", "equalto",
     "advanced") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
@@ -48,7 +48,7 @@
     <br />
 
     <b>Extreme</b>
-    {% for challenge in challenge_names | selectattr("difficulty", "equalto",
+    {% for challenge in challenge_names | selectattr("level", "equalto",
     "extreme") %}
     <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
     {% endfor %}
