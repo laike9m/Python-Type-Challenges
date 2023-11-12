@@ -35,7 +35,7 @@
 - Start a development server
 
   ```
-  pdm devserver
+  pdm dev
   ```
 
   Then visit http://127.0.0.1:5000/ to access the app in your local browser.

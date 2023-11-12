@@ -18,7 +18,7 @@ license = {text = "MIT"}
 plugins = ["pdm-autoexport"]
 
 [tool.pdm.scripts]
-devserver = "flask --app app run --debug"
+dev = "flask --app app run --debug"
 test = "pytest -n auto"
 format = "djhtml --tabwidth 2 templates"
 
