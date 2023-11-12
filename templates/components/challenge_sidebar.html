@@ -1,0 +1,12 @@
+<nav>
+  {% for level, challenge_names in challenges_groupby_level.items() %}
+    <ul>
+      <li>
+        <h5>{{ level }}</h5>
+      </li>
+      {% for name in challenge_names %}
+        <li><a href="/challenges/{{ name }}">{{ name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</nav>
