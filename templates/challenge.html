@@ -14,9 +14,7 @@
   <style type="text/css">
     .challenge-container {
       display: flex;
-      padding: 1rem 2rem;
       max-height: 100vh;
-      width: max(95vw, 95%);
     }
 
     /* Sidebar Area */
@@ -24,13 +22,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-right: 2rem;
+      max-width: fit-content;
     }
 
     .sidebar-container .sidebar-challenge-list {
       overflow-y: auto;
-      max-width: fit-content;
-      min-width: 100px;
+      overflow-x: hidden;
     }
 
     .sidebar-container .sidebar-actions {
@@ -47,6 +44,7 @@
     .challenge-area {
       display: flex;
       flex-direction: column;
+      margin: 0 2rem;
       width: 100%;
     }
 
@@ -187,12 +185,15 @@
 {% endblock %}
 
 {% block content %}
-  <div class="challenge-container container-fluid">
+  <div class="challenge-container">
     <!-- Left/Top Sidebar -->
     <div class="sidebar-container">
-      <div class="sidebar-challenge-list">
-        {% include 'components/challenge_list.html' %}
-      </div>
+        <!-- <div class="sidebar-challenge-list">
+            {% include 'components/challenge_list.html' %}
+        </div> -->
+      <aside class="sidebar-challenge-list">
+        {% include 'components/challenge_sidebar.html' with context %}
+      </aside>
       <div class="sidebar-actions">
         {% include 'components/darkmode.html' %}
       </div>
