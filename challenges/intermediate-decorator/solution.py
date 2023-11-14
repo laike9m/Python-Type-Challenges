@@ -8,8 +8,10 @@ from functools import wraps
 
 T = TypeVar("T", bound=Callable)
 
+
 def decorator(func: T) -> T:
     return func
+
 
 ## End of your code ##
 @decorator

@@ -20,7 +20,9 @@ plugins = ["pdm-autoexport"]
 [tool.pdm.scripts]
 dev = "flask --app app run --debug"
 test = "pytest -n auto"
-format = "djhtml --tabwidth 2 templates"
+run_black = "black ."
+djhtml = "djhtml --tabwidth 2 templates"
+format = {composite = ["run_black", "djhtml"]}
 
 [tool.pdm.dev-dependencies]
 dev = [
@@ -28,6 +30,7 @@ dev = [
     "djhtml>=3.0.6",
     "pre-commit>=3.5.0",
     "pytest-xdist>=3.3.1",
+    "black>=23.11.0",
 ]
 
 [[tool.pdm.autoexport]]

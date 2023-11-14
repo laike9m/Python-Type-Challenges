@@ -10,6 +10,7 @@ class SupportsQuack(Protocol):
     def quack(self) -> None:
         ...
 
+
 ## End of your code ##
 class Duck:
     def quack(self) -> None:

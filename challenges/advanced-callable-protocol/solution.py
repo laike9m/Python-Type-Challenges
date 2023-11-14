@@ -12,6 +12,7 @@ class SingleStringInput(Protocol):
     def __call__(self, name: str) -> None:
         ...
 
+
 ## End of your code ##
 def accept_single_string_input(func: SingleStringInput) -> None:
     func(name="name")
