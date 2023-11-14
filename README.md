@@ -15,7 +15,7 @@ This project use [PDM](https://pdm.fming.dev/latest/), a modern Python package a
 ```bash
 pdm plugin add pdm-autoexport
 pdm install
-pdm dev
+pdm dev  # This will run a local Flask server
 ```
 
 Alternatively, you can install dependencies just using `pip`:
