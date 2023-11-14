@@ -3,10 +3,10 @@ TODO:
 
 Define a `Tree` type. `Tree` is a dictionary, whose keys are string, values are also `Tree`.
 """
-from typing import Dict, TypeAlias
+from typing import Dict
 
 
-Tree : TypeAlias = Dict[str, 'Tree']
+type Tree = Dict[str, 'Tree']
 
 
 ## End of your code ##
