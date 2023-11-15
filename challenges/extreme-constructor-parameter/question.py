@@ -31,7 +31,7 @@ res[0].b.upper()
 
 
 @constructor_parameter(Foo)
-def func_fail(foo: Foo) -> list:
+def func_fail(foo: Foo) -> list[Any]:
     ...
 
 
