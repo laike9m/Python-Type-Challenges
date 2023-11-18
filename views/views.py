@@ -24,7 +24,7 @@ def get_challenge(name: str):
     return render_template(
         "challenge.html",
         name=name,
-        challenge_names=challenge_manager.challenge_names,
+        challenges_groupby_level=challenge_manager.challenges_groupby_level,
         code_under_test=challenge.user_code,
         test_code=challenge.test_code,
         python_info=platform.python_version(),

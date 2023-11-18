@@ -5,17 +5,16 @@ import re
 import subprocess
 import tempfile
 import tokenize
-from collections import OrderedDict
 from dataclasses import dataclass, field
 from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
-from typing import ClassVar, Literal, TypeAlias, get_args, cast
+from typing import ClassVar
 
 ROOT_DIR = Path(__file__).parent.parent
 
 
-ChallengeName: TypeAlias = str
+type ChallengeName = str
 
 
 class Level(StrEnum):
@@ -23,9 +22,6 @@ class Level(StrEnum):
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXTREME = "extreme"
-
-
-LEVELs = [l.value for l in Level]
 
 
 @dataclass
@@ -59,26 +55,21 @@ class TypeCheckResult:
 
 class ChallengeManager:
     def __init__(self):
-        self.challenges = self._load_challenges()
-        self.challenge_names = [
-            ChallengeInfo(name=name, level=c.level)
-            for name, c in self.challenges.items()
-        ]
+        self.challenges: dict[ChallengeName, Challenge] = self._load_challenges()
+        self.challenges_groupby_level = self.get_challenges_groupby_level()
 
-    @property
-    @lru_cache
-    def challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
-        groups = {}
+    def get_challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
+        groups: dict[str, list[ChallengeName]] = {}
 
-        for challenge in self.challenge_names:
+        for challenge in self.challenges.values():
             groups.setdefault(challenge.level, []).append(challenge.name)
 
-        # Sort name alphabetically
-        for names in groups.values():
-            names.sort()
+        # Sort challenge by name alphabetically.
+        for challenge_names in groups.values():
+            challenge_names.sort()
 
-        # Use OrderedDict to keep the order of the level
-        return OrderedDict([(level, groups[level]) for level in LEVELs])
+        # Make sure groups are ordered by level (from easy to hard)
+        return {level: groups[level] for level in Level}
 
     def has_challenge(self, name: str) -> bool:
         return name in self.challenges
