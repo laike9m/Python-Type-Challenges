@@ -8,7 +8,7 @@ from typing import Dict, TypeAlias
 # For Python < 3.12
 # Tree : TypeAlias = Dict[str, 'Tree']
 
-type Tree = Dict[str, 'Tree']
+type Tree = Dict[str, "Tree"]
 
 
 ## End of your code ##

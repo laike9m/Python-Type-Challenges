@@ -12,6 +12,7 @@ from typing import Callable, TypeVar
 # def decorator(func: T) -> T:
 #     return func
 
+
 # Python >= 3.12
 def decorator[T: Callable](func: T) -> T:
     return func
