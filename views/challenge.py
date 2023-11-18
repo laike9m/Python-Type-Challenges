@@ -8,12 +8,9 @@ import tokenize
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
-from typing import ClassVar
+from typing import ClassVar, TypeAlias
 
 ROOT_DIR = Path(__file__).parent.parent
-
-
-type ChallengeName = str
 
 
 class Level(StrEnum):
@@ -21,6 +18,10 @@ class Level(StrEnum):
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXTREME = "extreme"
+
+
+ChallengeName: TypeAlias = str
+ChallengeKey: TypeAlias = tuple[Level, ChallengeName]
 
 
 @dataclass
@@ -48,28 +49,29 @@ class TypeCheckResult:
 
 class ChallengeManager:
     def __init__(self):
-        self.challenges: dict[ChallengeName, Challenge] = self._load_challenges()
+        self.challenges: dict[ChallengeKey, Challenge] = self._load_challenges()
+        self.challenges_groupby_level: dict[Level, list[ChallengeName]]
         self.challenges_groupby_level = self._get_challenges_groupby_level()
 
-    def has_challenge(self, name: str) -> bool:
-        return name in self.challenges
+    def has_challenge(self, key: ChallengeKey) -> bool:
+        return key in self.challenges
 
-    def get_challenge(self, name: str) -> Challenge:
-        return self.challenges[name]
+    def get_challenge(self, key: ChallengeKey) -> Challenge:
+        return self.challenges[key]
 
-    def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
-        challenge = self.get_challenge(name)
+    def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
+        challenge = self.get_challenge(key)
         return self._type_check_with_pyright(user_code, challenge.test_code)
 
     @staticmethod
-    def _load_challenges() -> dict[ChallengeName, Challenge]:
+    def _load_challenges() -> dict[ChallengeKey, Challenge]:
         challenges = {}
         for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
             dir_name = os.path.basename(os.path.dirname(filename))
             level, challenge_name = dir_name.split("-", maxsplit=1)
             with open(filename, "r") as file:
                 code = file.read()
-            challenges[challenge_name] = Challenge(
+            challenges[(level, challenge_name)] = Challenge(
                 name=challenge_name,
                 level=Level(level),
                 code=code,

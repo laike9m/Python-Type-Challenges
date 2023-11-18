@@ -282,7 +282,7 @@
       runButton.innerText = ""
 
       let code = myCodeMirror.getValue();
-      fetch('/run/{{name}}', {
+      fetch('/run/{{level}}/{{name}}', {
         method: 'POST',
         body: code
       })
