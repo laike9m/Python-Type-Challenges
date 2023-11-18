@@ -7,7 +7,6 @@ import tempfile
 import tokenize
 from dataclasses import dataclass, field
 from enum import StrEnum
-from functools import lru_cache
 from pathlib import Path
 from typing import ClassVar
 
@@ -42,12 +41,6 @@ class Challenge:
 
 
 @dataclass(frozen=True, slots=True)
-class ChallengeInfo:
-    name: ChallengeName
-    level: Level
-
-
-@dataclass(frozen=True, slots=True)
 class TypeCheckResult:
     message: str
     passed: bool
@@ -56,20 +49,7 @@ class TypeCheckResult:
 class ChallengeManager:
     def __init__(self):
         self.challenges: dict[ChallengeName, Challenge] = self._load_challenges()
-        self.challenges_groupby_level = self.get_challenges_groupby_level()
-
-    def get_challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
-        groups: dict[str, list[ChallengeName]] = {}
-
-        for challenge in self.challenges.values():
-            groups.setdefault(challenge.level, []).append(challenge.name)
-
-        # Sort challenge by name alphabetically.
-        for challenge_names in groups.values():
-            challenge_names.sort()
-
-        # Make sure groups are ordered by level (from easy to hard)
-        return {level: groups[level] for level in Level}
+        self.challenges_groupby_level = self._get_challenges_groupby_level()
 
     def has_challenge(self, name: str) -> bool:
         return name in self.challenges
@@ -96,6 +76,19 @@ class ChallengeManager:
             )
 
         return challenges
+
+    def _get_challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
+        groups: dict[str, list[ChallengeName]] = {}
+
+        for challenge in self.challenges.values():
+            groups.setdefault(challenge.level, []).append(challenge.name)
+
+        # Sort challenge by name alphabetically.
+        for challenge_names in groups.values():
+            challenge_names.sort()
+
+        # Make sure groups are ordered by level (from easy to hard)
+        return {level: groups[level] for level in Level}
 
     EXPECT_ERROR_COMMENT = "expect-type-error"
 
