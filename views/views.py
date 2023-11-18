@@ -2,7 +2,7 @@ import platform
 
 from flask import Blueprint, jsonify, redirect, render_template, request
 
-from .utils import challenge_manager
+from .challenge import challenge_manager
 
 app_views = Blueprint("app_views", __name__)
 
