@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from views.utils import ChallengeManager
+from views.challenge import ChallengeManager
 
 CHALLENGES_DIR = Path(__file__).parent.parent / "challenges"
 ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution.py"))

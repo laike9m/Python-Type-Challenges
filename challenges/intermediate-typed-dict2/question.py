@@ -17,6 +17,6 @@ a: Point2D = {"x": 1, "y": 2, "label": "good"}
 a: Point2D = {"x": 1, "z": 2, "label": "good"}  # expect-type-error
 a: Point2D = {(1,): 1, "y": 2, "label": "good"}  # expect-type-error
 a: Point2D = {"x": 1, "y": "2", "label": "good"}  # expect-type-error
-b: Point2D = {"z": 3, "label": "bad"}  # expect-type-erro
+b: Point2D = {"z": 3, "label": "bad"}  # expect-type-error
 assert Point2D(x=1, y=2) == dict(x=1, y=2)
 assert Point2D(x=1, y=2, label="first") == dict(x=1, y=2, label="first")
