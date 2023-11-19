@@ -1,6 +1,12 @@
 import platform
 
-from flask import Blueprint, jsonify, redirect, render_template, request
+from flask import (
+    Blueprint,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+)
 
 from .challenge import challenge_manager, Level
 
