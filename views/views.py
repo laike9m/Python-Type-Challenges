@@ -15,7 +15,7 @@ def index():
     )
 
 
-@app_views.route("/challenges/<level>/<name>", methods=["GET"])
+@app_views.route("/<level>/<name>", methods=["GET"])
 def get_challenge(level: str, name: str):
     challenge_key = (Level(level), name)
     if not challenge_manager.has_challenge(challenge_key):

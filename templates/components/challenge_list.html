@@ -28,22 +28,22 @@
   <ol>
     <strong>Basic</strong>
     {% for challenge in challenges_groupby_level["basic"] %}
-      <li><a href="/challenges/basic/{{ challenge }}">{{ challenge }}</a></li>
+      <li><a href="/basic/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
 
     <strong>Intermediate</strong>
     {% for challenge in challenges_groupby_level["intermediate"] %}
-      <li><a href="/challenges/intermediate/{{ challenge }}">{{ challenge }}</a></li>
+      <li><a href="/intermediate/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
 
     <strong>Advanced</strong>
     {% for challenge in challenges_groupby_level["advanced"] %}
-      <li><a href="/challenges/advanced/{{ challenge }}">{{ challenge }}</a></li>
+      <li><a href="/advanced/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
 
     <b>Extreme</b>
     {% for challenge in challenges_groupby_level["extreme"] %}
-      <li><a href="/challenges/extreme/{{ challenge }}">{{ challenge }}</a></li>
+      <li><a href="/extreme/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
   </ol>
 </details>

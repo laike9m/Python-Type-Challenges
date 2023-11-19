@@ -31,7 +31,7 @@
   <h3 class="challenge-card__level">{{level}}</h3>
   <div class="challenge-card__list">
     {% for name in challenge_names %}
-      <a href="/challenges/{{ level }}/{{ name }}">{{ name }}</a>
+      <a href="/{{ level }}/{{ name }}">{{ name }}</a>
     {% endfor %}
   </div>
 </div>
