@@ -21,7 +21,12 @@ class Level(StrEnum):
 
 
 ChallengeName: TypeAlias = str
-ChallengeKey: TypeAlias = tuple[Level, ChallengeName]
+
+
+@dataclass(frozen=True)
+class ChallengeKey:
+    level: Level
+    name: ChallengeName
 
 
 @dataclass
@@ -71,7 +76,7 @@ class ChallengeManager:
             level, challenge_name = dir_name.split("-", maxsplit=1)
             with open(filename, "r") as file:
                 code = file.read()
-            challenges[(level, challenge_name)] = Challenge(
+            challenges[ChallengeKey(Level(level), challenge_name)] = Challenge(
                 name=challenge_name,
                 level=Level(level),
                 code=code,

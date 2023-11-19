@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4"
-content_hash = "sha256:bacd7921ed40ba45065685df35bf985762e8fd6ecd458ef57be7d3f3ce41040c"
+content_hash = "sha256:bcc354f41e6805de5045f636d22aba999935a6db76cd11bdf0b8a9b76323c034"
 
 [[package]]
 name = "black"
@@ -119,6 +119,20 @@ dependencies = [
 files = [
     {file = "flask-3.0.0-py3-none-any.whl", hash = "sha256:21128f47e4e3b9d597a3e8521a329bf56909b690fcc3fa3e477725aa81367638"},
     {file = "flask-3.0.0.tar.gz", hash = "sha256:cfadcdb638b609361d29ec22360d6070a77d7463dcb3ab08d2c2f2f168845f58"},
+]
+
+[[package]]
+name = "flask-sitemapper"
+version = "1.7.0"
+requires_python = ">=3.8,<4.0"
+summary = "Flask extension for generating XML sitemaps"
+dependencies = [
+    "flask>=2.2.2",
+    "jinja2<4.0.0,>=3.1.2",
+]
+files = [
+    {file = "flask_sitemapper-1.7.0-py3-none-any.whl", hash = "sha256:289d2d75cf958dbae49cb4b06957d898d0edec3f405ae5c6160cb6985bad4a56"},
+    {file = "flask_sitemapper-1.7.0.tar.gz", hash = "sha256:0dc0bb4ccff30adc2474c14eb7b395822f02812d3541325e9f62b61b13389614"},
 ]
 
 [[package]]
