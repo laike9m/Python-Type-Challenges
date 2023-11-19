@@ -1,6 +1,6 @@
 # Python Type Challenges
 
-Learn Python 🐍 typing (type hints) by completing online challenges.
+Master Python typing (type hints) with interactive online exercises!
 
 🌟🌟 Click **[HERE](https://python-type-challenges.zeabur.app)** to start 🌟🌟
 

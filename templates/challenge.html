@@ -3,13 +3,14 @@
 {% block head %}
   {{ super() }}
 
+  <title>Python Type Challenge - Level: {{level}}, Topic: {{name}}</title>
+  <meta name="description" content="Join Python Type Challenges to learn and master Python typing (type hints) with our comprehensive and interactive exercises.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
   <script src="{{ url_for('static', filename='js/js-confetti.browser.js')}}"></script>
-  <title>Python Type Challenge - {{ name }}</title>
 
   <style type="text/css">
     .challenge-container {
