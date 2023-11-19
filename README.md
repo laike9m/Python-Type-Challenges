@@ -44,3 +44,5 @@ If you met issues or want to suggest a new feature/improvement, feel free to [op
 ## Credits
 
 This project is inspired [Type Exercise in Rust](https://github.com/skyzh/type-exercise-in-rust/) by [@skyzh](https://github.com/skyzh), and [type-challenges](https://github.com/type-challenges/type-challenges/) by [@antfu](https://github.com/antfu).
+
+Social graph [images](https://unsplash.com/photos/person-sitting-front-of-laptop-mfB1B1s4sMc) come from [Christin Hume](https://unsplash.com/@christinhumephoto).
