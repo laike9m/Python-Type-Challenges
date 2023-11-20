@@ -27,11 +27,11 @@ flask run
 
 ## How to Contribute
 
-- **Add a new challenge**
+- **Add new challenges**
 
   Adding a new challenge is pretty simple: **you only need to create a new folder, add a `question.py` and a `solution.py`, and that's it**. See [here](docs/Contribute.md) for a detailed guidance.
 
-- **Making code changes**
+- **New features & bug fixes**
 
   If you want to fix a bug or add a new feature, follow the [guidance](docs/Development.md).
 
