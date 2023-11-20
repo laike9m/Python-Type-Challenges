@@ -52,7 +52,7 @@ def get_challenge(level: str, name: str):
 
 @app_views.route("/run/<level>/<name>", methods=["POST"])
 def run_challenge(level: str, name: str):
-    challenge_key = (Level(level), name)
+    challenge_key = ChallengeKey(Level(level), name)
     code = request.get_data(as_text=True)
 
     result = challenge_manager.run_challenge(user_code=code, key=challenge_key)
