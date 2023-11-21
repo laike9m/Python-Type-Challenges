@@ -72,8 +72,8 @@ class ChallengeManager:
     def _load_challenges() -> dict[ChallengeKey, Challenge]:
         challenges = {}
         for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
-            dir_name = os.path.basename(os.path.dirname(filename))
-            level, challenge_name = dir_name.split("-", maxsplit=1)
+            challenge_folder_name = os.path.basename(os.path.dirname(filename))
+            level, challenge_name = challenge_folder_name.split("-", maxsplit=1)
             with open(filename, "r") as file:
                 code = file.read()
             challenges[ChallengeKey(Level(level), challenge_name)] = Challenge(
