@@ -5,17 +5,12 @@ import re
 import subprocess
 import tempfile
 import tokenize
-from collections import OrderedDict
 from dataclasses import dataclass, field
 from enum import StrEnum
-from functools import lru_cache
 from pathlib import Path
-from typing import ClassVar, Literal, TypeAlias, get_args, cast
+from typing import ClassVar, TypeAlias
 
 ROOT_DIR = Path(__file__).parent.parent
-
-
-ChallengeName: TypeAlias = str
 
 
 class Level(StrEnum):
@@ -25,7 +20,13 @@ class Level(StrEnum):
     EXTREME = "extreme"
 
 
-LEVELs = [l.value for l in Level]
+ChallengeName: TypeAlias = str
+
+
+@dataclass(frozen=True)
+class ChallengeKey:
+    level: Level
+    name: ChallengeName
 
 
 @dataclass
@@ -46,12 +47,6 @@ class Challenge:
 
 
 @dataclass(frozen=True, slots=True)
-class ChallengeInfo:
-    name: ChallengeName
-    level: Level
-
-
-@dataclass(frozen=True, slots=True)
 class TypeCheckResult:
     message: str
     passed: bool
@@ -59,52 +54,48 @@ class TypeCheckResult:
 
 class ChallengeManager:
     def __init__(self):
-        self.challenges = self._load_challenges()
-        self.challenge_names = [
-            ChallengeInfo(name=name, level=c.level)
-            for name, c in self.challenges.items()
-        ]
+        self.challenges: dict[ChallengeKey, Challenge] = self._load_challenges()
+        self.challenges_groupby_level: dict[Level, list[ChallengeName]]
+        self.challenges_groupby_level = self._get_challenges_groupby_level()
 
-    @property
-    @lru_cache
-    def challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
-        groups = {}
+    def has_challenge(self, key: ChallengeKey) -> bool:
+        return key in self.challenges
 
-        for challenge in self.challenge_names:
-            groups.setdefault(challenge.level, []).append(challenge.name)
+    def get_challenge(self, key: ChallengeKey) -> Challenge:
+        return self.challenges[key]
 
-        # Sort name alphabetically
-        for names in groups.values():
-            names.sort()
-
-        # Use OrderedDict to keep the order of the level
-        return OrderedDict([(level, groups[level]) for level in LEVELs])
-
-    def has_challenge(self, name: str) -> bool:
-        return name in self.challenges
-
-    def get_challenge(self, name: str) -> Challenge:
-        return self.challenges[name]
-
-    def run_challenge(self, name: str, user_code: str) -> TypeCheckResult:
-        challenge = self.get_challenge(name)
+    def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
+        challenge = self.get_challenge(key)
         return self._type_check_with_pyright(user_code, challenge.test_code)
 
     @staticmethod
-    def _load_challenges() -> dict[ChallengeName, Challenge]:
+    def _load_challenges() -> dict[ChallengeKey, Challenge]:
         challenges = {}
         for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
-            dir_name = os.path.basename(os.path.dirname(filename))
-            level, challenge_name = dir_name.split("-", maxsplit=1)
+            challenge_folder_name = os.path.basename(os.path.dirname(filename))
+            level, challenge_name = challenge_folder_name.split("-", maxsplit=1)
             with open(filename, "r") as file:
                 code = file.read()
-            challenges[challenge_name] = Challenge(
+            challenges[ChallengeKey(Level(level), challenge_name)] = Challenge(
                 name=challenge_name,
                 level=Level(level),
                 code=code,
             )
 
         return challenges
+
+    def _get_challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
+        groups: dict[str, list[ChallengeName]] = {}
+
+        for challenge in self.challenges.values():
+            groups.setdefault(challenge.level, []).append(challenge.name)
+
+        # Sort challenge by name alphabetically.
+        for challenge_names in groups.values():
+            challenge_names.sort()
+
+        # Make sure groups are ordered by level (from easy to hard)
+        return {level: groups[level] for level in Level}
 
     EXPECT_ERROR_COMMENT = "expect-type-error"
 

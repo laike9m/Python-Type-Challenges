@@ -17,6 +17,14 @@ jobs:
           cache: true
       - name: Install dependencies
         run: pdm install
-
       - name: Run tests
         run: pdm run test
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          subject: Test Failure in ${{ github.repository }}
+          body: The test for ${{ github.repository }} failed.
+          to: laike9m@gmail.com
+          from: GitHub
+          server_address: smtp.gmail.com

@@ -1,21 +1,14 @@
 """
 TODO:
 
-Define a function that accepts two parameters of the same type and returns the same type.
+The function `add` accepts two arguments and returns a value, they all have the same type.
 The type can only be str or int.
 """
-from typing import TypeVar
-
-T = TypeVar("T", int, str)
 
 
-def add(a: T, b: T) -> T:
+def add(a, b):
     return a
 
-
-# For Python >= 3.12
-# def add[T: (str,int)](a: T, b: T) -> T:
-#     return a
 
 ## End of your code ##
 from typing import assert_type

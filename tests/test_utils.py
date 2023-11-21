@@ -1,4 +1,4 @@
-from views.utils import ChallengeManager
+from views.challenge import ChallengeManager
 
 
 def test_run_type_check_with_pyright():

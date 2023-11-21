@@ -1,11 +1,13 @@
+"""
+Make sure all solutions type check.
+"""
+
 from pathlib import Path
 
 import pytest
 
-from views.utils import ChallengeManager
-
-CHALLENGES_DIR = Path(__file__).parent.parent / "challenges"
-ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution.py"))
+from views.challenge import ChallengeManager
+from .fixture import ALL_SOLUTIONS
 
 
 @pytest.mark.parametrize("solution_file", ALL_SOLUTIONS, ids=lambda x: x.parent.name)

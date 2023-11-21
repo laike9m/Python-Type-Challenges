@@ -3,13 +3,14 @@
 {% block head %}
   {{ super() }}
 
+  <title>Python Type Challenge - Level: {{level}}, Topic: {{name}}</title>
+  <meta name="description" content="{{description}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-  <title>Python Type Challenge - {{ name }}</title>
+  <script src="{{ url_for('static', filename='js/js-confetti.browser.js')}}"></script>
 
   <style type="text/css">
     .challenge-container {
@@ -176,6 +177,7 @@
     .CodeMirror {
       height: auto;
       border: 2px solid orange;
+      font-size: 16px;
     }
 
     .CodeMirror.CodeMirror-focused {
@@ -283,7 +285,7 @@
       runButton.innerText = ""
 
       let code = myCodeMirror.getValue();
-      fetch('/run/{{name}}', {
+      fetch('/run/{{level}}/{{name}}', {
         method: 'POST',
         body: code
       })

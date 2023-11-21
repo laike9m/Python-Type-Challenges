@@ -9,6 +9,7 @@ from typing import Protocol
 class SupportsQuack:
     ...
 
+
 ## End of your code ##
 class Duck:
     def quack(self) -> None:

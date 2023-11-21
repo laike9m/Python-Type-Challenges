@@ -9,48 +9,41 @@
   }
 
   #challenge-list ol {
-    padding-left: 20px;
     list-style: none;
     line-height: 1.2;
-  }
-
-  #challenge-list ol li {
     padding-left: 10px;
   }
+
+  #challenge-list strong {
+    line-height: 1.5;
+  }
+
+  /* Add a padding before the first challenge of each level */
+  #challenge-list strong + li {
+    padding-top: 5px;
+  }
 </style>
-
-
 <details id="challenge-list" open="true">
   <summary>Challenges</summary>
   <ol>
     <strong>Basic</strong>
-    {% for challenge in challenge_names | selectattr("level", "equalto",
-    "basic") %}
-    <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
+    {% for challenge in challenges_groupby_level["basic"] %}
+      <li><a href="/basic/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
-
-    <br />
 
     <strong>Intermediate</strong>
-    {% for challenge in challenge_names | selectattr("level", "equalto",
-    "intermediate") %}
-    <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
+    {% for challenge in challenges_groupby_level["intermediate"] %}
+      <li><a href="/intermediate/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
-
-    <br />
 
     <strong>Advanced</strong>
-    {% for challenge in challenge_names | selectattr("level", "equalto",
-    "advanced") %}
-    <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
+    {% for challenge in challenges_groupby_level["advanced"] %}
+      <li><a href="/advanced/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
 
-    <br />
-
     <b>Extreme</b>
-    {% for challenge in challenge_names | selectattr("level", "equalto",
-    "extreme") %}
-    <li><a href="/challenges/{{ challenge.name }}">{{ challenge.name }}</a></li>
+    {% for challenge in challenges_groupby_level["extreme"] %}
+      <li><a href="/extreme/{{ challenge }}">{{ challenge }}</a></li>
     {% endfor %}
   </ol>
 </details>

@@ -9,7 +9,7 @@ import typing
 
 class Foo:
     def return_self(self):
-        return self
+        ...
 
 
 ## End of your code ##

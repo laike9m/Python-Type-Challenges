@@ -6,7 +6,7 @@ Class `Foo` has an instance variable `bar`, which is an integer.
 
 
 class Foo:
-    """Hint: No need to write __init__"""
+    """Hint: you don't need to write __init__"""
 
 
 ## End of your code ##

@@ -6,6 +6,7 @@ and return a wrapper function with the same signature as the constructor of Foo,
 and function decorated by `constructor_parameter` can be called with an instance of Foo.
 """
 
+
 def constructor_parameter():
     ...
 
@@ -30,7 +31,7 @@ res[0].b.upper()
 
 
 @constructor_parameter(Foo)
-def func_fail(foo: Foo) -> list:
+def func_fail(foo: Foo) -> list[Any]:
     ...
 
 
