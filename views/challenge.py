@@ -19,6 +19,10 @@ class Level(StrEnum):
     ADVANCED = "advanced"
     EXTREME = "extreme"
 
+    @classmethod
+    def is_valid_level(cls, level: str):
+        return level in cls._value2member_map_
+
 
 ChallengeName: TypeAlias = str
 

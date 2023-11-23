@@ -22,3 +22,9 @@ def test_run_challenge(question_file: Path):
 
     # Verify backend can run type check and return results
     assert response.json is not None
+
+
+def test_invalid_challenge_redirect_to_homepage():
+    response = app.test_client().get("/foo/bar")
+    assert response.status_code == 302
+    assert response.location == "/"

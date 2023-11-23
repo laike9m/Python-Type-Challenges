@@ -1,6 +1,8 @@
 import platform
+from functools import wraps
 
 from flask import (
+    abort,
     Blueprint,
     jsonify,
     redirect,
@@ -12,6 +14,18 @@ from .challenge import challenge_manager, Level, ChallengeKey
 from .sitemap import sitemapper
 
 app_views = Blueprint("app_views", __name__)
+
+
+def validate_challenge(view_func):
+    @wraps(view_func)
+    def wrapper(level, name, *args, **kwargs):
+        if Level.is_valid_level(level) and challenge_manager.has_challenge(
+            ChallengeKey(Level(level), name)
+        ):
+            return view_func(level, name, *args, **kwargs)  # valid challenge
+        abort(404)
+
+    return wrapper
 
 
 @sitemapper.include(changefreq="daily", priority=1.0)
@@ -33,12 +47,9 @@ def index():
     },
 )
 @app_views.route("/<level>/<name>", methods=["GET"])
+@validate_challenge
 def get_challenge(level: str, name: str):
-    challenge_key = ChallengeKey(Level(level), name)
-    if not challenge_manager.has_challenge(challenge_key):
-        return redirect("/")
-
-    challenge = challenge_manager.get_challenge(challenge_key)
+    challenge = challenge_manager.get_challenge(ChallengeKey(Level(level), name))
     return render_template(
         "challenge.html",
         name=name,
@@ -51,11 +62,12 @@ def get_challenge(level: str, name: str):
 
 
 @app_views.route("/run/<level>/<name>", methods=["POST"])
+@validate_challenge
 def run_challenge(level: str, name: str):
-    challenge_key = ChallengeKey(Level(level), name)
     code = request.get_data(as_text=True)
-
-    result = challenge_manager.run_challenge(user_code=code, key=challenge_key)
+    result = challenge_manager.run_challenge(
+        user_code=code, key=ChallengeKey(Level(level), name)
+    )
     if result.passed:
         message = "<h2>✅ Congratulations! You passed the test 🎉</h2>"
         return jsonify({"passed": True, "message": message})
