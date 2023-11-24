@@ -11,7 +11,6 @@ from flask.testing import FlaskClient
 
 from app import app
 
-QUESTION = "question.py"
 CHALLENGES_DIR = Path(__file__).parent.parent / "challenges"
 ALL_QUESTIONS = list(CHALLENGES_DIR.glob("**/question.py"))
 ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution.py"))
@@ -20,11 +19,6 @@ ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution.py"))
 @pytest.fixture
 def test_client() -> FlaskClient:
     return app.test_client()
-
-
-@pytest.fixture
-def question() -> str:
-    return QUESTION
 
 
 @pytest.fixture(params=ALL_QUESTIONS, ids=lambda x: x.parent.name)
