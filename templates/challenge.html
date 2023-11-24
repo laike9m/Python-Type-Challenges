@@ -15,7 +15,7 @@
   <style type="text/css">
     .challenge-container {
       display: flex;
-      max-height: 100vh;
+      height: 100dvh;
     }
 
     /* Sidebar Area */
@@ -23,12 +23,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: fit-content;
+      padding-bottom: 12px;
+      border-right: 1px solid hsl(205, 20%, 94%);
     }
 
-    .sidebar-container .sidebar-challenge-list {
+    .sidebar-container .sidebar-challenge-main {
       overflow-y: auto;
-      overflow-x: hidden;
+      padding-left: 8px;
+      padding-right: 8px;
     }
 
     .sidebar-container .sidebar-actions {
@@ -56,8 +58,8 @@
     }
 
     .challenge-header__title>span:nth-child(1) {
-      font-size: 30px;
-      font-weight: bold;
+      font-size: 40px;
+      font-weight: 900;
       margin-right: 20px;
     }
 
@@ -136,18 +138,28 @@
         align-items: center;
         margin-top: 20px;
         height: 100%;
-        width: 100%;
+        padding: 8px 12px;
       }
 
       .sidebar-container {
-        overflow-y: auto;
         margin-right: 0;
         margin-bottom: 2rem;
-        min-height: 100px;
+        flex-direction: row;
+        justify-content: center;
+        border-right: 0px;
+        gap: 4px;
       }
 
-      .sidebar-container .sidebar-challenge-list {
+      .sidebar-container .sidebar-challenge-main {
         height: 100%;
+        padding-left: 0px;
+      }
+
+      .sidebar-container .sidebar-actions {
+        margin-top: 0px;
+        padding-top: 0px;
+        border-top: 0px;
+        width: initial;
       }
 
       .challenge-header__title {
@@ -190,12 +202,9 @@
   <div class="challenge-container">
     <!-- Left/Top Sidebar -->
     <div class="sidebar-container">
-        <!-- <div class="sidebar-challenge-list">
-            {% include 'components/challenge_list.html' %}
-        </div> -->
-      <aside class="sidebar-challenge-list">
+      <div class="sidebar-challenge-main">
         {% include 'components/challenge_sidebar.html' with context %}
-      </aside>
+      </div>
       <div class="sidebar-actions">
         {% include 'components/darkmode.html' %}
       </div>
