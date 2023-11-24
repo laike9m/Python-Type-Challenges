@@ -7,10 +7,8 @@ from pathlib import Path
 import pytest
 
 from views.challenge import ChallengeManager
-from .fixture import ALL_QUESTIONS
 
 
-@pytest.mark.parametrize("question_file", ALL_QUESTIONS, ids=lambda x: x.parent.name)
 def test_solution_valid(question_file: Path):
     # Skip the challenges whose question can't fail type check no matter how many tests are added.
     if question_file.parent.name == "basic-any":
