@@ -25,6 +25,21 @@
     align-items: center;
     gap: 8px;
   }
+
+  @media only screen and (max-width: 1080px) and (min-width: 800px) {
+    .challenges {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    .challenge-card .challenge-card__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      justify-items: center;
+      width: 100%;
+    }
+  }
 </style>
 
 <div class="challenge-card">
