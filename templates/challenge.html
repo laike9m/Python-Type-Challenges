@@ -36,7 +36,7 @@
     .sidebar-container .sidebar-actions {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-around;
       margin-top: 8px;
       padding-top: 8px;
       border-top: 1px solid hsl(205, 20%, 94%);
@@ -55,13 +55,13 @@
       display: flex;
       align-items: center;
       margin-bottom: 1rem;
+      margin-top: 8px;
     }
 
     .challenge-header__title>span:nth-child(1) {
       font-size: 35px;
       font-weight: 700;
       margin-right: 20px;
-      margin-top: 8px;
     }
 
     .challenge-header__exerpt {
@@ -88,6 +88,9 @@
     }
 
     #playground-link {
+      display: flex;
+      place-items: center;
+      gap: 2px;
       position: absolute;
       top: 3px;
       right: 3px;
@@ -144,11 +147,11 @@
 
       .sidebar-container {
         margin-right: 0;
-        margin-bottom: 2rem;
         flex-direction: row;
         width: 100%;
         border-right: 0px;
         gap: 4px;
+        padding: 0;
       }
 
       .sidebar-container .sidebar-challenge-main {
@@ -162,6 +165,7 @@
         padding-top: 0px;
         border-top: 0px;
         width: initial;
+        gap: 8px;
       }
 
       .challenge-header__title {
@@ -171,7 +175,7 @@
 
       .challenge-header__title>span:nth-child(1) {
         width: 100%;
-        font-size: 20px;
+        font-size: 32px;
         margin-bottom: 8px;
       }
 
@@ -208,6 +212,7 @@
         {% include 'components/challenge_sidebar.html' with context %}
       </div>
       <div class="sidebar-actions">
+        {% include 'components/github_icon.html' %}
         {% include 'components/darkmode.html' %}
       </div>
     </div>
@@ -233,7 +238,8 @@
         <div class="codemirror-container">
           <div id="editor">
             <a id="playground-link" target="_blank" rel="noopener noreferrer">
-              Open Pyright Playground
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4m-8-2l8-8m0 0v5m0-5h-5"/></svg>
+              <span>Open Pyright Playground</span>
             </a>
           </div>
           <div class="editor-actions">
