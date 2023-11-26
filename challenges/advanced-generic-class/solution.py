@@ -13,7 +13,7 @@ from typing import TypeVar, Generic, assert_type
 
 
 # For Python >= 3.12
-class Stack[T]():
+class Stack[T]:
     def __init__(self) -> None:
         self.items: list[T] = []  # This list[T] optional
 
