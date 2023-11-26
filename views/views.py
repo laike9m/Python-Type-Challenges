@@ -1,3 +1,4 @@
+import ast
 import platform
 from functools import wraps
 
@@ -65,6 +66,13 @@ def get_challenge(level: str, name: str):
 @validate_challenge
 def run_challenge(level: str, name: str):
     code = request.get_data(as_text=True)
+    try:
+        ast.parse(code)
+    except SyntaxError as e:
+        return jsonify(
+            {"passed": False, "message": f"😱 SyntaxError: {e.msg} (line {e.lineno})"}
+        )
+
     result = challenge_manager.run_challenge(
         user_code=code, key=ChallengeKey(Level(level), name)
     )

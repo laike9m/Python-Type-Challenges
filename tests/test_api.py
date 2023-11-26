@@ -19,6 +19,14 @@ def test_run_challenge(test_client: FlaskClient, question_file: Path):
     assert response.json is not None
 
 
+def test_run_code_with_syntax_error(test_client: FlaskClient):
+    response = test_client.post(f"run/basic/any", data="""class A::""")
+    assert response.json == {
+        "message": "😱 SyntaxError: invalid syntax (line 1)",
+        "passed": False,
+    }
+
+
 def test_invalid_challenge_redirect_to_homepage(test_client: FlaskClient):
     response = test_client.get("/foo/bar")
     assert response.status_code == 302
