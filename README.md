@@ -10,7 +10,9 @@ Happy typing!
 
 ## How to Run Locally
 
-This project use [PDM](https://pdm.fming.dev/latest/), a modern Python package and dependency manager, to manage dependencies. After you [have installed PDM](https://pdm.fming.dev/latest/#installation), you can run this project locally based on the following steps:
+The project is[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-light.svg)](https://zeabur.com?referralCode=laike9m&utm_source=laike9m&utm_campaign=oss), but you can also run it locally.
+
+It's recommended to use [PDM](https://pdm-project.org/) to manage dependencies. After [installing PDM](https://pdm.fming.dev/latest/#installation), you can run this project locally based on the following steps:
 
 ```bash
 pdm plugin add pdm-autoexport
