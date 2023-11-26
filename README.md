@@ -2,7 +2,7 @@
 
 Master Python typing (type hints) with interactive online exercises!
 
-🌟🌟 Click **[HERE](https://python-type-challenges.zeabur.app)** to start 🌟🌟
+Click 👉👉 **[HERE](https://python-type-challenges.zeabur.app)** to start
 
 ![](docs/images/usage.gif)
 
