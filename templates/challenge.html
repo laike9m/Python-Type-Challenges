@@ -36,7 +36,7 @@
     .sidebar-container .sidebar-actions {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-around;
       margin-top: 8px;
       padding-top: 8px;
       border-top: 1px solid hsl(205, 20%, 94%);
@@ -162,6 +162,7 @@
         padding-top: 0px;
         border-top: 0px;
         width: initial;
+        gap: 8px;
       }
 
       .challenge-header__title {
@@ -208,6 +209,7 @@
         {% include 'components/challenge_sidebar.html' with context %}
       </div>
       <div class="sidebar-actions">
+        {% include 'components/github_icon.html' %}
         {% include 'components/darkmode.html' %}
       </div>
     </div>
