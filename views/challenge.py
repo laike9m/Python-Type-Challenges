@@ -2,6 +2,7 @@ import glob
 import io
 import os
 import re
+import random
 import subprocess
 import tempfile
 import tokenize
@@ -73,6 +74,12 @@ class ChallengeManager:
     def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(key)
         return self._type_check_with_pyright(user_code, challenge.test_code)
+
+    def get_random_challenge(self) -> dict[str, str]:
+        challenges_groupby_level = self.challenges_groupby_level
+        level = random.choice(list(challenges_groupby_level.keys()))
+        name = random.choice(challenges_groupby_level[level])
+        return {"level": level, "name": name}
 
     @staticmethod
     def _load_challenges() -> dict[ChallengeKey, Challenge]:
