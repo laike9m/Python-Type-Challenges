@@ -124,6 +124,12 @@
       width: 100px;
     }
 
+    #answer-link {
+      display: none;
+      padding: 2px 4px;
+      margin-right: 10px;
+    }
+
     .tests-result-container {
       display: flex;
       flex-direction: column;
@@ -243,6 +249,12 @@
             </a>
           </div>
           <div class="editor-actions">
+            <p id="answer-link">Stuck? Check out
+              <a target="_blank" rel="noopener noreferrer"
+                 href="https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges/{{level}}-{{name}}/solution.py">
+                solution
+              </a>
+            </p>
             <button id="reset-button" class="secondary">
               Reset
             </button>
@@ -311,6 +323,10 @@
           // add confetti effect when passed
           if (json.passed) {
             confetti.addConfetti()
+          } else {
+            setTimeout(() => {
+              document.getElementById('answer-link').style.display = 'block';
+            }, 500);
           }
           document.getElementById("result").innerHTML = json.message;
         })
