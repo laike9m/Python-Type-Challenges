@@ -76,9 +76,8 @@ class ChallengeManager:
         return self._type_check_with_pyright(user_code, challenge.test_code)
 
     def get_random_challenge(self) -> dict[str, str]:
-        challenges_groupby_level = self.challenges_groupby_level
-        level = random.choice(list(challenges_groupby_level.keys()))
-        name = random.choice(challenges_groupby_level[level])
+        level = random.choice(list(self.challenges_groupby_level.keys()))
+        name = random.choice(self.challenges_groupby_level[level])
         return {"level": level, "name": name}
 
     @staticmethod

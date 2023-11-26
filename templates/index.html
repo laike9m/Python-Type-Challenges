@@ -32,7 +32,7 @@
       border-radius: 8px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       width: 20%;
-      margin-bottom: 24px;
+      margin-top: 24px;
     }
 
     .challenges {
@@ -76,12 +76,12 @@
 
   <div class="main-container">
     <h1 class="title">Welcome to Python Type Challenges!</h1>
-    <div class="random-button"><a href="/random">Random 🔀</a></div>
     <div class="challenges">
       {% for level, challenge_names in challenges_groupby_level.items() %}
         {% include 'components/challenge_card.html' with context %}
       {% endfor%}
     </div>
+    <div class="random-button"><a href="/random" title="Pick a random challenge">Random Challenge 🔀</a></div>
   </div>
 
 {% endblock %}
