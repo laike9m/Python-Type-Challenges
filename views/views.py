@@ -10,7 +10,7 @@ from flask import (
     request,
 )
 
-from .challenge import challenge_manager, Level, ChallengeKey
+from .challenge import ChallengeKey, Level, challenge_manager
 from .sitemap import sitemapper
 
 app_views = Blueprint("app_views", __name__)

@@ -15,9 +15,7 @@
   <style type="text/css">
     .challenge-container {
       display: flex;
-      padding: 1rem 2rem;
-      max-height: 100vh;
-      width: max(95vw, 95%);
+      height: 100dvh;
     }
 
     /* Sidebar Area */
@@ -25,13 +23,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-right: 2rem;
+      padding-bottom: 12px;
+      border-right: 1px solid hsl(205, 20%, 94%);
     }
 
-    .sidebar-container .sidebar-challenge-list {
+    .sidebar-container .sidebar-challenge-main {
       overflow-y: auto;
-      max-width: fit-content;
-      min-width: 100px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
 
     .sidebar-container .sidebar-actions {
@@ -48,6 +47,7 @@
     .challenge-area {
       display: flex;
       flex-direction: column;
+      margin: 0 2rem;
       width: 100%;
     }
 
@@ -58,9 +58,10 @@
     }
 
     .challenge-header__title>span:nth-child(1) {
-      font-size: 30px;
-      font-weight: bold;
+      font-size: 35px;
+      font-weight: 700;
       margin-right: 20px;
+      margin-top: 8px;
     }
 
     .challenge-header__exerpt {
@@ -138,18 +139,29 @@
         align-items: center;
         margin-top: 20px;
         height: 100%;
-        width: 100%;
+        padding: 8px 12px;
       }
 
       .sidebar-container {
-        overflow-y: auto;
         margin-right: 0;
         margin-bottom: 2rem;
-        min-height: 100px;
+        flex-direction: row;
+        width: 100%;
+        border-right: 0px;
+        gap: 4px;
       }
 
-      .sidebar-container .sidebar-challenge-list {
+      .sidebar-container .sidebar-challenge-main {
         height: 100%;
+        padding-left: 0px;
+        margin-right: auto;
+      }
+
+      .sidebar-container .sidebar-actions {
+        margin-top: 0px;
+        padding-top: 0px;
+        border-top: 0px;
+        width: initial;
       }
 
       .challenge-header__title {
@@ -189,11 +201,11 @@
 {% endblock %}
 
 {% block content %}
-  <div class="challenge-container container-fluid">
+  <div class="challenge-container">
     <!-- Left/Top Sidebar -->
     <div class="sidebar-container">
-      <div class="sidebar-challenge-list">
-        {% include 'components/challenge_list.html' %}
+      <div class="sidebar-challenge-main">
+        {% include 'components/challenge_sidebar.html' with context %}
       </div>
       <div class="sidebar-actions">
         {% include 'components/darkmode.html' %}
