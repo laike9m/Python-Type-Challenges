@@ -87,3 +87,9 @@ def run_challenge(level: str, name: str):
     return jsonify(
         {"passed": False, "message": error_message, "debug_info": result.debug_info}
     )
+
+
+@app_views.route("/random", methods=["GET"])
+def run_random_challenge():
+    challenge = challenge_manager.get_random_challenge()
+    return redirect(f"/{challenge['level']}/{challenge['name']}")

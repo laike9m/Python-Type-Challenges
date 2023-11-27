@@ -24,6 +24,17 @@
       font-family: inherit;
     }
 
+    .random-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 20%;
+      margin-top: 24px;
+    }
+
     .challenges {
       display: grid;
       grid-template-columns: repeat(4, minmax(280px, 1fr));
@@ -46,6 +57,10 @@
         grid-template-columns: 1fr;
         width: 80%;
       }
+
+      .random-button {
+        width: 50%;
+      }
     }
 
 
@@ -66,6 +81,7 @@
         {% include 'components/challenge_card.html' with context %}
       {% endfor%}
     </div>
+    <div class="random-button"><a href="/random" title="Pick a random challenge">Random Challenge 🔀</a></div>
   </div>
 
 {% endblock %}
