@@ -10,17 +10,16 @@ Happy typing!
 
 ## How to Run Locally
 
-The project is[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-light.svg)](https://zeabur.com?referralCode=laike9m&utm_source=laike9m&utm_campaign=oss), but you can also run it locally.
+You can also run the challenge locally. To do that, clone the project and install necessary dependencies, using either PDM or `requirements.txt`.
 
-It's recommended to use [PDM](https://pdm-project.org/) to manage dependencies. After [installing PDM](https://pdm.fming.dev/latest/#installation), you can run this project locally based on the following steps:
+[PDM](https://pdm-project.org/) is recommended. After [installing PDM](https://pdm.fming.dev/latest/#installation), you can install needed dependencies with the following steps:
 
 ```bash
-pdm plugin add pdm-autoexport
 pdm install
 pdm dev  # This will run a local Flask server
 ```
 
-Alternatively, you can install dependencies just using `pip`:
+Alternatively, you can install dependencies with `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
@@ -42,6 +41,10 @@ flask run
 For general questions, you can post them in [Discussions](https://github.com/laike9m/Python-Type-Challenges/discussions).
 
 If you met issues or want to suggest a new feature/improvement, feel free to [open a new issue](https://github.com/laike9m/Python-Type-Challenges/issues/new).
+
+## Sponsor
+
+[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-light.svg)](https://zeabur.com?referralCode=laike9m&utm_source=laike9m&utm_campaign=oss)
 
 ## Credits
 
