@@ -108,7 +108,7 @@
           </li>
         {% endif %}
         {% for name in challenge_names %}
-          <li><a href="/{{ level }}/{{ name }}">{{ name }}</a></li>
+          <li><a id="{{ level }}-{{ name }}" href="/{{ level }}/{{ name }}">{{ name }}</a></li>
         {% endfor %}
       </ul>
     {% endfor %}
