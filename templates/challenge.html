@@ -331,6 +331,7 @@
             }, 500);
           }
           document.getElementById("result").innerHTML = json.message;
+          console.log(json.debug_info);
         })
         .catch((error) => {
           console.error('Error:', error);
