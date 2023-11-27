@@ -1,7 +1,8 @@
 """
 TODO:
-    Add type annotations to the class Wrap, so that it can be called with the
-    same arguments as the function it wraps.
+
+Add type annotations to the class Wrap, so that it can be called with the
+same arguments as the function it wraps.
 """
 
 
