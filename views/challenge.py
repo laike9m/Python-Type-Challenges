@@ -114,9 +114,6 @@ class ChallengeManager:
     def _type_check_with_pyright(
         cls, user_code: str, test_code: str
     ) -> TypeCheckResult:
-        time_table = {}  # debug_only, remove after done
-        get_current_time = lambda: datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        time_table["0_check_with_pyright_start"] = get_current_time()
         code = f"{user_code}{test_code}"
         buffer = io.StringIO(code)
 
@@ -143,14 +140,11 @@ class ChallengeManager:
             temp.flush()
             # TODO: switch to json output to simplify output parsing.
             # https://microsoft.github.io/pyright/#/command-line?id=json-output
-            start_time = datetime.datetime.now()
-            time_table["1_pyright_run_start"] = get_current_time()
             raw_result = subprocess.run(
                 ["pyright", "--pythonversion", "3.12", temp.name],
                 capture_output=True,
                 text=True,
             ).stdout
-            time_table["2_pyright_run_end"] = get_current_time()
         error_lines: list[str] = []
 
         # Substract lineno in merged code by lineno_delta, so that the lineno in
@@ -185,9 +179,7 @@ class ChallengeManager:
         else:
             error_lines.append(f"\nFound {len(error_lines)} errors")
 
-        return TypeCheckResult(
-            message="\n".join(error_lines), passed=passed, debug_info=time_table
-        )
+        return TypeCheckResult(message="\n".join(error_lines), passed=passed)
 
 
 challenge_manager = ChallengeManager()
