@@ -347,17 +347,5 @@
     resetButton.onclick = function () {
       myCodeMirror.setValue(code_under_test);
     };
-
-    // If window size is > 800, expand the challenge list.
-    function checkWidth() {
-      let detailsElement = document.getElementById('challenge-list');
-      if (window.innerWidth < 800) {
-        detailsElement.removeAttribute('open');
-      } else {
-        detailsElement.setAttribute('open', '');
-      }
-    }
-    checkWidth();  // Check the width initially
-    window.addEventListener('resize', checkWidth);
   </script>
 {% endblock %}
