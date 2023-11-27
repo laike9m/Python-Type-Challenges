@@ -78,7 +78,9 @@ def run_challenge(level: str, name: str):
     )
     if result.passed:
         message = "<h2>✅ Congratulations! You passed the test 🎉</h2>"
-        return jsonify({"passed": True, "message": message})
+        return jsonify(
+            {"passed": True, "message": message, "debug_info": result.debug_info}
+        )
 
     error_message = "<h2>❌ Challenge failed 😢</h2>"
     error_message += f"<p>Error:\n{result.message}</p>"
