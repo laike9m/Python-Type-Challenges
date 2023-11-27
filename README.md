@@ -44,7 +44,7 @@ If you met issues or want to suggest a new feature/improvement, feel free to [op
 
 ## Sponsor
 
-[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-light.svg)](https://zeabur.com?referralCode=laike9m&utm_source=laike9m&utm_campaign=oss)
+[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-dark.svg)](https://zeabur.com?referralCode=laike9m&utm_source=laike9m&utm_campaign=oss)
 
 ## Credits
 
