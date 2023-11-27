@@ -34,4 +34,5 @@ def replace_wildcard(string: str, replacement: str, *, count: int = -1) -> str:
 assert_type(add(1, 2), int)
 assert_type(replace_wildcard("Hello *", "World"), str)
 assert_type(replace_wildcard("Hello *", "World", count=1), str)
-assert_type(replace_wildcard("Hello *", "World", "1"), str)  # expect-type-error
+replace_wildcard("Hello *", 1)  # expect-type-error
+replace_wildcard("Hello *", "World", 1)  # expect-type-error
