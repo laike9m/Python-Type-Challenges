@@ -30,6 +30,8 @@ def r_sitemap():
     return sitemapper.generate()
 
 
+print("sss")
+
 # Temporary solution for
 # https://github.com/laike9m/Python-Type-Challenges/issues/49
 threading.Thread(
