@@ -1,7 +1,8 @@
+import threading
 from flask import Flask, redirect, request, send_from_directory
 from typing import cast
 
-from views import views
+from views import views, challenge
 from views.sitemap import sitemapper
 
 app = Flask(
@@ -27,3 +28,14 @@ def robots_txt():
 @app.route("/sitemap.xml")
 def r_sitemap():
     return sitemapper.generate()
+
+
+# Temporary solution for
+# https://github.com/laike9m/Python-Type-Challenges/issues/49
+threading.Thread(
+    target=challenge.challenge_manager.run_challenge,
+    kwargs={
+        "key": challenge.ChallengeKey(challenge.Level("basic"), "any"),
+        "user_code": "",
+    },
+).start()
