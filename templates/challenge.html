@@ -308,6 +308,8 @@
 
     let runButton = document.getElementById('run-button')
     runButton.onclick = function () {
+      console.log(`Run challenge at: ${new Date().toLocaleString()}`);
+
       // set button spinner
       let rawInnerText = runButton.innerText;
       runButton.ariaBusy = true;

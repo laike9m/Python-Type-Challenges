@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
 from typing import ClassVar, TypeAlias
+import datetime
 
 ROOT_DIR = Path(__file__).parent.parent
 
@@ -112,6 +113,7 @@ class ChallengeManager:
     def _type_check_with_pyright(
         cls, user_code: str, test_code: str
     ) -> TypeCheckResult:
+        print(f"start _type_check_with_pyright at: {datetime.datetime.now()}")
         code = f"{user_code}{test_code}"
         buffer = io.StringIO(code)
 
@@ -138,11 +140,15 @@ class ChallengeManager:
             temp.flush()
             # TODO: switch to json output to simplify output parsing.
             # https://microsoft.github.io/pyright/#/command-line?id=json-output
+            start_time = datetime.datetime.now()
+            print(f"pyright run start: {start_time}")
             raw_result = subprocess.run(
                 ["pyright", "--pythonversion", "3.12", temp.name],
                 capture_output=True,
                 text=True,
             ).stdout
+            end_time = datetime.datetime.now()
+            print(f"pyright run end: {end_time}, duration: {end_time - start_time}")
         error_lines: list[str] = []
 
         # Substract lineno in merged code by lineno_delta, so that the lineno in
