@@ -4,13 +4,16 @@ TODO:
 Add type annotations to the class `Wrap`, so that it can be called with the
 same arguments as the function it wraps.
 """
-from typing import Callable, Generic, ParamSpec, TypeVar
+from typing import Callable
 
-P = ParamSpec("P")
-T = TypeVar("T")
+# Before 3.12 you have to write:
+# T = TypeVar('T')
+# P = ParamSpec('P')
+# class Wrap(Generic[T, P]):
 
 
-class Wrap(Generic[P, T]):
+# For Python >= 3.12
+class Wrap[T, **P]:
     def __init__(self, func: Callable[P, T]) -> None:
         self.func = func
 
