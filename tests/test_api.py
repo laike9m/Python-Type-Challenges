@@ -4,6 +4,7 @@ from flask.testing import FlaskClient
 
 from views.challenge import ChallengeKey, Level, challenge_manager
 
+
 def test_get_challenge(test_client: FlaskClient, question_file: Path):
     level, challenge_name = question_file.parent.name.split("-", maxsplit=1)
     response = test_client.get(f"/{level}/{challenge_name}")
