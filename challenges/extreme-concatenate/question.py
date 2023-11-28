@@ -33,8 +33,8 @@ foo_with_person(Person(), 1)  # expect-type-error
 foo_with_person(Person(), "1", 2)  # expect-type-error
 
 
-def foo2(value, mode: str, *, maybe: bool) -> None:
-    pass
+def foo2(value, mode: str, *, maybe: bool) -> int:
+    return 1
 
 
 foo_with_person = transform(foo2)
