@@ -17,14 +17,20 @@ jobs:
           cache: true
       - name: Install dependencies
         run: pdm install
-      - name: Run tests
-        run: pdm run test
+      - name: Run tests with retry
+        uses: nick-invision/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: pdm run test
       - name: Send failure email
         if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
           subject: Test Failure in ${{ github.repository }}
           body: The test for ${{ github.repository }} failed.
-          to: laike9m@gmail.com
+          to: ${{ secrets.MAIL_USERNAME }}
           from: GitHub
           server_address: smtp.gmail.com
+          server_user: ${{ secrets.MAIL_USERNAME }}
+          server_password: ${{ secrets.MAIL_PASSWORD }}
