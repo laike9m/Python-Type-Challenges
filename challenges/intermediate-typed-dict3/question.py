@@ -1,7 +1,7 @@
 """
 TODO:
 
-Define a class `Person` that represents a dictionary with three string keys:
+Define a class `Person` that represents a dictionary with five string keys:
     name, age, gender, address, email
 
 The value of each key must be the specified type:
