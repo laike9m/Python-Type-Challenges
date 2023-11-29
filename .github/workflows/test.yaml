@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: pdm install
       - name: Run tests with retry
-        uses: nick-invision/retry@v3
+        uses: nick-fields/retry@v2
         with:
           timeout_minutes: 10
           max_attempts: 3
@@ -32,5 +32,5 @@ jobs:
           to: ${{ secrets.MAIL_USERNAME }}
           from: GitHub
           server_address: smtp.gmail.com
-          server_user: ${{ secrets.MAIL_USERNAME }}
-          server_password: ${{ secrets.MAIL_PASSWORD }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
