@@ -73,7 +73,8 @@ class ChallengeManager:
 
     def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(key)
-        return self._type_check_with_pyright(user_code, challenge.test_code)
+        # Make sure user code ends with a new line to avoid issue #63.
+        return self._type_check_with_pyright(user_code + "\n", challenge.test_code)
 
     def get_random_challenge(self) -> dict[str, str]:
         level = random.choice(list(self.challenges_groupby_level.keys()))
