@@ -1,7 +1,8 @@
 """
 TODO:
 
-foo is a function that returns an interger when second argument is 1, returns a string when second argument is 2, returns a list when second argument is 3, otherwise it returns inputs self.
+foo is a function that:
+returns an interger when second argument is 1, returns a string when second argument is 2, returns a list when second argument is 3, and otherwise it returns the same type as the first argument.
 """
 from typing import Any, Literal, overload, TypeVar
 
