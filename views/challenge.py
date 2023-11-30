@@ -151,13 +151,16 @@ class ChallengeManager:
                 ["pyright", "--pythonversion", "3.12", temp.name],
                 capture_output=True,
                 text=True,
-            ).stdout
+            )
+            stdout, stderr = raw_result.stdout, raw_result.stderr
+            if stderr:
+                return TypeCheckResult(message=stderr, passed=False)
         error_lines: list[str] = []
 
         # Substract lineno in merged code by lineno_delta, so that the lineno in
         # error message matches those in the test code editor. Fixed #20.
         lineno_delta = len(user_code.splitlines())
-        for line in raw_result.splitlines():
+        for line in stdout.splitlines():
             m = re.match(cls.PYRIGHT_MESSAGE_REGEX, line)
             if m is None:
                 continue
