@@ -330,11 +330,10 @@
           // add confetti effect when passed
           if (json.passed) {
             confetti.addConfetti()
-          } else {
-            setTimeout(() => {
-              document.getElementById('answer-link').style.display = 'block';
-            }, 500);
           }
+          setTimeout(() => {
+            document.getElementById('answer-link').style.display = 'block';
+          }, 500);
           document.getElementById("result").innerHTML = json.message;
           if (json.debug_info !== undefined) {
             console.log(json.debug_info);
