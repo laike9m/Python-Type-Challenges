@@ -1,33 +1,35 @@
 """
 TODO:
 
-Define a class `Point2D` that represents a dictionary with three string keys:
-    x, y, label
+Define a class `Student` that represents a dictionary with three keys:
+- name, a string
+- age, an integer
+- school, a string
 
-The value of each key must be the specified type:
-    x - int, y - int, label - str
-
-Note: label is optional
+Note: school can be optional
 """
 
 from typing import TypedDict, NotRequired
 
 
-class Point2D(TypedDict):
-    x: int
-    y: int
-    label: NotRequired[str]
+class Student(TypedDict):
+    name: str
+    age: int
+    school: NotRequired[str]
 
 
 # Alternatively you can write:
-# Point2D = TypedDict('Point2D', {'x': int, 'y': int, 'label': NotRequired[str]})
+# Student = TypedDict('Student', {'name': str, 'age': int, 'school': str})
+
 
 ## End of your code ##
-a: Point2D = {"x": 1, "y": 2}
-a: Point2D = {"x": 1, "y": 2, "label": "good"}
-a: Point2D = {"x": 1, "z": 2, "label": "good"}  # expect-type-error
-a: Point2D = {(1,): 1, "y": 2, "label": "good"}  # expect-type-error
-a: Point2D = {"x": 1, "y": "2", "label": "good"}  # expect-type-error
-b: Point2D = {"z": 3, "label": "bad"}  # expect-type-error
-assert Point2D(x=1, y=2) == dict(x=1, y=2)
-assert Point2D(x=1, y=2, label="first") == dict(x=1, y=2, label="first")
+a: Student = {"name": "Tom", "age": 15}
+a: Student = {"name": "Tom", "age": 15, "school": "Hogwarts"}
+a: Student = {"name": 1, "age": 15, "school": "Hogwarts"}  # expect-type-error
+a: Student = {(1,): "Tom", "age": 2, "school": "Hogwarts"}  # expect-type-error
+a: Student = {"name": "Tom", "age": "2", "school": "Hogwarts"}  # expect-type-error
+a: Student = {"z": "Tom", "age": 2}  # expect-type-error
+assert Student(name="Tom", age=15) == dict(name="Tom", age=15)
+assert Student(name="Tom", age=15, school="Hogwarts") == dict(
+    name="Tom", age=15, school="Hogwarts"
+)

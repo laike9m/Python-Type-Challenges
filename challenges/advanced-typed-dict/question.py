@@ -1,21 +1,29 @@
 """
 TODO:
 
-Define a class `Point3D` using the predefined Point2D.
-`Point3D` needs to have an extra key-value pair: z - int
+Define a class `Undergraduate` using the predefined class `Student`.
+`Undergraduate` has an extra key `major` of type string
 """
 
 from typing import TypedDict
 
 
-class Point2D(TypedDict):
-    x: int
-    y: int
-    label: str
+class Student(TypedDict):
+    name: str
+    age: int
+    school: str
+
+
+class Undergraduate:
+    ...
 
 
 ## End of your code ##
-a: Point3D = {"x": 1, "y": 2, "z": 3, "label": "good"}
-a: Point3D = {"x": 1, "z": 2, "label": "good"}  # expect-type-error
-a: Point3D = {"x": 1, "y": 2, "label": "good"}  # expect-type-error
-assert Point3D(x=1, y=2, z=3, label="first") == dict(x=1, y=2, z=3, label="first")
+a: Undergraduate = {"name": "Tom", "age": 20, "school": "MIT", "major": "Math"}
+a: Undergraduate = {"name": "Tom", "age": 20, "school": "MIT"}  # expect-type-error
+assert Undergraduate(name="Tom", age=20, school="MIT", major="Math") == {
+    "name": "Tom",
+    "age": 20,
+    "school": "MIT",
+    "major": "Math",
+}
