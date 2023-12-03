@@ -3,7 +3,7 @@ TODO:
 
 a method-like descriptor, implements the `__get__` only.
 """
-from typing import ParamSpec, TypeVar, Concatenate, Callable, Generic
+from typing import Any, ParamSpec, TypeVar, Concatenate, Callable, Generic, overload
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -13,8 +13,22 @@ class MyMethod(Generic[T, P, R]):
     def __init__(self, func: Callable[Concatenate[T, P], R]) -> None:
         self.func = func
     
-    def __get__(self, instance, owner) -> None:
-        return
+    @overload
+    def __get__(self, instance: None, owner: type) -> Callable[Concatenate[T, P], R]:
+        ...
+    
+    @overload
+    def __get__(self, instance: Any, owner: type) -> Callable[P, R]:
+        ...
+    
+    def __get__(self, instance: Any | None, owner: type):
+        if instance is None:
+            return self.func
+
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            return self.func(instance, *args, **kwargs)
+    
+        return wrapper
 
 
 ## End of your code ##

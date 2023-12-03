@@ -4,9 +4,22 @@ TODO:
 Define a descriptor, make test case works.
 """
 
+from typing import overload, Self, Any
 
 class Descriptor:
-    ...
+    @overload
+    def __get__(self, instance: None, owner: type) -> Self:
+        ...
+    
+    @overload
+    def __get__(self, instance: Any, owner: type) -> str:
+        ...
+    
+    def __get__(self, instance: Any, owner: type) -> Self | str:
+        if instance is None:
+            return self
+    
+        return ""
 
 
 ## End of your code ##
