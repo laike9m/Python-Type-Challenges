@@ -1,8 +1,8 @@
 """
 TODO:
 
-make Fn[VnCallable] could be casted to a Callable with a Any value.
-you MUST NOT modify anything expect the `Fn.into_callable`'s annotation.
+Enhance the Fn[VnCallable].into_callable method to return a Callable with an additional Any parameter at the beginning (using Concatenate).
+This should preserve the remaining parts of the function signature from VnCallable (i.e., parameters and their types, excluding the suffix), as well as the return type.
 """
 
 from typing import Callable, TypeVar, Generic, Any, assert_type
