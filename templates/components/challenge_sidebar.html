@@ -1,0 +1,127 @@
+<style>
+  /* override picocss default style */
+  nav ol:first-of-type,
+  nav ul:first-of-type {
+    margin-left: 0;
+  }
+
+  .challenge-nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .challenge-nav ul li {
+    padding: 0px 8px;
+  }
+
+  .challenge-nav ul li:not(:first-of-type) a {
+    padding: 8px 10px;
+  }
+
+  .challenge-nav .challenge-level {
+    width: fit-content;
+    border-bottom: 1px dashed hsl(240, 2%, 90%);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 1rem 0px;
+  }
+
+  .challenge-nav ul:nth-child(1)>li:nth-child(1) {
+    position: relative;
+  }
+
+  .sidebar-toggle {
+    display: none;
+  }
+
+
+  @media only screen and (max-width: 800px) {
+    .sidebar-toggle {
+      display: flex;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .sidebar-toggle-close {
+      margin-left: auto;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: fit-content;
+      padding: 4px 8px;
+      height: 100%;
+      /* use picocss default css variable. see: https://github.com/picocss/pico/blob/master/css/themes/default.css */
+      background: var(--background-color);
+      box-shadow: 0 0 10px #00000080;
+      transition: left 0.2s ease-in-out;
+      z-index: 1;
+      overflow-y: auto;
+    }
+
+    .drawer-container {
+      position: relative;
+    }
+
+
+    .drawer.open {
+      left: 0;
+    }
+  }
+</style>
+
+<span class="sidebar-toggle">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024">
+    <path fill="currentColor"
+          d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM142.4 642.1L298.7 519a8.84 8.84 0 0 0 0-13.9L142.4 381.9c-5.8-4.6-14.4-.5-14.4 6.9v246.3a8.9 8.9 0 0 0 14.4 7z" />
+  </svg>
+  <span>All Challenges</span>
+</span>
+
+<aside class="drawer">
+  <nav class="challenge-nav drawer-container">
+    {% for level, challenge_names in challenges_groupby_level.items() %}
+      <ul>
+      <!-- Compose close button with first level in row -->
+        {% if level == "basic" %}
+          <li>
+            <h5 class="challenge-level">{{ level }}</h5>
+            <span class="sidebar-toggle sidebar-toggle-close">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                      d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z" />
+              </svg>
+            </span>
+          </li>
+        {% else %}
+          <li>
+            <h5 class="challenge-level">{{ level }}</h5>
+          </li>
+        {% endif %}
+        {% for name in challenge_names %}
+          <li><a id="{{ level }}-{{ name }}" href="/{{ level }}/{{ name }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </nav>
+</aside>
+
+<script>
+  const sidebarTogglers = document.querySelectorAll('.sidebar-toggle');
+  const drawer = document.querySelector('.drawer');
+
+  sidebarTogglers.forEach((toggler) => {
+    toggler.addEventListener('click', () => {
+      drawer.classList.toggle('open');
+    });
+  });
+</script>

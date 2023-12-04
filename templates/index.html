@@ -1,21 +1,87 @@
-<head>
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="google-site-verification" content="IB8oI3WkbGLDND4SMC6m_EiPmREdddxly_JUS-lbM_A" />
+  <link href="https://fonts.loli.net/css2?family=IBM+Plex+Mono:wght@300;500;700&family=Poppins&display=swap"
+        rel="stylesheet">
   <style>
-    html {
-      font-size: 1.5rem;
-    }
-    #challenge-list {
+    .main-container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 30%;
-      margin: auto;
+      padding: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-family: inherit;
+    }
+
+    .random-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 20%;
+      margin-top: 24px;
+    }
+
+    .challenges {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(280px, 1fr));
+      gap: 24px;
+      grid-template-rows: auto;
+      justify-items: center;
+    }
+
+    @media only screen and (max-width: 800px) {
+      .main-container {
+        height: 100%;
+        margin: 4rem auto;
+      }
+
+      .title {
+        width: 80%;
+      }
+
+      .challenges {
+        grid-template-columns: 1fr;
+        width: 80%;
+      }
+
+      .random-button {
+        width: 50%;
+      }
+    }
+
+
+    @media only screen and (max-width: 1080px) and (min-width: 800px) {
+      .challenges {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
-</head>
+{% endblock %}
 
-<body>
-  <center>
-    <h1>Welcome to Python Type Challenges!</h1>
-  </center>
-  {% include 'github_ribbon.html' %} {% include 'challenge_list.html' %}
-</body>
+{% block content %}
+
+  <div class="main-container">
+    <h1 class="title">Welcome to Python Type Challenges!</h1>
+    <div class="challenges">
+      {% for level, challenge_names in challenges_groupby_level.items() %}
+        {% include 'components/challenge_card.html' with context %}
+      {% endfor%}
+    </div>
+    <div class="random-button"><a href="/random" title="Pick a random challenge">Random Challenge 🔀</a></div>
+  </div>
+
+{% endblock %}

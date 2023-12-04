@@ -5,14 +5,12 @@ foo can accept either an integer argument or no argument.
 """
 
 
-def foo(x=0):
+def foo(x):
     pass
 
 
-def should_pass():
-    foo(10)
-    foo()
+## End of your code ##
+foo(10)
+foo()
 
-
-def should_fail():
-    foo("10")
+foo("10")  # expect-type-error

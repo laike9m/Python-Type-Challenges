@@ -1,0 +1,78 @@
+<head>
+  <style type="text/css">
+    .theme-switcher {
+      display: flex;
+      place-items: center;
+      position: relative;
+      height: 20px;
+      width: 20px;
+    }
+
+    #theme-switch {
+      display: none;
+    }
+
+    .icon-sun,
+    .icon-moon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .icon-sun {
+      opacity: 1;
+    }
+
+    .icon-moon {
+      opacity: 0;
+    }
+
+    #theme-switch:checked~label .icon-sun {
+      opacity: 0;
+    }
+
+    #theme-switch:checked~label .icon-moon {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<div class="theme-switcher">
+  <input type="checkbox" id="theme-switch" />
+  <label for="theme-switch">
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path fill="currentColor"
+            d="M120 40V16a8 8 0 0 1 16 0v24a8 8 0 0 1-16 0Zm72 88a64 64 0 1 1-64-64a64.07 64.07 0 0 1 64 64Zm-16 0a48 48 0 1 0-48 48a48.05 48.05 0 0 0 48-48ZM58.34 69.66a8 8 0 0 0 11.32-11.32l-16-16a8 8 0 0 0-11.32 11.32Zm0 116.68l-16 16a8 8 0 0 0 11.32 11.32l16-16a8 8 0 0 0-11.32-11.32ZM192 72a8 8 0 0 0 5.66-2.34l16-16a8 8 0 0 0-11.32-11.32l-16 16A8 8 0 0 0 192 72Zm5.66 114.34a8 8 0 0 0-11.32 11.32l16 16a8 8 0 0 0 11.32-11.32ZM48 128a8 8 0 0 0-8-8H16a8 8 0 0 0 0 16h24a8 8 0 0 0 8-8Zm80 80a8 8 0 0 0-8 8v24a8 8 0 0 0 16 0v-24a8 8 0 0 0-8-8Zm112-88h-24a8 8 0 0 0 0 16h24a8 8 0 0 0 0-16Z" />
+    </svg>
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path fill="currentColor"
+            d="M235.54 150.21a104.84 104.84 0 0 1-37 52.91A104 104 0 0 1 32 120a103.09 103.09 0 0 1 20.88-62.52a104.84 104.84 0 0 1 52.91-37a8 8 0 0 1 10 10a88.08 88.08 0 0 0 109.8 109.8a8 8 0 0 1 10 10Z" />
+    </svg>
+  </label>
+
+
+  <script type="text/javascript">
+    const themeSwitch = document.getElementById('theme-switch');
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        themeSwitch.checked = true;
+      }
+    }
+
+    let themeSwitchEvt = new Event('themeSwitch');
+    themeSwitch.addEventListener('change', function (event) {
+      if (event.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+      // dispatch the event used to update the code mirror theme
+      window.dispatchEvent(themeSwitchEvt);
+    });
+  </script>
+</div>

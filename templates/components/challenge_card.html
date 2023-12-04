@@ -1,0 +1,52 @@
+<style>
+  .challenge-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  .challenge-card .challenge-card__level {
+    margin-bottom: 1rem;
+    border-bottom: 1px dotted hsl(0, 0%, 80%);
+    font-size: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bolder;
+  }
+
+  .challenge-card .challenge-card__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media only screen and (max-width: 1080px) and (min-width: 800px) {
+    .challenges {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    .challenge-card .challenge-card__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      justify-items: center;
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="challenge-card">
+  <h3 class="challenge-card__level">{{level}}</h3>
+  <div class="challenge-card__list">
+    {% for name in challenge_names %}
+      <a href="/{{ level }}/{{ name }}">{{ name }}</a>
+    {% endfor %}
+  </div>
+</div>

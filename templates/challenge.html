@@ -1,132 +1,362 @@
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css"
-  />
+{% extends "base.html" %}
+
+{% block head %}
+  {{ super() }}
+
+  <title>Python Type Challenge - Level: {{level}}, Topic: {{name}}</title>
+  <meta name="description" content="{{description}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
-  <style>
-    html {
-      font-size: 1.2rem;
-    }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+  <script src="{{ url_for('static', filename='js/js-confetti.browser.js')}}"></script>
 
-    .container {
+  <style type="text/css">
+    .challenge-container {
       display: flex;
-      flex-direction: row;
-      justify-content: center;
-      margin: 0 auto;
+      height: 100dvh;
     }
 
-    .navigation-container {
-      padding: 10px;
-      flex: 1;
+    /* Sidebar Area */
+    .sidebar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 12px;
+      border-right: 1px solid hsl(205, 20%, 94%);
     }
 
-    .codemirror-container {
-      padding: 10px;
+    .sidebar-container .sidebar-challenge-main {
+      overflow-y: auto;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .sidebar-container .sidebar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid hsl(205, 20%, 94%);
+      width: 100%;
+    }
+
+    /* Challenge Area */
+    .challenge-area {
+      display: flex;
+      flex-direction: column;
+      margin: 0 2rem;
+      width: 100%;
+    }
+
+    .challenge-header__title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      margin-top: 8px;
+    }
+
+    .challenge-header__title>span:nth-child(1) {
+      font-size: 35px;
+      font-weight: 700;
+      margin-right: 20px;
+    }
+
+    .challenge-header__exerpt {
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .challenge-main {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    /* Code Editor Area */
+    .challenge-main .codemirror-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 50%;
+    }
+
+    #editor {
+      position: relative;
+    }
+
+    #playground-link {
+      display: flex;
+      place-items: center;
+      gap: 2px;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      padding: 5px;
+      /* The "secondary" style comes from https://picocss.com/docs/buttons.html */
+      background: var(--secondary);
+      color: var(--secondary-inverse);
+      border-bottom-left-radius: 5px;
+      font-size: 12px;
+      text-decoration: none;
+      z-index: 1;
+      opacity: 0;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #editor:hover #playground-link {
+      opacity: 1;
+    }
+
+    .editor-actions {
       display: flex;
       justify-content: flex-end;
-      flex-direction: column;
-      flex: 4;
+      align-self: flex-end;
+      gap: 8px;
     }
 
-    .result-container {
-      flex: 4;
+    .editor-actions button {
+      padding: 2px 4px;
+      border-radius: 4px;
+      width: 100px;
+    }
+
+    #answer-link {
+      display: none;
+      padding: 2px 4px;
+      margin-right: 10px;
+    }
+
+    .tests-result-container {
       display: flex;
-      justify-content: start;
-      margin-left: 10px;
+      flex-direction: column;
+      width: 50%;
+      gap: 16px;
+    }
+
+    .tests-result-container #result {
+      white-space: pre-line
     }
 
     /* 当视口宽度小于 800px 时，更改布局为单列 */
     @media only screen and (max-width: 800px) {
-      .container {
+      .challenge-container {
         flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        height: 100%;
+        padding: 8px 12px;
       }
+
+      .sidebar-container {
+        margin-right: 0;
+        flex-direction: row;
+        width: 100%;
+        border-right: 0px;
+        gap: 4px;
+        padding: 0;
+      }
+
+      .sidebar-container .sidebar-challenge-main {
+        height: 100%;
+        padding-left: 0px;
+        margin-right: auto;
+      }
+
+      .sidebar-container .sidebar-actions {
+        margin-top: 0px;
+        padding-top: 0px;
+        border-top: 0px;
+        width: initial;
+        gap: 8px;
+      }
+
+      .challenge-header__title {
+        font-size: 14px;
+        flex-wrap: wrap;
+      }
+
+      .challenge-header__title>span:nth-child(1) {
+        width: 100%;
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .challenge-main {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+      }
+
+      .challenge-main .codemirror-container,
+      .challenge-main .tests-result-container {
+        width: 100%;
+      }
+    }
+
+    .active-challenge {
+      background-color: var(--primary-focus);
     }
 
     .CodeMirror {
       height: auto;
       border: 2px solid orange;
+      font-size: 16px;
     }
 
     .CodeMirror.CodeMirror-focused {
       border: 2px solid blue;
     }
-
-    .code {
-      background-color: #ffffcc;
-    }
   </style>
-</head>
+{% endblock %}
 
-<body>
-  {% include 'github_ribbon.html' %}
-  <div class="container">
-    <div class="navigation-container">{% include 'challenge_list.html' %}</div>
-    <div class="codemirror-container">
-      <h2>Challenge - {{name}}</h2>
-      <p style="margin-top: 0; line-height: 1.5">
-        Complete code following the instructions below, so that
-        <code>should_pass</code> passes type check,
-        <code>should_fail</code> fails type check. Hit the "Run" button to see
-        result.
-      </p>
-      <div id="editor"></div>
-      <div style="display: flex; justify-content: flex-end">
-        <button id="run-button" style="width: 100px; margin-top: 10px">
-          ▶️ Run
-        </button>
+{% block content %}
+  <div class="challenge-container">
+    <!-- Left/Top Sidebar -->
+    <div class="sidebar-container">
+      <div class="sidebar-challenge-main">
+        {% include 'components/challenge_sidebar.html' with context %}
       </div>
-      <p style="margin-top: 0">Test cases</p>
-      <div id="tests"></div>
+      <div class="sidebar-actions">
+        {% include 'components/github_icon.html' %}
+        {% include 'components/darkmode.html' %}
+        {% include 'components/randomizer.html' %}
+      </div>
     </div>
-    <div class="result-container">
-      <p id="result" style="white-space: pre-line"></p>
+
+    <!-- Right/Bottom Challenge Area-->
+    <div class="challenge-area">
+      <!-- Challenge Header Area-->
+      <div class="challenge-header">
+        <div class="challenge-header__title">
+          <span>Challenge - {{ name }}</span>
+          {%include 'components/badge.html' with context %}
+        </div>
+        <p class="challenge-header__exerpt">
+          Complete code following the instructions, so that lines followed by
+          <code># expect-type-error</code> (if any)
+          fail type check, while others can pass.<br>
+          Hit the "▶️ Run" button to see result.
+        </p>
+      </div>
+
+      <div class="challenge-main">
+        <!-- Code Editor Area -->
+        <div class="codemirror-container">
+          <div id="editor">
+            <a id="playground-link" target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4m-8-2l8-8m0 0v5m0-5h-5"/></svg>
+              <span>Open Pyright Playground</span>
+            </a>
+          </div>
+          <div class="editor-actions">
+            <p id="answer-link">Stuck? Check out
+              <a target="_blank" rel="noopener noreferrer"
+                 href="https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges/{{level}}-{{name}}/solution.py">
+                solution
+              </a>
+            </p>
+            <button id="reset-button" class="secondary">
+              Reset
+            </button>
+            <button id="run-button">
+              ▶️ Run
+            </button>
+          </div>
+        </div>
+        <!-- Test Cases and Result Area -->
+        <div class="tests-result-container">
+          <div id="tests"></div>
+          <div id="result"></div>
+        </div>
+      </div>
     </div>
   </div>
+
   <script type="text/javascript">
-    let code_under_test = {{code_under_test | tojson}};
-    console.log(code_under_test);
-    var myCodeMirror = CodeMirror(document.getElementById("editor"), {
+    let confetti = new JSConfetti();
+    let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+    let sharedCodeMirrorOptions = {
+      mode: "python",
+      lineWrapping: true,
+      lineNumbers: true,
+      indentUnit: 4,
+      theme: initTheme,
+    }
+    let code_under_test = {{ code_under_test | tojson }};
+    let myCodeMirror = CodeMirror(document.getElementById("editor"), {
       value: code_under_test,
-      mode: "python",
-      lineWrapping: true,
-      lineNumbers: true,
-      indentUnit: 4
+      ...sharedCodeMirrorOptions,
     });
-    let test_code = {{test_code | tojson}};
-    CodeMirror(document.getElementById("tests"), {
+    let test_code = {{ test_code | tojson }};
+    let testCodeMirror = CodeMirror(document.getElementById("tests"), {
       value: test_code,
-      mode: "python",
-      lineWrapping: true,
-      lineNumbers: true,
-      readOnly: "nocursor"
+      readOnly: "nocursor",
+      ...sharedCodeMirrorOptions,
     });
 
-    document.getElementById('run-button').onclick = function () {
-      var code = myCodeMirror.getValue();
-      fetch('/run/{{name}}', {
+    let playgroundLink = document.getElementById("playground-link");
+    playgroundLink.addEventListener('click', function (event) {
+      const code = myCodeMirror.getValue() + testCodeMirror.getValue();
+      this.href = "https://pyright-play.net/?code=" + LZString.compressToEncodedURIComponent(code);
+    });
+
+    window.addEventListener('themeSwitch', function (event) {
+      let theme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+      myCodeMirror.setOption("theme", theme);
+      testCodeMirror.setOption("theme", theme);
+    })
+
+    let runButton = document.getElementById('run-button')
+    runButton.onclick = function () {
+      console.log(`Run challenge at: ${new Date().toLocaleString()}`);
+
+      // set button spinner
+      let rawInnerText = runButton.innerText;
+      runButton.ariaBusy = true;
+      runButton.innerText = ""
+
+      let code = myCodeMirror.getValue();
+      fetch('/run/{{level}}/{{name}}', {
         method: 'POST',
         body: code
       })
-        .then(response => response.text())
-        .then(result => document.getElementById("result").innerHTML = result)
+        .then(response => response.json())
+        .then(json => {
+          // add confetti effect when passed
+          if (json.passed) {
+            confetti.addConfetti()
+          }
+          setTimeout(() => {
+            document.getElementById('answer-link').style.display = 'block';
+          }, 500);
+          document.getElementById("result").innerHTML = json.message;
+          if (json.debug_info !== undefined) {
+            console.log(json.debug_info);
+          }
+        })
         .catch((error) => {
           console.error('Error:', error);
+        })
+        .finally(() => {
+          // reset button spinner
+          runButton.ariaBusy = false;
+          runButton.innerText = rawInnerText;
         });
     };
 
-    // If window size is > 800, expand the challenge list.
-    function checkWidth() {
-      var detailsElement = document.getElementById('challenge-list');
-      if (window.innerWidth < 800) {
-        detailsElement.removeAttribute('open');
-      } else {
-        detailsElement.setAttribute('open', '');
-      }
-    }
-    checkWidth();  // Check the width initially
-    window.addEventListener('resize', checkWidth);
+    let resetButton = document.getElementById('reset-button')
+    resetButton.onclick = function () {
+      myCodeMirror.setValue(code_under_test);
+    };
+
+    // Make sure the current challenge is visible to user.
+    activeChallengeInList = document.getElementById("{{level}}-{{name}}");
+    activeChallengeInList.scrollIntoView({block: 'center'});
+    activeChallengeInList.classList.add('active-challenge');  // Highlight
   </script>
-</body>
+{% endblock %}

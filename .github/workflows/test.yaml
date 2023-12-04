@@ -1,0 +1,38 @@
+name: Unit Test
+
+on:
+  push:
+    branches: [ main, test ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: 3.12
+          cache: true
+      - name: Install dependencies
+        run: pdm install
+      - name: Preheat Pyright
+        # If we don't do this, each pytest-xdist process will try to install the
+        # dependencies of Pyright (Node.js packages, pyi). Each installation assumes
+        # it's a clean install, and will error if files already exist.
+        run: pdm run pyright --pythonversion 3.12 challenges/basic-any/solution.py
+        continue-on-error: true
+      - name: Run tests
+        run: pdm run test
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          subject: Test Failure in ${{ github.repository }}
+          body: The test for ${{ github.repository }} failed.
+          to: ${{ secrets.MAIL_USERNAME }}
+          from: GitHub
+          server_address: smtp.gmail.com
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}

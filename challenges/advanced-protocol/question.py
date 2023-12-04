@@ -10,6 +10,7 @@ class SupportsQuack:
     ...
 
 
+## End of your code ##
 class Duck:
     def quack(self) -> None:
         print("quack!")
@@ -20,9 +21,5 @@ class Dog:
         print("bark!")
 
 
-def should_pass():
-    duck: SupportsQuack = Duck()
-
-
-def should_fail():
-    dog: SupportsQuack = Dog()
+duck: SupportsQuack = Duck()
+dog: SupportsQuack = Dog()  # expect-type-error

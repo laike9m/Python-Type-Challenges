@@ -6,24 +6,40 @@ authors = [
     {name = "laike9m", email = "laike9m@gmail.com"},
 ]
 dependencies = [
-    "mypy>=1.6.1",
     "flask>=3.0.0",
-    "libcst>=1.1.0",
-    "gunicorn>=21.2.0",
     "typing-extensions>=4.8.0",
+    "pyright>=1.1.338",
+    "flask-sitemapper>=1.7.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
 
+[tool.pdm]
+plugins = ["pdm-autoexport"]
+
 [tool.pdm.scripts]
-devserver = "flask --app app run --debug"
+dev = "flask --app app run --debug"
+test = "pytest -n auto"
+run_black = "black ."
+djhtml = "djhtml --tabwidth 2 templates"
+format = {composite = ["run_black", "djhtml"]}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "djhtml>=3.0.6",
+    "pre-commit>=3.5.0",
+    "pytest-xdist>=3.3.1",
+    "black>=23.11.0",
+]
+
+[[tool.pdm.autoexport]]
+filename = "requirements.txt"
+groups = ["default"]
+without-hashes = true
 
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
 pythonVersion = "3.12"
-
-[tool.mypy]
-check_untyped_defs = true
-warn_no_return = false
