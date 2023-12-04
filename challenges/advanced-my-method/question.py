@@ -9,10 +9,11 @@ P = ParamSpec("P")
 T = TypeVar("T")
 R = TypeVar("R")
 
+
 class MyMethod(Generic[T, P, R]):
     def __init__(self, func: Callable[Concatenate[T, P], R]) -> None:
         self.func = func
-    
+
     def __get__(self, instance, owner) -> None:
         return
 
@@ -22,6 +23,7 @@ class Foo:
     @MyMethod
     def do_something(self, value: int) -> None:
         ...
+
 
 foo = Foo()
 

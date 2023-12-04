@@ -9,6 +9,7 @@ from typing import Callable, TypeVar, Generic, Any, assert_type
 
 VnCallable = TypeVar("VnCallable", bound=Callable)
 
+
 class Fn(Generic[VnCallable]):
     def __init__(self, f: VnCallable) -> None:
         self.f = f
@@ -16,16 +17,17 @@ class Fn(Generic[VnCallable]):
     def into_callable(self) -> None:
         ...
 
+
 ## End of your code ##
 @Fn
 def example(a: int, b: str, c: float, *, d: bool = False) -> None:
     return
 
 
-assert_type(example.f(1, "1", 1., d=False), None)
+assert_type(example.f(1, "1", 1.0, d=False), None)
 
 a: Any = 11111111
-b = example.into_callable()(a, 1, "1", 1., d=False)
+b = example.into_callable()(a, 1, "1", 1.0, d=False)
 assert_type(b, None)
 
-example.into_callable()(1, "1", 1., d=False)  # expect-type-error
+example.into_callable()(1, "1", 1.0, d=False)  # expect-type-error
