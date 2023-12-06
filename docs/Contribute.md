@@ -30,7 +30,7 @@
 
    `solution.py` contains the right solution, with everything else unchanged.
 
-   **Rule of Thumb: ** A challenge should NEVER ask users to write the actual implementation. Users are expected to write type hints and type hints only, and be able to pass the tests.
+   **Rule of Thumb**: A challenge should *NEVER* ask users to write the actual implementation. Users are expected to write type hints and type hints only, and be able to pass the tests.
 
 5. Test with [`pyright`](https://microsoft.github.io/pyright/#/installation?id=command-line) to make sure your new challenge works as expected.
 
