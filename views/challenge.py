@@ -51,6 +51,10 @@ class Challenge:
     def parse_code(self):
         self.user_code, _, self.test_code = self.code.partition(self.CODE_SPLITTER)
 
+    @property
+    def key(self) -> ChallengeKey:
+        return ChallengeKey(level=self.level, name=self.name)
+
 
 @dataclass(frozen=True, slots=True)
 class TypeCheckResult:
@@ -73,6 +77,8 @@ class ChallengeManager:
 
     def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(key)
+        if user_code == challenge.user_code:
+            return TypeCheckResult(message="Please make some changes to the code before running!", passed=False)
         # Make sure user code ends with a new line to avoid issue #63.
         return self._type_check_with_pyright(user_code + "\n", challenge.test_code)
 

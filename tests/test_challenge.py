@@ -1,6 +1,12 @@
 from views.challenge import ChallengeManager
 
 
+def test_run_not_modified_user_code(random_q_challenge):
+    ret = ChallengeManager().run_challenge(random_q_challenge.key, random_q_challenge.user_code)
+    assert ret.passed is False
+    assert "make some changes" in ret.message
+
+
 def test_run_type_check_with_pyright():
     code = """\
 a: int = 1
