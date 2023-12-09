@@ -8,8 +8,9 @@ import random
 from pathlib import Path
 
 import pytest
-from app import app
 from flask.testing import FlaskClient
+
+from app import app
 from views.challenge import Challenge, Level
 
 CHALLENGES_DIR = Path(__file__).parent.parent / "challenges"
