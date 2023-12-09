@@ -1,12 +1,12 @@
 """
 TODO:
 
-foo should accept an argument of arbitrary type.
+The `foo` function currently takes no arguments, modify it to take an argument of arbitrary type.
 """
 
 
-def foo(x):
-    pass
+def foo():
+    """⬆️ Change me"""
 
 
 ## End of your code ##
