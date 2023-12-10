@@ -1,12 +1,20 @@
 """
 TODO:
 
-Define a descriptor, make test case works.
+Create a descriptor and adorn the __get__ method with the @typing.overload decorator to ensure the functionality of the test case.
+
+NOTE: Craft at least two overload declarations:
+
+- one to handle the case when the instance is None (i.e., accessing TestClass.a), and another...
+- ...to cater to any instance of TestClass.
+
+NOTE: By explicitly binding the instance parameter to the TestClass class, the test cases can also be successfully passed.
 """
 
 
 class Descriptor:
-    ...
+    def __get__(self, instance: ..., owner: ...):
+        ...
 
 
 ## End of your code ##

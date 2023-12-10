@@ -11,10 +11,15 @@ VnCallable = TypeVar("VnCallable", bound=Callable)
 
 
 class Fn(Generic[VnCallable]):
+    # you MUST NOT modify the Generic defination.
+
     def __init__(self, f: VnCallable) -> None:
         self.f = f
 
-    def into_callable(self) -> None:
+    def into_callable(self):
+        # TODO: annotate self parameter, not required to touch the function body.
+        # NOTE: the test case requires a Any prefix param before VnCallable's parameters.
+        #       information is enough for type checker to infer these types.
         ...
 
 

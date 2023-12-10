@@ -14,7 +14,7 @@ VnCallable = TypeVar("VnCallable", bound=Callable)
 
 class Fn(Generic[VnCallable]):
     def __init__(self, f: VnCallable) -> None:
-        self.f = f
+        ...
 
     def into_callable(self: "Fn[Callable[P, R]]") -> Callable[Concatenate[Any, P], R]:
         ...
