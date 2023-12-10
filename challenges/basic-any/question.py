@@ -1,12 +1,12 @@
 """
 TODO:
 
-The `foo` function currently takes no arguments, modify it to take an argument of arbitrary type.
+Modify `foo` so it takes an argument of arbitrary type.
 """
 
 
 def foo():
-    """⬆️ Change me"""
+    """⬆️ Change me. No need to implement the function."""
 
 
 ## End of your code ##
