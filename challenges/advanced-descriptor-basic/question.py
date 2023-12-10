@@ -14,6 +14,7 @@ NOTE: By explicitly binding the instance parameter to the TestClass class, the t
 
 class Descriptor:
     def __get__(self, instance: ..., owner: ...):
+        """you don't need to implement this"""
         ...
 
 
