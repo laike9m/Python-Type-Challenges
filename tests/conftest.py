@@ -16,7 +16,13 @@ ALL_QUESTIONS = list(CHALLENGES_DIR.glob("**/question.py"))
 ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution*.py"))
 
 
-@pytest.fixture
+@pytest.fixture()
+def assets_dir() -> Path:
+    """The directory contains test assets."""
+    return Path(__file__).parent / "assets"
+
+
+@pytest.fixture()
 def test_client() -> FlaskClient:
     return app.test_client()
 
