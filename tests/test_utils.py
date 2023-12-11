@@ -1,4 +1,5 @@
 from views.challenge import ChallengeManager
+from views.utils.text import render_hints
 
 
 def test_run_type_check_with_pyright():
@@ -18,3 +19,8 @@ e: list[str] = [  # expect-type-error
         "2: error: Expected type error but instead passed\n\n"
         "Found 2 errors"
     )
+
+
+def test_render_hints():
+    content = render_hints("[foo](http://example.com)")
+    assert "<a href=" in content

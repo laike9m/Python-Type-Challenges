@@ -9,6 +9,7 @@
    For example, say you want to add a new challenge about [Protocols](https://mypy.readthedocs.io/en/stable/protocols.html). Since this is an advanced topic, you may name the directory `advanced-protocol`.
 
 4. Put a `question.py` and a `solution.py` in the new directory. Here's an example `question.py`:
+
    ```python
    """
    TODO:
@@ -34,4 +35,9 @@
 
 5. Test with [`pyright`](https://microsoft.github.io/pyright/#/installation?id=command-line) to make sure your new challenge works as expected.
 
-6. Create a Pull Request.
+6. *(Optional)* Add a hint message for the challenge,
+   A well-written *HINT* sometimes makes the challenge even better. Steps:
+   - Create a file named `hints.md` in the same directory.
+   - Write hint message in markdown format, e.g: `Check out TypeVar, the constraints argument might be a good fit for this challenge.`.
+
+7. Create a Pull Request.

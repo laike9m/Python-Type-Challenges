@@ -66,8 +66,28 @@
     }
 
     .challenge-header__exerpt {
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.2rem;
       line-height: 1.5;
+    }
+
+    .hints-container {
+      margin-bottom: 1.5rem;
+      font-size: 13px;
+    }
+
+    .hints-container #hints-missing {
+      color: #aaa;
+    }
+    .hints-container .hints-message {
+      display: none;
+      color: #333;
+      background-color: #f3f3f3;
+      margin-top: 6px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    .hints-container .hints-message * {
+      font-size: 13px;
     }
 
     .challenge-main {
@@ -243,6 +263,14 @@
           fail type check, while others can pass.<br>
           Hit the "▶️ Run" button to see result.
         </p>
+        <div class="hints-container">
+          {% if hints_for_display %}
+            <a id="read-hints" href="javascript:void(0);">[💡 Read Hints]</a>
+          {% else %}
+            <span id="hints-missing" href="javascript:void(0);">[💡 No Hints Available]</span>
+          {% endif %}
+          <div class="hints-message">{{hints_for_display | safe}}</div>
+        </div>
       </div>
 
       <div class="challenge-main">
@@ -354,6 +382,22 @@
     resetButton.onclick = function () {
       myCodeMirror.setValue(code_under_test);
     };
+
+    // Set up hints events and functions
+    let hintBtn = document.getElementById('read-hints')
+    hintBtn.onclick = function () {
+      // Toggle the display of the hints message.
+      let msgElem = document.getElementsByClassName('hints-message')[0];
+      if (msgElem.style.display === 'block') {
+        msgElem.style.display = 'none';
+      } else {
+        msgElem.style.display = 'block';
+      }
+    };
+    // Make sure to open links in hints in new tab.
+    document.querySelectorAll('.hints-message a').forEach(function(elem) {
+      elem.setAttribute('target', '_blank');
+    })
 
     // Make sure the current challenge is visible to user.
     activeChallengeInList = document.getElementById("{{level}}-{{name}}");

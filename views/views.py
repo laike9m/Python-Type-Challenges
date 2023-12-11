@@ -13,6 +13,7 @@ from flask import (
 
 from .challenge import ChallengeKey, Level, challenge_manager
 from .sitemap import sitemapper
+from .utils.text import render_hints
 
 app_views = Blueprint("app_views", __name__)
 
@@ -58,6 +59,7 @@ def get_challenge(level: str, name: str):
         challenges_groupby_level=challenge_manager.challenges_groupby_level,
         code_under_test=challenge.user_code,
         test_code=challenge.test_code,
+        hints_for_display=render_hints(challenge.hints) if challenge.hints else None,
         python_info=platform.python_version(),
     )
 

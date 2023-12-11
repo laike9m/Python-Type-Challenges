@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4"
-content_hash = "sha256:60c320ace488205de74250c7de2f05c6c94e508af2f35d553b10294380d7b6f6"
+content_hash = "sha256:7df2fb14afe43bc748b9aad9ea656615e182f2d75a98371ab675e19e2333f5ec"
 
 [[package]]
 name = "black"
@@ -176,6 +176,16 @@ dependencies = [
 files = [
     {file = "Jinja2-3.1.2-py3-none-any.whl", hash = "sha256:6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61"},
     {file = "Jinja2-3.1.2.tar.gz", hash = "sha256:31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"},
+]
+
+[[package]]
+name = "markdown"
+version = "3.5.1"
+requires_python = ">=3.8"
+summary = "Python implementation of John Gruber's Markdown."
+files = [
+    {file = "Markdown-3.5.1-py3-none-any.whl", hash = "sha256:5874b47d4ee3f0b14d764324d2c94c03ea66bee56f2d929da9f2508d65e722dc"},
+    {file = "Markdown-3.5.1.tar.gz", hash = "sha256:b65d7beb248dc22f2e8a31fb706d93798093c308dc1aba295aedeb9d41a813bd"},
 ]
 
 [[package]]
