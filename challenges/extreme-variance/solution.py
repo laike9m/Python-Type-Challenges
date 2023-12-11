@@ -22,3 +22,8 @@ g(l1)
 l2: list[int | str] = [1, 2]
 f(l2)
 g(l2)
+
+f(1)  # expect-type-error
+f("1")  # expect-type-error
+g(1)  # expect-type-error
+g("1")
