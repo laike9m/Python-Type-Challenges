@@ -1,7 +1,9 @@
 """
 TODO:
 
-Define a descriptor, make test case works.
+Create a descriptor and annotate the __get__ method.
+
+HINT: use typing.overload
 """
 
 from typing import overload, Self, Any
@@ -17,10 +19,7 @@ class Descriptor:
         ...
 
     def __get__(self, instance: Any, owner: type) -> Self | str:
-        if instance is None:
-            return self
-
-        return ""
+        ...
 
 
 ## End of your code ##
@@ -38,6 +37,5 @@ def string_value(x: str) -> None:
 
 descriptor_self(TestClass.a)
 string_value(TestClass().a)
-
 descriptor_self(TestClass().a)  # expect-type-error
 string_value(TestClass.a)  # expect-type-error

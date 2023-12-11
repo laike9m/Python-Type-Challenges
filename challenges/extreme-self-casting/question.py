@@ -1,8 +1,10 @@
 """
 TODO:
 
-Enhance the Fn[VnCallable].into_callable method to return a Callable with an additional Any parameter at the beginning (using Concatenate).
-This should preserve the remaining parts of the function signature from VnCallable (i.e., parameters and their types, excluding the suffix), as well as the return type.
+Enhance the Fn[VnCallable].into_callable method to return a Callable with an additional
+Any parameter at the beginning (using Concatenate).
+This should preserve the remaining parts of the function signature from VnCallable
+(i.e., parameters and their types, excluding the suffix), as well as the return type.
 """
 
 from typing import Callable, TypeVar, Generic, Any, assert_type
