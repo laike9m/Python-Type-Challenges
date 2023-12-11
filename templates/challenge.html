@@ -70,20 +70,24 @@
       line-height: 1.5;
     }
 
+    /* Hints styles */
     .hints-container {
       margin-bottom: 1.5rem;
       font-size: 13px;
     }
-
+    .hints-container #read-hints {
+      padding: 0.2em 0.8em;
+      font-size: 13px;
+    }
     .hints-container #hints-missing {
-      color: #aaa;
+      margin-top: 0.8em;
+      color: var(--secondary);
     }
     .hints-container .hints-message {
       display: none;
-      color: #333;
-      background-color: #f3f3f3;
-      margin-top: 6px;
-      padding: 14px;
+      margin-top: 0.5em;
+      margin-bottom: 0;
+      padding: 0.75em 1em;
       font-size: 13px;
     }
     .hints-container .hints-message * {
@@ -265,11 +269,11 @@
         </p>
         <div class="hints-container">
           {% if hints_for_display %}
-            <a id="read-hints" href="javascript:void(0);">[💡 Read Hints]</a>
+            <a id="read-hints" role="button" class="secondary outline" href="javascript:void(0);">💡 Read Hints</a>
           {% else %}
-            <span id="hints-missing" href="javascript:void(0);">[💡 No Hints Available]</span>
+            <div id="hints-missing" href="javascript:void(0);">💡 No Hints Available</div>
           {% endif %}
-          <div class="hints-message">{{hints_for_display | safe}}</div>
+          <article class="hints-message">{{hints_for_display | safe}}</article>
         </div>
       </div>
 
