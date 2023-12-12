@@ -30,6 +30,7 @@
   ```
   pdm format
   ```
+
   Note: The project uses [djhtml](https://github.com/rtts/djhtml) to format HTML, which may conflicts with your editor's default formatter.
 
 - Start a development server
@@ -39,5 +40,17 @@
   ```
 
   Then visit http://127.0.0.1:5000/ to access the app in your local browser.
+
+- Update dependencies
+
+  ```
+  # Use pdm to manage dependencies
+  pdm add markdown
+
+  # Sync changes with requirements.txt after update
+  pdm export --prod --without-hashes > requirements.txt
+  ```
+
+  You may also want to use [pdm-autoexport](https://github.com/pdm-project/pdm-autoexport) extension, it sync the dependencies to other formats automatically.
 
 If you encounter any issues in the above steps, please file a bug and I'll fix it as soon as I can.

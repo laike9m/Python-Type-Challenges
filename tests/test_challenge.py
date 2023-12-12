@@ -1,20 +1,19 @@
 from pathlib import Path
 
 import pytest
-
 from views.challenge import ChallengeKey, ChallengeManager
 
 
 class TestLoadChallenges:
     def test_load_empty_dir(self, tmpdir):
-        assert ChallengeManager(Path(tmpdir)).get_challenge_cnt() == 0
+        assert ChallengeManager(Path(tmpdir)).challenge_count == 0
 
     def test_defaults(self):
-        assert ChallengeManager().get_challenge_cnt() > 0
+        assert ChallengeManager().challenge_count > 0
 
     def test_load_tests_assets(self, assets_dir):
         mgr = ChallengeManager(assets_dir / "challenges")
-        assert mgr.get_challenge_cnt() > 0
+        assert mgr.challenge_count > 0
 
 
 class TestChallengeWithHints:

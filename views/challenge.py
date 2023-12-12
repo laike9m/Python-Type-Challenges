@@ -4,6 +4,7 @@ import re
 import subprocess
 import tempfile
 import tokenize
+from collections import defaultdict
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
@@ -33,7 +34,7 @@ class ChallengeKey:
 
     @classmethod
     def from_str(cls, key: str):
-        """Create a key object form a string like "basic-foo"."""
+        """Create a key object from a string like "basic-foo"."""
         level, name = key.split("-", maxsplit=1)
         return cls(Level(level), name)
 
@@ -71,8 +72,7 @@ class TypeCheckResult:
 class ChallengeManager:
     """The manager for challenges.
 
-    :param root_dir: The root directory that contains the files of challenges,
-        use "{PROJECT_ROOT}/challenges" by default.
+    :param root_dir: The root directory that contains the files of challenges.
     """
 
     def __init__(self, root_dir: Optional[Path] = None):
@@ -88,8 +88,9 @@ class ChallengeManager:
     def get_challenge(self, key: ChallengeKey) -> Challenge:
         return self.challenges[key]
 
-    def get_challenge_cnt(self) -> int:
-        """Get the count of challenges."""
+    @property
+    def challenge_count(self) -> int:
+        """The count of challenges."""
         return len(self.challenges)
 
     def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
@@ -127,17 +128,17 @@ class ChallengeManager:
         return challenges
 
     def _get_challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
-        groups: dict[str, list[ChallengeName]] = {}
+        groups: defaultdict[str, list[ChallengeName]] = defaultdict(list)
 
         for challenge in self.challenges.values():
-            groups.setdefault(challenge.level, []).append(challenge.name)
+            groups[challenge.level].append(challenge.name)
 
         # Sort challenge by name alphabetically.
         for challenge_names in groups.values():
             challenge_names.sort()
 
         # Make sure groups are ordered by level (from easy to hard)
-        return {level: groups.get(level, []) for level in Level}
+        return {level: groups[level] for level in Level}
 
     EXPECT_ERROR_COMMENT = "expect-type-error"
 
