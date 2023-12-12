@@ -98,7 +98,9 @@
     .hints-container .hints-message * {
       font-size: 13px;
     }
-
+    .hints-container .hints-message ul {
+      margin-bottom: 0;
+    }
     .challenge-main {
       display: flex;
       justify-content: space-between;
@@ -276,7 +278,7 @@
           {% if hints_for_display %}
             <a id="read-hints" role="button" class="secondary outline" href="javascript:void(0);">💡 Read Hints</a>
           {% else %}
-            <div id="hints-missing" href="javascript:void(0);">💡 No Hints Available</div>
+            <div id="hints-missing">💡 No Hints Available</div>
           {% endif %}
           <article class="hints-message">{{hints_for_display | safe}}</article>
         </div>

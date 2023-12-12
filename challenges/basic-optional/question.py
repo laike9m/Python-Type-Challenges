@@ -1,7 +1,7 @@
 """
 TODO:
 
-foo can accept either an integer argument or no argument.
+foo can accept an integer argument, None or no argument at all.
 """
 
 
@@ -11,6 +11,7 @@ def foo(x):
 
 ## End of your code ##
 foo(10)
+foo(None)
 foo()
 
 foo("10")  # expect-type-error

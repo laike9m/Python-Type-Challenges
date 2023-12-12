@@ -1,0 +1,2 @@
+- A union type can be created using the `|` operator, e.g: `X | Y`
+- or using [Union](https://docs.python.org/3/library/typing.html#typing.Union)
