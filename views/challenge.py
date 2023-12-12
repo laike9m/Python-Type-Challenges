@@ -1,16 +1,14 @@
-import glob
 import io
-import os
-import re
 import random
+import re
 import subprocess
 import tempfile
 import tokenize
+from collections import defaultdict
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
-from typing import ClassVar, TypeAlias
-import datetime
+from typing import ClassVar, Optional, TypeAlias
 
 ROOT_DIR = Path(__file__).parent.parent
 
@@ -34,9 +32,20 @@ class ChallengeKey:
     level: Level
     name: ChallengeName
 
+    @classmethod
+    def from_str(cls, key: str):
+        """Create a key object from a string like "basic-foo"."""
+        level, name = key.split("-", maxsplit=1)
+        return cls(Level(level), name)
+
 
 @dataclass
 class Challenge:
+    """A challenge object.
+
+    :param hints: An optional string of hints, use markdown syntax.
+    """
+
     CODE_SPLITTER: ClassVar[str] = "\n## End of your code ##\n"
 
     name: ChallengeName
@@ -44,6 +53,7 @@ class Challenge:
     code: str
     user_code: str = field(default="", init=False)
     test_code: str = field(default="", init=False)
+    hints: Optional[str] = None
 
     def __post_init__(self):
         self.parse_code()
@@ -60,8 +70,15 @@ class TypeCheckResult:
 
 
 class ChallengeManager:
-    def __init__(self):
-        self.challenges: dict[ChallengeKey, Challenge] = self._load_challenges()
+    """The manager for challenges.
+
+    :param root_dir: The root directory that contains the files of challenges.
+    """
+
+    def __init__(self, root_dir: Optional[Path] = None):
+        if not root_dir:
+            root_dir = ROOT_DIR / "challenges"
+        self.challenges: dict[ChallengeKey, Challenge] = self._load_challenges(root_dir)
         self.challenges_groupby_level: dict[Level, list[ChallengeName]]
         self.challenges_groupby_level = self._get_challenges_groupby_level()
 
@@ -70,6 +87,11 @@ class ChallengeManager:
 
     def get_challenge(self, key: ChallengeKey) -> Challenge:
         return self.challenges[key]
+
+    @property
+    def challenge_count(self) -> int:
+        """The count of challenges."""
+        return len(self.challenges)
 
     def run_challenge(self, key: ChallengeKey, user_code: str) -> TypeCheckResult:
         challenge = self.get_challenge(key)
@@ -82,26 +104,34 @@ class ChallengeManager:
         return {"level": level, "name": name}
 
     @staticmethod
-    def _load_challenges() -> dict[ChallengeKey, Challenge]:
+    def _load_challenges(root_dir: Path) -> dict[ChallengeKey, Challenge]:
         challenges = {}
-        for filename in glob.glob(f"{ROOT_DIR}/challenges/*/question.py"):
-            challenge_folder_name = os.path.basename(os.path.dirname(filename))
-            level, challenge_name = challenge_folder_name.split("-", maxsplit=1)
-            with open(filename, "r") as file:
-                code = file.read()
-            challenges[ChallengeKey(Level(level), challenge_name)] = Challenge(
-                name=challenge_name,
-                level=Level(level),
-                code=code,
-            )
+        for challenge_folder in root_dir.iterdir():
+            question_source = challenge_folder / "question.py"
+            if not question_source.exists():
+                continue
 
+            # Try to read the optional hints file
+            hints_file = challenge_folder / "hints.md"
+            if hints_file.exists():
+                hints = hints_file.read_text().strip()
+            else:
+                hints = None
+
+            key = ChallengeKey.from_str(challenge_folder.name)
+            challenges[key] = Challenge(
+                name=key.name,
+                level=key.level,
+                code=question_source.read_text(),
+                hints=hints,
+            )
         return challenges
 
     def _get_challenges_groupby_level(self) -> dict[Level, list[ChallengeName]]:
-        groups: dict[str, list[ChallengeName]] = {}
+        groups: defaultdict[str, list[ChallengeName]] = defaultdict(list)
 
         for challenge in self.challenges.values():
-            groups.setdefault(challenge.level, []).append(challenge.name)
+            groups[challenge.level].append(challenge.name)
 
         # Sort challenge by name alphabetically.
         for challenge_names in groups.values():

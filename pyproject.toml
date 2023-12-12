@@ -10,6 +10,7 @@ dependencies = [
     "typing-extensions>=4.8.0",
     "pyright>=1.1.338",
     "flask-sitemapper>=1.7.0",
+    "markdown>=3.5.1",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
