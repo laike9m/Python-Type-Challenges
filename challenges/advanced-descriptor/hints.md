@@ -1,0 +1,2 @@
+- A descriptor's `__get__` method is called in 2 different ways: "owned by class" or "owned by instance", you have to annotate the method for both cases.
+- Don't panic, [@overload](https://docs.python.org/3/library/typing.html#typing.overload) can help you with that.

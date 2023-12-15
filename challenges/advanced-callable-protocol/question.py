@@ -2,8 +2,6 @@
 TODO:
 
 Define a callable type that accepts a string parameter called `name` and returns None.
-
-HINT: Use Protocol
 """
 
 
