@@ -1,0 +1,2 @@
+- Use [TypeVar](https://docs.python.org/3/library/typing.html#typing.TypeVar) to annotate a generic function.
+- Or try the ["Generic Functions"](https://docs.python.org/3/reference/compound_stmts.html#generic-functions) statement, it looks like this: `def func[T](arg: T): ...`.
