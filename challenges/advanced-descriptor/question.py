@@ -2,8 +2,6 @@
 TODO:
 
 Create a descriptor and annotate the __get__ method.
-
-HINT: use typing.overload
 """
 
 

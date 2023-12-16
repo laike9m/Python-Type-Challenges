@@ -4,14 +4,14 @@ TODO:
 Define a decorator that wraps a function and returns a function with the same signature.
 The decorator takes an argument `message` of type string
 """
-from typing import TypeVar
 from collections.abc import Callable
+from typing import TypeVar
 
 # Python < 3.12
 #
 # T = TypeVar("T", bound=Callable)
 #
-# def decorator(func: T) -> T:
+# def decorator(message: str) -> Callable[[T], T]:
 #     return func
 
 

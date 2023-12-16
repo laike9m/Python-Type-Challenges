@@ -1,0 +1,2 @@
+- Check out [ParamSpec](https://docs.python.org/3/library/typing.html#typing.ParamSpec).
+- Try to start with this: `class Wrap[T, **P]`, `**P` creates a `ParamSpec` object.

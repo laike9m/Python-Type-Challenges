@@ -1,0 +1,2 @@
+- How about changing that troublesome symbol to a "STRING"?
+- Something in the ["\_\_future__"](https://peps.python.org/pep-0563/) may also help you.

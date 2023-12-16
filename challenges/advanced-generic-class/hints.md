@@ -1,0 +1,2 @@
+- The syntax for defining a generic class is: `class Stack[T]:`.
+- Remember to use `T` in the class body.

@@ -2,11 +2,9 @@
 TODO:
 
 Create a descriptor and annotate the __get__ method.
-
-HINT: use typing.overload
 """
 
-from typing import overload, Self, Any
+from typing import Any, Self, overload
 
 
 class Descriptor:
