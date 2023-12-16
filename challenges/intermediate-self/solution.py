@@ -12,6 +12,16 @@ class Foo:
         ...
 
 
+# Another solution using TypeVar
+# from typing import TypeVar
+#
+# T = TypeVar('T', bound='Foo')
+#
+# class Foo:
+#     def return_self(self: T) -> T:
+#         ...
+
+
 ## End of your code ##
 class SubclassOfFoo(Foo):
     pass

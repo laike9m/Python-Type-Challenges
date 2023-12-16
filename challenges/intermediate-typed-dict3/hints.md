@@ -1,0 +1,2 @@
+- Check out [TypedDict](https://docs.python.org/3/library/typing.html#typing.TypedDict).
+- Don't miss out the `total` keyword argument.

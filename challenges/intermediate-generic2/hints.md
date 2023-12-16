@@ -1,1 +1,2 @@
-Check out [TypeVar](https://docs.python.org/3/library/typing.html#typing.TypeVar), the `constraints` argument might be a good fit for this challenge.
+- [TypeVar](https://docs.python.org/3/library/typing.html#typing.TypeVar) with `constraints` might be a good fit for this challenge.
+- You can also try to solve this using the ["Generic Functions"](https://docs.python.org/3/reference/compound_stmts.html#generic-functions) statement.
