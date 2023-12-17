@@ -4,16 +4,8 @@ TODO:
 Define a `Array` type that supports addition of arrays with the same shape.
 """
 
-from typing import Generic, Tuple, TypeAlias, TypeVar, TypeVarTuple
 
-T = TypeVar("T")
-Ts = TypeVarTuple("Ts")
-
-S1: TypeAlias = Tuple[float, int]
-S2: TypeAlias = Tuple[*S1, str]
-
-
-class Array(Generic[*Ts]):
+class Array:
     def __add__(self, other):
         ...
 
@@ -21,11 +13,12 @@ class Array(Generic[*Ts]):
         ...
 
 
-a: Array[*S1] = Array()
-b: Array[*S1] = Array()
+## End of your code ##
+a: Array[float, int] = Array()
+b: Array[float, int] = Array()
 print(a + b)
 
-c: Array[*S2] = Array()
+c: Array[float, int, str] = Array()
 print(a + c)  # expect-type-error
 
 d = a.add_dimension("foo")
