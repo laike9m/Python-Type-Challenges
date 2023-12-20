@@ -1,0 +1,2 @@
+- Finish typed-dict challenges first
+- Check out [Unpack](https://docs.python.org/3/library/typing.html#typing.Unpack)
