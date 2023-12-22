@@ -1,6 +1,10 @@
 # So you want to create a new challange
 
-Awesome, this guide will help you create a new challenge. Before diving into the details, there's an important question: how to find an idea for a new challenge? There are two good ways:
+Awesome, this guide will help you create a new challenge. Before diving into the details, there's an important question:
+
+*how to find an idea for a new challenge?*
+
+There are two good ways:
 
 - Real-world problems you encountered in work and/or study;
 - Every typing related PEP has numerous examples discussing different uses cases (e.g. [PEP 646](https://peps.python.org/pep-0646/))
