@@ -1,7 +1,7 @@
 """
 TODO:
 
-Define a `Array` type that supports addition of arrays with the same shape.
+Define an `Array` type that supports element-wise addition of arrays with identical dimensions and types.
 """
 
 
@@ -9,17 +9,13 @@ class Array:
     def __add__(self, other):
         ...
 
-    def add_dimension(self, x):
-        ...
-
 
 ## End of your code ##
+from typing import assert_type
+
 a: Array[float, int] = Array()
 b: Array[float, int] = Array()
-print(a + b)
+assert_type(a + b, Array[float, int])
 
 c: Array[float, int, str] = Array()
-print(a + c)  # expect-type-error
-
-d = a.add_dimension("foo")
-print(c + d)
+assert_type(a + c, Array[float, int, str])  # expect-type-error

@@ -1,10 +1,10 @@
 """
 TODO:
 
-Define a `Array` type that supports addition of arrays with the same shape.
+Define an `Array` type that supports element-wise addition of arrays with identical dimensions and types.
 """
 
-from typing import Generic, TypeVar, TypeVarTuple
+from typing import Generic, TypeVar, TypeVarTuple, assert_type
 
 T = TypeVar("T")
 Ts = TypeVarTuple("Ts")
@@ -14,17 +14,13 @@ class Array(Generic[*Ts]):
     def __add__(self, other: "Array[*Ts]") -> "Array[*Ts]":
         ...
 
-    def add_dimension(self, x: "T") -> "Array[*Ts, T]":
-        ...
-
 
 ## End of your code ##
+from typing import assert_type
+
 a: Array[float, int] = Array()
 b: Array[float, int] = Array()
-print(a + b)
+assert_type(a + b, Array[float, int])
 
 c: Array[float, int, str] = Array()
-print(a + c)  # expect-type-error
-
-d = a.add_dimension("foo")
-print(c + d)
+assert_type(a + c, Array[float, int, str])  # expect-type-error
