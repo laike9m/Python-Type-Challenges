@@ -1,0 +1,149 @@
+<div class="challenge-header">
+  <div class="challenge-header__title">
+    <span>Challenge - {{ name }}</span>
+    {%include 'components/badge.html' with context %}
+  </div>
+  <p class="challenge-header__exerpt">
+    Complete code following the instructions, so that lines followed by
+    <code># expect-type-error</code> (if any)
+    fail type check, while others can pass.<br>
+    Hit the "▶️ Run" button to see result.
+  </p>
+  <div class="hints-container">
+    {% if hints_for_display %}
+      <a id="read-hints" role="button" class="secondary outline" href="javascript:void(0);">💡 Read Hints</a>
+    {% else %}
+      <div id="hints-missing">💡 No Hints Available</div>
+    {% endif %}
+    <article class="hints-message">{{hints_for_display | safe}}</article>
+  </div>
+</div>
+
+<div class="challenge-main">
+  <div class="codemirror-container">
+    <div id="editor">
+      <a id="playground-link" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4m-8-2l8-8m0 0v5m0-5h-5"/></svg>
+        <span>Open Pyright Playground</span>
+      </a>
+    </div>
+    <div class="editor-actions">
+      <p id="answer-link">Stuck? Check out
+        <a target="_blank" rel="noopener noreferrer"
+           href="https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges/{{level}}-{{name}}/solution.py">
+          solution
+        </a>
+      </p>
+      <button id="reset-button" class="secondary">
+        Reset
+      </button>
+      <button id="run-button">
+        ▶️ Run
+      </button>
+    </div>
+  </div>
+  <div class="tests-result-container">
+    <div id="tests"></div>
+    <div id="result"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  let confetti = new JSConfetti();
+  let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+  let sharedCodeMirrorOptions = {
+    mode: "python",
+    lineWrapping: true,
+    lineNumbers: true,
+    indentUnit: 4,
+    theme: initTheme,
+  }
+  let code_under_test = {{ code_under_test | tojson }};
+  let myCodeMirror = CodeMirror(document.getElementById("editor"), {
+    value: code_under_test,
+    ...sharedCodeMirrorOptions,
+  });
+  let test_code = {{ test_code | tojson }};
+  let testCodeMirror = CodeMirror(document.getElementById("tests"), {
+    value: test_code,
+    readOnly: "nocursor",
+    ...sharedCodeMirrorOptions,
+  });
+
+  let playgroundLink = document.getElementById("playground-link");
+  playgroundLink.addEventListener('click', function (event) {
+    const code = myCodeMirror.getValue() + testCodeMirror.getValue();
+    this.href = "https://pyright-play.net/?code=" + LZString.compressToEncodedURIComponent(code);
+  });
+
+  window.addEventListener('themeSwitch', function (event) {
+    let theme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+    myCodeMirror.setOption("theme", theme);
+    testCodeMirror.setOption("theme", theme);
+  })
+
+  let runButton = document.getElementById('run-button')
+  runButton.onclick = function () {
+    console.log(`Run challenge at: ${new Date().toLocaleString()}`);
+
+    // set button spinner
+    let rawInnerText = runButton.innerText;
+    runButton.ariaBusy = true;
+    runButton.innerText = ""
+
+    let code = myCodeMirror.getValue();
+    fetch('/run/{{level}}/{{name}}', {
+      method: 'POST',
+      body: code
+    })
+      .then(response => response.json())
+      .then(json => {
+        // add confetti effect when passed
+        if (json.passed) {
+          confetti.addConfetti()
+        }
+        setTimeout(() => {
+          document.getElementById('answer-link').style.display = 'block';
+        }, 500);
+        document.getElementById("result").innerHTML = json.message;
+        if (json.debug_info !== undefined) {
+          console.log(json.debug_info);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        // reset button spinner
+        runButton.ariaBusy = false;
+        runButton.innerText = rawInnerText;
+      });
+  };
+
+  let resetButton = document.getElementById('reset-button')
+  resetButton.onclick = function () {
+    myCodeMirror.setValue(code_under_test);
+  };
+
+  // Set up hints events and functions
+  let hintBtn = document.getElementById('read-hints')
+  hintBtn.onclick = function () {
+    // Toggle the display of the hints message.
+    let msgElem = document.getElementsByClassName('hints-message')[0];
+    if (msgElem.style.display === 'block') {
+      msgElem.style.display = 'none';
+    } else {
+      msgElem.style.display = 'block';
+    }
+  };
+  // Make sure to open links in hints in new tab.
+  document.querySelectorAll('.hints-message a').forEach(function(elem) {
+    elem.setAttribute('target', '_blank');
+  })
+
+  // Make sure the current challenge is visible to user.
+  activeChallengeInList = document.getElementById("{{level}}-{{name}}");
+  activeChallengeInList.scrollIntoView({block: 'center'});
+  activeChallengeInList.classList.add('active-challenge');  // Highlight
+</script>
