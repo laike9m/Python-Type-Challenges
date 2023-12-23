@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4"
-content_hash = "sha256:7df2fb14afe43bc748b9aad9ea656615e182f2d75a98371ab675e19e2333f5ec"
+content_hash = "sha256:456c9ed246988c1ad8cad9ee40d8177be012649a231041a01f0994b884aa9b10"
 
 [[package]]
 name = "black"
@@ -119,6 +119,19 @@ dependencies = [
 files = [
     {file = "flask-3.0.0-py3-none-any.whl", hash = "sha256:21128f47e4e3b9d597a3e8521a329bf56909b690fcc3fa3e477725aa81367638"},
     {file = "flask-3.0.0.tar.gz", hash = "sha256:cfadcdb638b609361d29ec22360d6070a77d7463dcb3ab08d2c2f2f168845f58"},
+]
+
+[[package]]
+name = "flask-htmx"
+version = "0.3.2"
+requires_python = ">=3.8,<4.0"
+summary = "A Flask extension to work with HTMX."
+dependencies = [
+    "Flask<4.0.0,>=2.0.2",
+]
+files = [
+    {file = "flask_htmx-0.3.2-py3-none-any.whl", hash = "sha256:a1e0071216349197d6669662c2c35a1ab849b6fca28c89dc90932761f7e73c05"},
+    {file = "flask_htmx-0.3.2.tar.gz", hash = "sha256:8def77bb292369ff77513ff7b76d27b06f83e1d8c21165b6714c06c1cc2b9275"},
 ]
 
 [[package]]

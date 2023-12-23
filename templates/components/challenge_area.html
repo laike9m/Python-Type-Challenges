@@ -48,102 +48,106 @@
   </div>
 </div>
 
-
 <script type="text/javascript">
-  let confetti = new JSConfetti();
-  let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
-  let sharedCodeMirrorOptions = {
-    mode: "python",
-    lineWrapping: true,
-    lineNumbers: true,
-    indentUnit: 4,
-    theme: initTheme,
-  }
-  let code_under_test = {{ code_under_test | tojson }};
-  let myCodeMirror = CodeMirror(document.getElementById("editor"), {
-    value: code_under_test,
-    ...sharedCodeMirrorOptions,
-  });
-  let test_code = {{ test_code | tojson }};
-  let testCodeMirror = CodeMirror(document.getElementById("tests"), {
-    value: test_code,
-    readOnly: "nocursor",
-    ...sharedCodeMirrorOptions,
-  });
-
-  let playgroundLink = document.getElementById("playground-link");
-  playgroundLink.addEventListener('click', function (event) {
-    const code = myCodeMirror.getValue() + testCodeMirror.getValue();
-    this.href = "https://pyright-play.net/?code=" + LZString.compressToEncodedURIComponent(code);
-  });
-
-  window.addEventListener('themeSwitch', function (event) {
-    let theme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
-    myCodeMirror.setOption("theme", theme);
-    testCodeMirror.setOption("theme", theme);
-  })
-
-  let runButton = document.getElementById('run-button')
-  runButton.onclick = function () {
-    console.log(`Run challenge at: ${new Date().toLocaleString()}`);
-
-    // set button spinner
-    let rawInnerText = runButton.innerText;
-    runButton.ariaBusy = true;
-    runButton.innerText = ""
-
-    let code = myCodeMirror.getValue();
-    fetch('/run/{{level}}/{{name}}', {
-      method: 'POST',
-      body: code
-    })
-      .then(response => response.json())
-      .then(json => {
-        // add confetti effect when passed
-        if (json.passed) {
-          confetti.addConfetti()
-        }
-        setTimeout(() => {
-          document.getElementById('answer-link').style.display = 'block';
-        }, 500);
-        document.getElementById("result").innerHTML = json.message;
-        if (json.debug_info !== undefined) {
-          console.log(json.debug_info);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        // reset button spinner
-        runButton.ariaBusy = false;
-        runButton.innerText = rawInnerText;
-      });
-  };
-
-  let resetButton = document.getElementById('reset-button')
-  resetButton.onclick = function () {
-    myCodeMirror.setValue(code_under_test);
-  };
-
-  // Set up hints events and functions
-  let hintBtn = document.getElementById('read-hints')
-  hintBtn.onclick = function () {
-    // Toggle the display of the hints message.
-    let msgElem = document.getElementsByClassName('hints-message')[0];
-    if (msgElem.style.display === 'block') {
-      msgElem.style.display = 'none';
-    } else {
-      msgElem.style.display = 'block';
+  function renderCodeArea(code_under_test, test_code, level, name) {
+    let confetti = new JSConfetti();
+    let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+    let sharedCodeMirrorOptions = {
+      mode: "python",
+      lineWrapping: true,
+      lineNumbers: true,
+      indentUnit: 4,
+      theme: initTheme,
     }
-  };
-  // Make sure to open links in hints in new tab.
-  document.querySelectorAll('.hints-message a').forEach(function(elem) {
-    elem.setAttribute('target', '_blank');
-  })
+    let myCodeMirror = CodeMirror(document.getElementById("editor"), {
+      value: code_under_test,
+      ...sharedCodeMirrorOptions,
+    });
+    let testCodeMirror = CodeMirror(document.getElementById("tests"), {
+      value: test_code,
+      readOnly: "nocursor",
+      ...sharedCodeMirrorOptions,
+    });
 
-  // Make sure the current challenge is visible to user.
-  activeChallengeInList = document.getElementById("{{level}}-{{name}}");
-  activeChallengeInList.scrollIntoView({block: 'center'});
-  activeChallengeInList.classList.add('active-challenge');  // Highlight
+    let playgroundLink = document.getElementById("playground-link");
+    playgroundLink.addEventListener('click', function (event) {
+      const code = myCodeMirror.getValue() + testCodeMirror.getValue();
+      this.href = "https://pyright-play.net/?code=" + LZString.compressToEncodedURIComponent(code);
+    });
+
+    window.addEventListener('themeSwitch', function (event) {
+      let theme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
+      myCodeMirror.setOption("theme", theme);
+      testCodeMirror.setOption("theme", theme);
+    })
+
+    let runButton = document.getElementById('run-button')
+    runButton.onclick = function () {
+      console.log(`Run challenge at: ${new Date().toLocaleString()}`);
+
+      // set button spinner
+      let rawInnerText = runButton.innerText;
+      runButton.ariaBusy = true;
+      runButton.innerText = ""
+
+      let code = myCodeMirror.getValue();
+      fetch(`/run/${level}/${name}`, {
+        method: 'POST',
+        body: code
+      })
+        .then(response => response.json())
+        .then(json => {
+          // add confetti effect when passed
+          if (json.passed) {
+            confetti.addConfetti()
+          }
+          setTimeout(() => {
+            document.getElementById('answer-link').style.display = 'block';
+          }, 500);
+          document.getElementById("result").innerHTML = json.message;
+          if (json.debug_info !== undefined) {
+            console.log(json.debug_info);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+        .finally(() => {
+          // reset button spinner
+          runButton.ariaBusy = false;
+          runButton.innerText = rawInnerText;
+        });
+    };
+
+    let resetButton = document.getElementById('reset-button')
+    resetButton.onclick = function () {
+      myCodeMirror.setValue(code_under_test);
+    };
+
+    // Set up hints events and functions
+    let hintBtn = document.getElementById('read-hints')
+    if (hintBtn !== null) {
+      hintBtn.onclick = function () {
+        // Toggle the display of the hints message.
+        let msgElem = document.getElementsByClassName('hints-message')[0];
+        if (msgElem.style.display === 'block') {
+          msgElem.style.display = 'none';
+        } else {
+          msgElem.style.display = 'block';
+        }
+      };
+      // Make sure to open links in hints in new tab.
+      document.querySelectorAll('.hints-message a').forEach(function(elem) {
+        elem.setAttribute('target', '_blank');
+      })
+    }
+
+    // Make sure the current challenge is visible to user.
+    activeChallengeInList = document.getElementById(`${level}-${name}`);
+    activeChallengeInList.classList.add('active-challenge');  // Highlight
+  }
+
+  codeUnderTest = {{code_under_test | tojson}};
+  testCode = {{ test_code | tojson }};
+  renderCodeArea(codeUnderTest, testCode, "{{level}}", "{{name}}");
 </script>

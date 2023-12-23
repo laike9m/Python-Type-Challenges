@@ -10,12 +10,14 @@ from flask import (
     render_template,
     request,
 )
+from flask_htmx import HTMX
 
 from .challenge import ChallengeKey, Level, challenge_manager
 from .sitemap import sitemapper
 from .utils.text import render_hints
 
 app_views = Blueprint("app_views", __name__)
+htmx = HTMX(app_views)
 
 
 def validate_challenge(view_func):
@@ -52,16 +54,20 @@ def index():
 @validate_challenge
 def get_challenge(level: str, name: str):
     challenge = challenge_manager.get_challenge(ChallengeKey(Level(level), name))
-    return render_template(
-        "challenge.html",
-        name=name,
-        level=challenge.level,
-        challenges_groupby_level=challenge_manager.challenges_groupby_level,
-        code_under_test=challenge.user_code,
-        test_code=challenge.test_code,
-        hints_for_display=render_hints(challenge.hints) if challenge.hints else None,
-        python_info=platform.python_version(),
-    )
+    params = {
+        "name": name,
+        "level": challenge.level,
+        "challenges_groupby_level": challenge_manager.challenges_groupby_level,
+        "code_under_test": challenge.user_code,
+        "test_code": challenge.test_code,
+        "hints_for_display": render_hints(challenge.hints) if challenge.hints else None,
+        "python_info": platform.python_version(),
+    }
+    if htmx:
+        # In this case, challenges_groupby_level is transferred, since it's not
+        # used in challenge_area.html
+        return render_template("components/challenge_area.html", **params)
+    return render_template("challenge.html", **params)
 
 
 @app_views.route("/run/<level>/<name>", methods=["POST"])

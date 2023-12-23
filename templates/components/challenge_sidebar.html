@@ -108,7 +108,16 @@
           </li>
         {% endif %}
         {% for name in challenge_names %}
-          <li><a id="{{ level }}-{{ name }}" href="/{{ level }}/{{ name }}">{{ name }}</a></li>
+          <li>
+            <!-- Use HTMX to replace the challenge area -->
+            <a id="{{ level }}-{{ name }}"
+               hx-get="/{{ level }}/{{ name }}"
+               hx-target=".challenge-area"
+               hx-push-url="true"
+               onclick="removeHighlight(event)">
+              {{ name }}
+            </a>
+          </li>
         {% endfor %}
       </ul>
     {% endfor %}
@@ -124,4 +133,12 @@
       drawer.classList.toggle('open');
     });
   });
+
+  function removeHighlight(event) {
+    previousActiveChallenges = document.getElementsByClassName("active-challenge");
+    for (c of previousActiveChallenges) {
+      // Remove previously highlighted challenge in the list.
+      c.classList.remove('active-challenge');
+    }
+  }
 </script>
