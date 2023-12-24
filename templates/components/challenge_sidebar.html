@@ -134,6 +134,11 @@
     });
   });
 
+  /**
+   * Remove previously highlighted style from the challenge list.
+   *
+   * @param {Event} event - The click event.
+   */
   function removeHighlight(event) {
     previousActiveChallenges = document.getElementsByClassName("active-challenge");
     for (c of previousActiveChallenges) {

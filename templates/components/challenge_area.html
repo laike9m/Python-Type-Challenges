@@ -49,6 +49,14 @@
 </div>
 
 <script type="text/javascript">
+  /**
+   * Render the code area with CodeMirror and Jinja2.
+   *
+   * @param {string} code_under_test - The code to be tested.
+   * @param {string} test_code - The test code.
+   * @param {'basic'|'intermediate'|'advanced'|'extreme'} level - The level of the challenge.
+   * @param {string} name - The name of the challenge.
+   */
   function renderCodeArea(code_under_test, test_code, level, name) {
     let confetti = new JSConfetti();
     let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
