@@ -124,6 +124,7 @@
   </nav>
 </aside>
 
+<script type="text/javascript" src="{{ url_for('static', filename='js/passedState.js')}}"></script>
 <script>
   const sidebarTogglers = document.querySelectorAll('.sidebar-toggle');
   const drawer = document.querySelector('.drawer');
@@ -146,4 +147,8 @@
       c.classList.remove('active-challenge');
     }
   }
+
+  const initialState = {{ challenges_groupby_level | tojson }};
+  const passedState = new PassedState();
+  passedState.init(initialState);
 </script>
