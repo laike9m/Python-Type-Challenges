@@ -108,6 +108,8 @@
           // add confetti effect when passed
           if (json.passed) {
             confetti.addConfetti()
+            // passedState has defined in challenge_sidebar.html
+            passedState.setPassed(level, name);
           }
           setTimeout(() => {
             document.getElementById('answer-link').style.display = 'block';
