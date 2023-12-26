@@ -3,7 +3,7 @@
 class PassedState {
 
     _key = 'passedState';
-    state = null;
+    _state = null;
 
     constructor(initialState = {}) {
         const currentState = localStorage.getItem(this._key);
@@ -16,9 +16,9 @@ class PassedState {
         const rawState = this._prepareState(initialState);
 
         // check new state and old state whether is undefined or not. and merge the new state to the old state.
-        const state = this._checkAndMerge(rawState, currentState);
+        const state = this._checkAndMerge(currentState, rawState);
         this._save(state);
-        this.state = state;
+        this._state = state;
         return
     }
 
@@ -48,7 +48,7 @@ class PassedState {
     }
 
     get() {
-        return this.state;
+        return this._state;
     }
 
     _save(state) {
@@ -62,7 +62,7 @@ class PassedState {
      * @returns void
      */
     setPassed(level, challengeName) {
-        const challenges = this.state[level];
+        const challenges = this._state[level];
         for (const challenge of challenges) {
             if (challenge.name === challengeName) {
                 challenge.passed = true;
@@ -70,7 +70,7 @@ class PassedState {
             }
         }
 
-        this._save(this.state);
+        this._save(this._state);
     }
 
     /**
@@ -79,7 +79,7 @@ class PassedState {
      * - If the new key in the new state is not in the current state, the new key will be added to the current state.
      * @param {object} newState 
      */
-    _checkAndMerge(newState, oldState) {
+    _checkAndMerge(oldState, newState) {
         if (!newState && !oldState) {
             throw new Error('one of the new state and the old state is required.');
         }
@@ -87,6 +87,33 @@ class PassedState {
         if (!newState) {
             return oldState;
         }
-        // TODO: compare the new state with the old state and merge the new state to the old state.
+
+        let mergedState = {};
+        const levels = ['basic', 'intermediate', 'advanced', 'expert'];
+
+        for (const level of levels) {
+            // Initialize an empty array for merged challenges
+            let mergedChallenges = [];
+
+            // Create a map for quick lookup of challenges by name
+            const oldChallengesMap = new Map(oldState[level].map(challenge => [challenge.name, challenge]));
+            const newChallengesMap = new Map(newState[level].map(challenge => [challenge.name, challenge]));
+
+            // Add or update challenges from the newState
+            for (const [name, newChallenge] of newChallengesMap.entries()) {
+                mergedChallenges.push({ ...newChallenge, passed: oldChallengesMap.get(name)?.passed });
+                oldChallengesMap.delete(name); // Remove the challenge from oldChallengesMap since it's updated
+            }
+
+            // Add remaining challenges from the oldState that are not updated (not present in newState)
+            for (const oldChallenge of oldChallengesMap.values()) {
+                mergedChallenges.push(oldChallenge);
+            }
+
+            // Set the merged challenges for the current level in the mergedState
+            mergedState[level] = mergedChallenges;
+        }
+
+        return mergedState;
     }
 }
