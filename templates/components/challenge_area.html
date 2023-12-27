@@ -110,6 +110,7 @@
             confetti.addConfetti()
             // passedState has defined in challenge_sidebar.html
             passedState.setPassed(level, name);
+            document.getElementById(`${level}-${name}`).parentNode.classList.add('passed');
           }
           setTimeout(() => {
             document.getElementById('answer-link').style.display = 'block';
@@ -153,8 +154,8 @@
     }
 
     // Make sure the current challenge is visible to user.
-    activeChallengeInList = document.getElementById(`${level}-${name}`);
-    activeChallengeInList.classList.add('active-challenge');  // Highlight
+    let activeChallengeInList = document.getElementById(`${level}-${name}`);
+    activeChallengeInList.parentNode.classList.add('active-challenge');  // Highlight
   }
 
   codeUnderTest = {{code_under_test | tojson}};

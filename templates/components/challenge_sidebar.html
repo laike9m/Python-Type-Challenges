@@ -10,14 +10,6 @@
     flex-direction: column;
   }
 
-  .challenge-nav ul li {
-    padding: 0px 8px;
-  }
-
-  .challenge-nav ul li:not(:first-of-type) a {
-    padding: 8px 10px;
-  }
-
   .challenge-nav .challenge-level {
     width: fit-content;
     border-bottom: 1px dashed hsl(240, 2%, 90%);
@@ -36,6 +28,22 @@
     display: none;
   }
 
+  .passed {
+    position: relative;
+  }
+
+  .passed::after {
+    /* iconify: https://icon-sets.iconify.design/lets-icons/done-ring-round */
+    content: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cg fill="none" stroke="%2366ba6f" stroke-linecap="round" stroke-width="2"%3E%3Cpath d="m9 10l3.258 2.444a1 1 0 0 0 1.353-.142L20 5"%2F%3E%3Cpath d="M21 12a9 9 0 1 1-6.67-8.693"%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    display: inline-block;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+    transition: all 1.5s ease-out;
+  }
 
   @media only screen and (max-width: 800px) {
     .sidebar-toggle {
@@ -141,7 +149,7 @@
    * @param {Event} event - The click event.
    */
   function removeHighlight(event) {
-    previousActiveChallenges = document.getElementsByClassName("active-challenge");
+    let previousActiveChallenges = document.getElementsByClassName("active-challenge");
     for (c of previousActiveChallenges) {
       // Remove previously highlighted challenge in the list.
       c.classList.remove('active-challenge');
@@ -151,4 +159,14 @@
   const initialState = {{ challenges_groupby_level | tojson }};
   const passedState = new PassedState();
   passedState.init(initialState);
+
+  // Highlight the passed challenges when the page is loaded.
+  let ids = Object.keys(passedState.get()).forEach(level => {
+    passedState.get()[level].forEach(challenge => {
+      let id = `#${level}-${challenge.name}`;
+      if (challenge.passed) {
+        document.querySelector(id).parentNode.classList.add('passed');
+      }
+    })
+  })
 </script>
