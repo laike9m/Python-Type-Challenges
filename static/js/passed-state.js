@@ -2,7 +2,7 @@
 
 class PassedState {
 
-    _key = 'passedState';
+    _key = 'python-type-challenges';
     _state = null;
 
     init(initialState) {
