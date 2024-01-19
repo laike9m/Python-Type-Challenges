@@ -161,7 +161,7 @@
   passedState.init(initialState);
 
   // Highlight the passed challenges when the page is loaded.
-  let ids = Object.keys(passedState.get()).forEach(level => {
+  Object.keys(passedState.get()).forEach(level => {
     passedState.get()[level].forEach(challenge => {
       let id = `#${level}-${challenge.name}`;
       if (challenge.passed) {
