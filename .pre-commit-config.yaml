@@ -1,6 +1,10 @@
 repos:
-  - repo: https://github.com/rtts/djhtml
-    rev: '3.0.6'
+  - repo: local
     hooks:
-      - id: djhtml
-        entry: djhtml --tabwidth 2 templates
+      - id: format
+        name: format
+        stages: [commit]
+        entry: pdm
+        args: ['format']
+        language: system
+        pass_filenames: false

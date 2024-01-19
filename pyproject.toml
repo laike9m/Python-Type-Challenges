@@ -24,7 +24,8 @@ plugins = ["pdm-autoexport"]
 dev = "flask --app app run --debug"
 test = "pytest -n auto"
 run_black = "black ."
-djhtml = "djhtml --tabwidth 2 templates"
+djhtml.cmd = "djhtml --tabwidth 2 templates"
+djhtml.env = {PYTHONUTF8 = "1"}
 format = {composite = ["run_black", "djhtml"]}
 
 [tool.pdm.dev-dependencies]
