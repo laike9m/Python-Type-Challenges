@@ -7,7 +7,7 @@ from typing import NoReturn
 
 
 def abort() -> NoReturn:
-    pass
+    raise RuntimeError("abort")
 
 
 ## End of your code ##

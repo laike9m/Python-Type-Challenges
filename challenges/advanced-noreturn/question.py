@@ -6,7 +6,7 @@ Please add type hints to the function `abort` to make the test pass.
 
 
 def abort():
-    pass
+    raise RuntimeError("abort")
 
 
 ## End of your code ##
