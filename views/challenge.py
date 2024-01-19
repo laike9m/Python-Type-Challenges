@@ -114,7 +114,7 @@ class ChallengeManager:
             # Try to read the optional hints file
             hints_file = challenge_folder / "hints.md"
             if hints_file.exists():
-                hints = hints_file.read_text().strip()
+                hints = hints_file.read_text(encoding="utf-8").strip()
             else:
                 hints = None
 
@@ -122,7 +122,7 @@ class ChallengeManager:
             challenges[key] = Challenge(
                 name=key.name,
                 level=key.level,
-                code=question_source.read_text(),
+                code=question_source.read_text(encoding="utf-8"),
                 hints=hints,
             )
         return challenges
