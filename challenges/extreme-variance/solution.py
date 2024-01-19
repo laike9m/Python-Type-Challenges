@@ -24,6 +24,10 @@ f(l2)
 g(l2)
 
 f(1)  # expect-type-error
-f("1")  # expect-type-error
+f("abc")  # expect-type-error
+g("abc")
+g(b"abc")
+g([1, "2"])
+g((1, "2", 3))
 g(1)  # expect-type-error
-g("1")
+g({1})  # expect-type-error
