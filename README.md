@@ -23,7 +23,7 @@ Alternatively, you can install dependencies with `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
-flask run
+python -X utf8 -m flask run
 ```
 
 ## How to Contribute
