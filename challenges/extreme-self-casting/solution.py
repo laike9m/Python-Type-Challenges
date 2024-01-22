@@ -10,7 +10,7 @@ Note: you're only requried to add type annotations without implementing transfor
 """
 
 
-from typing import Callable, Concatenate, Generic, ParamSpec, TypeVar, 
+from typing import Callable, Concatenate, Generic, ParamSpec, TypeVar
 
 
 R = TypeVar('R')
