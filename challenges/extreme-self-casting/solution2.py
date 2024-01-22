@@ -22,7 +22,7 @@ class Fn[R, **P]():
 
 
 ## End of your code ##
-from typing import assert_type
+from typing import assert_type, Any
 
 
 @Fn
