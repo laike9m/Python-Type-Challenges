@@ -10,25 +10,23 @@ Note: you're only requried to add type annotations without implementing transfor
 """
 
 
-from typing import Callable, Concatenate, ParamSpec, TypeVar, Generic, Any
-
-P = ParamSpec("P")
-R = TypeVar("R", covariant=True)
-VnCallable = TypeVar("VnCallable", bound=Callable)
+from typing import Callable, Concatenate, Generic, ParamSpec, TypeVar
 
 
-class Fn(Generic[VnCallable]):
-    def __init__(self, f: VnCallable) -> None:
+R = TypeVar('R')
+P = ParamSpec('P')
+
+
+class Fn(Generic[R, P]):
+    def __init__(self, f: Callable[P, R]):
         self.f = f
 
-    def transform_callable(
-        self: "Fn[Callable[P, R]]",
-    ) -> Callable[Concatenate[Any, P], R]:
+    def transform_callable(self) -> Callable[Concatenate[object, P], R]:
         ...
 
 
 ## End of your code ##
-from typing import assert_type
+from typing import assert_type, Any
 
 
 @Fn
