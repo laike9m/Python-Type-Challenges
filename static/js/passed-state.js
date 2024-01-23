@@ -1,5 +1,3 @@
-
-
 class PassedState {
 
     _key = 'python-type-challenges';
