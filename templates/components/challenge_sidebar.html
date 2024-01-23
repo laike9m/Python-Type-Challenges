@@ -140,8 +140,8 @@
   </nav>
 </aside>
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/passed-state.js')}}"></script>
-<script>
+<script type="module">
+  import PassedState from "{{ url_for('static', filename='js/passed-state.js')}}";
   const sidebarTogglers = document.querySelectorAll('.sidebar-toggle');
   const drawer = document.querySelector('.drawer');
 
@@ -169,8 +169,9 @@
   passedState.init(initialState);
 
   // Highlight the passed challenges when the page is loaded.
-  Object.keys(passedState.get()).forEach(level => {
-    passedState.get()[level].forEach(challenge => {
+  let state = passedState.get();
+  Object.keys(state).forEach(level => {
+    state[level].forEach(challenge => {
       let id = `#${level}-${challenge.name}`;
       if (challenge.passed) {
         document.querySelector(id).parentNode.classList.add('passed');

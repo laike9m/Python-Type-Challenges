@@ -1,51 +1,23 @@
-class PassedState {
+export default class PassedState {
     _key = 'python-type-challenges';
 
     /**
      * Initializing when there is no state in the local storage. If there is no state in the local storage, the initial state is required.
      * this function will check the new state and the old state whether is undefined or not and updated the old state based on new state.
      * 
-     * @param {object} initialState - the initial state of the challenges which grouped by the level.
+     * @param {object} newState - the initial state of the challenges which grouped by the level.
      * @returns void
      */
-    init(initialState) {
-        const currentState = this.get();
+    init(newState) {
+        const oldState = this.get();
         // initialize the state when there is no state in the local storage.
-        if (!currentState && !initialState) {
+        if (!oldState && !newState) {
             throw new Error('initial state is required when there is no state in the local storage.');
         }
 
-        // add passed property to the challenges in the initial state.
-        const rawState = this._prepareState(initialState);
-
         // check new state and old state whether is undefined or not. and merge the new state to the old state.
-        const state = this._checkAndMerge(currentState, rawState);
+        const state = this._checkAndMerge(oldState, newState);
         this._save(state);
-    }
-    /**
-     * prepare the state for initialization.
-     * 
-     * @param {object} rawState 
-     * @returns state - the state contains the challenge name and whether the challenge is passed.
-     */
-    _prepareState(rawState) {
-        if (!rawState) {
-            return {};
-        }
-
-        const state = {};
-        for (const level in rawState) {
-            const challenges = [];
-            for (const challengeName of rawState[level]) {
-                challenges.push({
-                    name: challengeName,
-                    passed: false
-                });
-            }
-            state[level] = challenges;
-        }
-
-        return state;
     }
 
     get() {
@@ -97,12 +69,24 @@ class PassedState {
             throw new Error('one of the new state and the old state is required.');
         }
 
-        if (!oldState && newState) {
-            return newState;
-        }
-
         if (!newState && oldState) {
             return oldState;
+        }
+
+        const state = {};
+        for (const level in newState) {
+            const challenges = [];
+            for (const challengeName of newState[level]) {
+                challenges.push({
+                    name: challengeName,
+                    passed: false
+                });
+            }
+            state[level] = challenges;
+        }
+
+        if (!oldState && newState) {
+            return state;
         }
 
         let mergedState = {};
@@ -114,7 +98,7 @@ class PassedState {
 
             // Create a map for quick lookup of challenges by name
             const oldChallengesMap = new Map(oldState[level].map(challenge => [challenge.name, challenge]));
-            const newChallengesMap = new Map(newState[level].map(challenge => [challenge.name, challenge]));
+            const newChallengesMap = new Map(state[level].map(challenge => [challenge.name, challenge]));
 
             // Add or update challenges from the newState
             for (const [name, newChallenge] of newChallengesMap.entries()) {
