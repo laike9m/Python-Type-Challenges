@@ -13,8 +13,8 @@ Note: you're only requried to add type annotations without implementing transfor
 from typing import Callable, Concatenate, Generic, ParamSpec, TypeVar
 
 
-R = TypeVar('R')
-P = ParamSpec('P')
+R = TypeVar("R")
+P = ParamSpec("P")
 
 
 class Fn(Generic[R, P]):

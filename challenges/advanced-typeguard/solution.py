@@ -1,10 +1,8 @@
 """
 TODO:
 
-is_string is a function that takes an argument value of arbitrary type, and returns a boolean.
-You should make is_string be able to narrow the type of the argument based on its return value:
-when it's true, narrow value's type to str.
-Basically, it should work like `isinstance(value, str)` from the perspective of a type checker.
+`is_string` determines whether the input value is a string.
+Your job is to make the type checker be aware of this information.
 """
 from typing import Any, TypeGuard
 
