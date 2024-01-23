@@ -158,6 +158,8 @@
     activeChallengeInList.parentNode.classList.add('active-challenge');  // Highlight
   }
 
+  // Don't add `let` to the following variables which are handled by htmx 
+  // else some errors will be raised.
   codeUnderTest = {{code_under_test | tojson}};
   testCode = {{ test_code | tojson }};
   renderCodeArea(codeUnderTest, testCode, "{{level}}", "{{name}}");
