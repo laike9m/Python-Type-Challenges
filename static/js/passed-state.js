@@ -1,7 +1,5 @@
 class PassedState {
-
     _key = 'python-type-challenges';
-    _state = null;
 
     /**
      * Initializing when there is no state in the local storage. If there is no state in the local storage, the initial state is required.
@@ -11,7 +9,7 @@ class PassedState {
      * @returns void
      */
     init(initialState) {
-        const currentState = localStorage.getItem(this._key);
+        const currentState = this.get();
         // initialize the state when there is no state in the local storage.
         if (!currentState && !initialState) {
             throw new Error('initial state is required when there is no state in the local storage.');
@@ -21,9 +19,8 @@ class PassedState {
         const rawState = this._prepareState(initialState);
 
         // check new state and old state whether is undefined or not. and merge the new state to the old state.
-        const state = this._checkAndMerge(JSON.parse(currentState), rawState);
+        const state = this._checkAndMerge(currentState, rawState);
         this._save(state);
-        this._state = state;
     }
     /**
      * prepare the state for initialization.
@@ -52,11 +49,8 @@ class PassedState {
     }
 
     get() {
-        if (!this._state) {
-            const currentState = localStorage.getItem(this._key);
-            this._state = JSON.parse(currentState);
-        }
-        return this._state;
+        const currentState = localStorage.getItem(this._key);
+        return JSON.parse(currentState);
     }
 
     /**
@@ -75,11 +69,9 @@ class PassedState {
      * @returns void
      */
     setPassed(level, challengeName) {
-        if (!this._state) {
-            this.get()
-        }
+        let state = this.get();
 
-        const challenges = this._state[level];
+        const challenges = state[level];
         for (const challenge of challenges) {
             if (challenge.name === challengeName) {
                 challenge.passed = true;
@@ -87,7 +79,7 @@ class PassedState {
             }
         }
 
-        this._save(this._state);
+        this._save(state);
     }
 
     /**
