@@ -49,9 +49,7 @@
 </div>
 
 <script type="module">
-  import PassedState from "{{ url_for('static', filename='js/passed-state.js')}}";
-
-  let passedState = new PassedState();
+  import passedState from "{{ url_for('static', filename='js/passed-state.js')}}";
 
   /**
    * Render the code area with CodeMirror and Jinja2.

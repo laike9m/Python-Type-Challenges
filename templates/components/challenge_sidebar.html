@@ -141,7 +141,7 @@
 </aside>
 
 <script type="module">
-  import PassedState from "{{ url_for('static', filename='js/passed-state.js')}}";
+  import passedState from "{{ url_for('static', filename='js/passed-state.js')}}";
   const sidebarTogglers = document.querySelectorAll('.sidebar-toggle');
   const drawer = document.querySelector('.drawer');
 
@@ -165,7 +165,6 @@
   }
 
   const initialState = {{ challenges_groupby_level | tojson }};
-  const passedState = new PassedState();
   passedState.init(initialState);
 
   // Highlight the passed challenges when the page is loaded.
