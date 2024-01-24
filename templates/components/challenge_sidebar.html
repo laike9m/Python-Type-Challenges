@@ -142,6 +142,22 @@
 
 <script type="module">
   import passedState from "{{ url_for('static', filename='js/passed-state.js')}}";
+  const initialState = {{ challenges_groupby_level | tojson }};
+  passedState.init(initialState);
+
+  // Highlight the passed challenges when the page is loaded.
+  let state = passedState.get();
+  Object.keys(state).forEach(level => {
+    state[level].forEach(challenge => {
+      let id = `#${level}-${challenge.name}`;
+      if (challenge.passed) {
+        document.querySelector(id).parentNode.classList.add('passed');
+      }
+    })
+  })
+</script>
+
+<script type="text/javascript">
   const sidebarTogglers = document.querySelectorAll('.sidebar-toggle');
   const drawer = document.querySelector('.drawer');
 
@@ -163,18 +179,4 @@
       c.classList.remove('active-challenge');
     }
   }
-
-  const initialState = {{ challenges_groupby_level | tojson }};
-  passedState.init(initialState);
-
-  // Highlight the passed challenges when the page is loaded.
-  let state = passedState.get();
-  Object.keys(state).forEach(level => {
-    state[level].forEach(challenge => {
-      let id = `#${level}-${challenge.name}`;
-      if (challenge.passed) {
-        document.querySelector(id).parentNode.classList.add('passed');
-      }
-    })
-  })
 </script>
