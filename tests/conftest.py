@@ -14,6 +14,7 @@ from app import app
 CHALLENGES_DIR = Path(__file__).parent.parent / "challenges"
 ALL_QUESTIONS = list(CHALLENGES_DIR.glob("**/question.py"))
 ALL_SOLUTIONS = list(CHALLENGES_DIR.glob("**/solution*.py"))
+ALL_HINTS = list(CHALLENGES_DIR.glob("**/hints.md"))
 
 
 @pytest.fixture()
@@ -34,4 +35,9 @@ def question_file(request):
 
 @pytest.fixture(params=ALL_SOLUTIONS, ids=lambda x: x.parent.name)
 def solution_file(request):
+    return request.param
+
+
+@pytest.fixture(params=ALL_HINTS, ids=lambda x: x.parent.name)
+def hint_file(request) -> Path:
     return request.param
