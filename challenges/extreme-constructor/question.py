@@ -12,6 +12,9 @@ def constructor_parameter():
 
 
 ## End of your code ##
+from typing import Any
+
+
 class Foo:
     a: int
     b: str

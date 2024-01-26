@@ -5,9 +5,7 @@ Define a decorator `constructor_parameter` that accepts the type of Foo.
 and return a wrapper function with the same signature as the constructor of Foo,
 and function decorated by `constructor_parameter` can be called with an instance of Foo.
 """
-from typing import Any, Callable, TypeVar
-
-from typing_extensions import ParamSpec
+from typing import Callable, ParamSpec, TypeVar
 
 T = TypeVar("T")
 P = ParamSpec("P")
@@ -21,6 +19,9 @@ def constructor_parameter(
 
 
 ## End of your code ##
+from typing import Any
+
+
 class Foo:
     a: int
     b: str
