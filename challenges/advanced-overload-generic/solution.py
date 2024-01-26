@@ -3,7 +3,7 @@ TODO:
 
 foo is a function that returns an interger when called with Foo[int], returns a string when called with Foo[str], otherwise returns a Foo[T].
 """
-from typing import Any, TypeVar, Generic, overload
+from typing import Any, Generic, TypeVar, overload
 
 T = TypeVar("T")
 
@@ -23,7 +23,7 @@ def foo(value: Foo[str]) -> str:
 
 
 @overload
-def foo(value: Foo[T]) -> Foo[T]:
+def foo(value: Foo[list]) -> Foo[list]:
     ...
 
 
