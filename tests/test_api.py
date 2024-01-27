@@ -2,8 +2,6 @@ from pathlib import Path
 
 from flask.testing import FlaskClient
 
-from views.challenge import ChallengeKey, Level, challenge_manager
-
 
 def test_get_challenge(test_client: FlaskClient, question_file: Path):
     level, challenge_name = question_file.parent.name.split("-", maxsplit=1)
@@ -33,11 +31,3 @@ def test_invalid_challenge_redirect_to_homepage(test_client: FlaskClient):
     response = test_client.get("/foo/bar")
     assert response.status_code == 302
     assert response.location == "/"
-
-
-def test_get_random_challenge(test_client: FlaskClient):
-    response = test_client.get("/random")
-    assert response.status_code == 302
-    level, challenge_name = response.location[1:].split("/")
-    assert Level.is_valid_level(level)
-    assert challenge_manager.has_challenge(ChallengeKey(Level(level), challenge_name))

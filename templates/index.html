@@ -82,7 +82,21 @@
         {% include 'components/challenge_card.html' with context %}
       {% endfor%}
     </div>
-    <div class="random-button"><a href="/random" title="Pick a random challenge">Random Challenge 🔀</a></div>
+    <div class="random-button"><a title="Pick a random challenge">Random Challenge 🔀</a></div>
   </div>
+  <script>
+    const challengesGroupbyLevel = {{ challenges_groupby_level | tojson }};
+    const levels = Object.keys(challengesGroupbyLevel);
+
+    let index = Math.floor(Math.random() * levels.length);
+    const level = levels[index];
+    const challengeNames = challengesGroupbyLevel[level];
+
+    index = Math.floor(Math.random() * levels.length);
+    const challengeName = challengeNames[index];
+
+    const randomButtonA = document.querySelector('.random-button>a');
+    randomButtonA.setAttribute('href', `/${level}/${challengeName}`);
+  </script>
 
 {% endblock %}
