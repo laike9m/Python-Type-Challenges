@@ -1,9 +1,9 @@
 """
 TODO:
 
-foo is a function that returns an interger when called with Foo[int], returns a string when called with Foo[str], otherwise returns a Foo[T].
+foo is a function that returns an interger when called with Foo[int], returns a string when called with Foo[str], otherwise returns a Foo[list].
 """
-from typing import TypeVar, Generic
+from typing import Generic, TypeVar
 
 T = TypeVar("T")
 
