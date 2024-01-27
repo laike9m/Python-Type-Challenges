@@ -31,6 +31,7 @@ def index():
     return render_template(
         "index.html",
         challenges_groupby_level=challenge_manager.challenges_groupby_level,
+        pathname=challenge_manager.get_random_challenge_pathname(),
     )
 
 

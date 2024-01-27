@@ -1,4 +1,5 @@
 import io
+import random
 import re
 import subprocess
 import tempfile
@@ -96,6 +97,11 @@ class ChallengeManager:
         challenge = self.get_challenge(key)
         # Make sure user code ends with a new line to avoid issue #63.
         return self._type_check_with_pyright(user_code + "\n", challenge.test_code)
+
+    def get_random_challenge_pathname(self) -> str:
+        level = random.choice(list(self.challenges_groupby_level.keys()))
+        name = random.choice(self.challenges_groupby_level[level])
+        return f"/{level}/{name}"
 
     @staticmethod
     def _load_challenges(root_dir: Path) -> dict[ChallengeKey, Challenge]:
