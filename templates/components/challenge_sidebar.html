@@ -59,15 +59,6 @@
       cursor: pointer;
     }
 
-    .sidebar-toggle-close {
-      margin-left: auto;
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      cursor: pointer;
-    }
-
     .drawer {
       position: fixed;
       top: 0;
@@ -107,22 +98,9 @@
   <nav class="challenge-nav drawer-container">
     {% for level, challenge_names in challenges_groupby_level.items() %}
       <ul>
-      <!-- Compose close button with first level in row -->
-        {% if level == "basic" %}
-          <li>
-            <h5 class="challenge-level">{{ level }}</h5>
-            <span class="sidebar-toggle sidebar-toggle-close">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                      d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z" />
-              </svg>
-            </span>
-          </li>
-        {% else %}
-          <li>
-            <h5 class="challenge-level">{{ level }}</h5>
-          </li>
-        {% endif %}
+        <li>
+          <h5 class="challenge-level">{{ level }}</h5>
+        </li>
         {% for name in challenge_names %}
           <li>
             <!-- Use HTMX to replace the challenge area -->
@@ -158,13 +136,11 @@
 </script>
 
 <script type="text/javascript">
-  const sidebarTogglers = document.querySelectorAll('.sidebar-toggle');
+  const sidebarToggler = document.querySelector('.sidebar-toggle');
   const drawer = document.querySelector('.drawer');
 
-  sidebarTogglers.forEach((toggler) => {
-    toggler.addEventListener('click', () => {
-      drawer.classList.toggle('open');
-    });
+  sidebarToggler.addEventListener('click', () => {
+    drawer.classList.toggle('open');
   });
 
   /**
