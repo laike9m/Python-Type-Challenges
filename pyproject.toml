@@ -7,7 +7,6 @@ authors = [
 ]
 dependencies = [
     "flask>=3.0.0",
-    "typing-extensions>=4.8.0",
     "pyright>=1.1.338",
     "flask-sitemapper>=1.7.0",
     "markdown>=3.5.1",
@@ -34,7 +33,7 @@ dev = [
     "djhtml>=3.0.6",
     "pre-commit>=3.5.0",
     "pytest-xdist>=3.3.1",
-    "black>=23.11.0",
+    "black<24.1.0",
 ]
 
 [[tool.pdm.autoexport]]
