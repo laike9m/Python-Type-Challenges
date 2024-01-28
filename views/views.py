@@ -2,7 +2,7 @@ import ast
 import platform
 from functools import wraps
 
-from flask import Blueprint, abort, jsonify, render_template, request
+from flask import Blueprint, abort, jsonify, redirect, render_template, request
 from flask_htmx import HTMX
 
 from .challenge import ChallengeKey, Level, challenge_manager
@@ -89,3 +89,16 @@ def run_challenge(level: str, name: str):
     return jsonify(
         {"passed": False, "message": error_message, "debug_info": result.debug_info}
     )
+
+
+@app_views.route("/random", methods=["GET"])
+def get_random():
+    pathname = challenge_manager.get_random_challenge_pathname()
+
+    if htmx:
+        return render_template(
+            "components/randomizer.html",
+            pathname=pathname,
+        )
+
+    return redirect(pathname)
