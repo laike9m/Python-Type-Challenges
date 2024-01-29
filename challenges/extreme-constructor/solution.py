@@ -13,7 +13,7 @@ R = TypeVar("R")
 
 
 def constructor_parameter(
-    cls: Callable[P, T]
+    cls: Callable[P, T],
 ) -> Callable[[Callable[[T], R]], Callable[P, R]]:
     ...
 

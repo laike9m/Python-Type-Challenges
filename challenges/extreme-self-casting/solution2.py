@@ -13,7 +13,7 @@ Note: you're only requried to add type annotations without implementing transfor
 from typing import Callable, Concatenate, Any
 
 
-class Fn[R, **P]():
+class Fn[R, **P]:
     def __init__(self, f: Callable[P, R]) -> None:
         self.f = f
 
