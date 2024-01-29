@@ -60,7 +60,12 @@ def get_challenge(level: str, name: str):
     if htmx:
         # In this case, challenges_groupby_level is transferred, since it's not
         # used in challenge_area.html
+        params[
+            "challenge_main_htmx"
+        ] = "hx-get=/random hx-target=#sidebar-actions-random hx-trigger=load"
         return render_template("components/challenge_area.html", **params)
+
+    params["pathname"] = challenge_manager.get_random_challenge_pathname()
     return render_template("challenge.html", **params)
 
 
