@@ -64,7 +64,7 @@
    */
   function renderCodeArea(code_under_test, test_code, level, name) {
     // delete old CodeMirrors to fix #109
-    Object.values(document.getElementsByClassName("CodeMirror")).forEach(el => el.remove());
+    document.querySelectorAll('.CodeMirror').forEach(el => el.remove());
 
     let confetti = new JSConfetti();
     let initTheme = localStorage.getItem('theme') === 'dark' ? "material-darker" : "default"
