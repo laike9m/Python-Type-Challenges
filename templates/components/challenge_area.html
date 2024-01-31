@@ -170,3 +170,11 @@
   let testCode = {{test_code | tojson}};
   renderCodeArea(codeUnderTest, testCode, "{{level}}", "{{name}}");
 </script>
+
+<script type="text/javascript">
+  const challengeArea = document.querySelector(".challenge-area");
+
+  challengeArea.addEventListener("click", () => {
+    drawer.classList.remove('open');
+  });
+</script>
