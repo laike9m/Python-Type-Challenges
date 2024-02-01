@@ -1,0 +1,2 @@
+- Check out [Concatenate](https://docs.python.org/3/library/typing.html#typing.Concatenate)
+- Omit the return type if you struggle with it
