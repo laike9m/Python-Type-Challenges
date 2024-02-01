@@ -7,7 +7,7 @@ The decorator takes an argument `message` of type string
 from collections.abc import Callable
 from typing import TypeVar
 
-# Python < 3.12
+# For Python < 3.12
 #
 # T = TypeVar("T", bound=Callable)
 #
@@ -15,7 +15,7 @@ from typing import TypeVar
 #     return func
 
 
-# Python >= 3.12
+# For Python >= 3.12
 def decorator[T: Callable](message: str) -> Callable[[T], T]:
     ...
 

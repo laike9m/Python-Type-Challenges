@@ -7,12 +7,14 @@ and function decorated by `constructor_parameter` can be called with an instance
 """
 from typing import Callable, ParamSpec, TypeVar
 
-T = TypeVar("T")
-P = ParamSpec("P")
-R = TypeVar("R")
+# Before 3.12 you have to write
+# T = TypeVar("T")
+# P = ParamSpec("P")
+# R = TypeVar("R")
+# def constructor_parameter(
 
 
-def constructor_parameter(
+def constructor_parameter[**P, T, R](
     cls: Callable[P, T],
 ) -> Callable[[Callable[[T], R]], Callable[P, R]]:
     ...

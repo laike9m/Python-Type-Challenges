@@ -4,12 +4,12 @@ TODO:
 Create a new type called Vector, which is a list of float.
 """
 
-from typing import TypeAlias
+# Before 3.12 you have to write
+# from typing import TypeAlias
+#
+# Vector: TypeAlias = list[float]
 
-Vector: TypeAlias = list[float]
-
-# Python >= 3.12
-# type Vector = list[float]
+type Vector = list[float]
 
 
 ## End of your code ##

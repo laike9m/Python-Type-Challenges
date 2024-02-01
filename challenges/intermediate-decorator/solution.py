@@ -5,7 +5,7 @@ Define a decorator that wraps a function and returns a function with the same si
 """
 from typing import Callable, TypeVar
 
-# Python < 3.12
+# For Python < 3.12
 #
 # T = TypeVar("T", bound=Callable)
 #
@@ -13,7 +13,7 @@ from typing import Callable, TypeVar
 #     return func
 
 
-# Python >= 3.12
+# For Python >= 3.12
 def decorator[T: Callable](func: T) -> T:
     return func
 

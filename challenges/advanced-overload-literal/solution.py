@@ -6,7 +6,10 @@ returns an interger when second argument is 1, returns a string when second argu
 """
 from typing import Any, Literal, overload, TypeVar
 
-T = TypeVar("T")
+# Before 3.12 you have to write:
+# T = TypeVar('T')
+#
+# def foo(value: T, flag: Any) -> T:
 
 
 @overload
@@ -25,7 +28,7 @@ def foo(value: Any, flag: Literal[3]) -> list[Any]:
 
 
 @overload
-def foo(value: T, flag: Any) -> T:
+def foo[T](value: T, flag: Any) -> T:
     ...
 
 
