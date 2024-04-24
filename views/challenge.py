@@ -98,10 +98,10 @@ class ChallengeManager:
         # Make sure user code ends with a new line to avoid issue #63.
         return self._type_check_with_pyright(user_code + "\n", challenge.test_code)
 
-    def get_random_challenge(self) -> dict[str, str]:
+    def get_random_challenge_pathname(self) -> str:
         level = random.choice(list(self.challenges_groupby_level.keys()))
         name = random.choice(self.challenges_groupby_level[level])
-        return {"level": level, "name": name}
+        return f"/{level}/{name}"
 
     @staticmethod
     def _load_challenges(root_dir: Path) -> dict[ChallengeKey, Challenge]:

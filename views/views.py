@@ -2,14 +2,7 @@ import ast
 import platform
 from functools import wraps
 
-from flask import (
-    abort,
-    Blueprint,
-    jsonify,
-    redirect,
-    render_template,
-    request,
-)
+from flask import Blueprint, abort, jsonify, redirect, render_template, request
 from flask_htmx import HTMX
 
 from .challenge import ChallengeKey, Level, challenge_manager
@@ -38,6 +31,7 @@ def index():
     return render_template(
         "index.html",
         challenges_groupby_level=challenge_manager.challenges_groupby_level,
+        pathname=challenge_manager.get_random_challenge_pathname(),
     )
 
 
@@ -66,7 +60,12 @@ def get_challenge(level: str, name: str):
     if htmx:
         # In this case, challenges_groupby_level is transferred, since it's not
         # used in challenge_area.html
+        params[
+            "challenge_main_htmx"
+        ] = "hx-get=/random hx-target=#sidebar-actions-random hx-trigger=load"
         return render_template("components/challenge_area.html", **params)
+
+    params["pathname"] = challenge_manager.get_random_challenge_pathname()
     return render_template("challenge.html", **params)
 
 
@@ -98,6 +97,13 @@ def run_challenge(level: str, name: str):
 
 
 @app_views.route("/random", methods=["GET"])
-def run_random_challenge():
-    challenge = challenge_manager.get_random_challenge()
-    return redirect(f"/{challenge['level']}/{challenge['name']}")
+def get_random():
+    pathname = challenge_manager.get_random_challenge_pathname()
+
+    if htmx:
+        return render_template(
+            "components/randomizer.html",
+            pathname=pathname,
+        )
+
+    return redirect(pathname)
