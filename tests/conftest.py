@@ -10,6 +10,7 @@ import pytest
 from flask.testing import FlaskClient
 
 from app import app
+from views.challenge import ChallengeManager
 
 CHALLENGES_DIR = Path(__file__).parent.parent / "challenges"
 ALL_QUESTIONS = list(CHALLENGES_DIR.glob("**/question.py"))
@@ -21,6 +22,11 @@ ALL_HINTS = list(CHALLENGES_DIR.glob("**/hints.md"))
 def assets_dir() -> Path:
     """The directory contains test assets."""
     return Path(__file__).parent / "assets"
+
+
+@pytest.fixture()
+def mgr(assets_dir: Path):
+    return ChallengeManager(assets_dir / "challenges")
 
 
 @pytest.fixture()
