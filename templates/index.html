@@ -1,13 +1,15 @@
-{% extends "base.html" %}
-
-{% set title = "Python Type Challenges - Learn & Master Type Hints" %}
-{% block head %}
-  {{ super() }}
+{% extends "base.html" %} {% set title = "Python Type Challenges - Learn & Master Type
+Hints" %} {% block head %} {{ super() }}
   <title>{{title}}</title>
-  <meta name="description" content="{{description}}">
-  <meta name="google-site-verification" content="IB8oI3WkbGLDND4SMC6m_EiPmREdddxly_JUS-lbM_A" />
-  <link href="https://fonts.loli.net/css2?family=IBM+Plex+Mono:wght@300;500;700&family=Poppins&display=swap"
-        rel="stylesheet">
+  <meta name="description" content="{{description}}" />
+  <meta
+    name="google-site-verification"
+    content="IB8oI3WkbGLDND4SMC6m_EiPmREdddxly_JUS-lbM_A"
+  />
+  <link
+    href="https://fonts.loli.net/css2?family=IBM+Plex+Mono:wght@300;500;700&family=Poppins&display=swap"
+    rel="stylesheet"
+  />
   <style>
     .main-container {
       display: flex;
@@ -15,7 +17,7 @@
       justify-content: center;
       align-items: center;
       padding: 1rem;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: "IBM Plex Mono", monospace;
     }
 
     .title {
@@ -64,25 +66,26 @@
       }
     }
 
-
     @media only screen and (max-width: 1080px) and (min-width: 800px) {
       .challenges {
         grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 
   <div class="main-container">
-    <h1 class="title">Welcome to Python Type Challenges!</h1>
+    <h1 style="margin-bottom: 0.5em;" class="title">Welcome to Python Type Challenges!</h1>
+    <a style="margin-bottom: 1em;" href="https://zeabur.com?referralCode=laike9m&utm_source=laike9m">
+      <img src=https://zeabur.com/deployed-on-zeabur-light.svg alt="Deployed on Zeabur"/>
+    </a >
     <div class="challenges">
-      {% for level, challenge_names in challenges_groupby_level.items() %}
-        {% include 'components/challenge_card.html' with context %}
-      {% endfor%}
+      {% for level, challenge_names in challenges_groupby_level.items() %} {% include
+        'components/challenge_card.html' with context %} {% endfor%}
     </div>
-    <div class="random-button"><a href="/random" title="Pick a random challenge">Random Challenge 🔀</a></div>
+    <div class="random-button">
+      <a href="/random" title="Pick a random challenge">Random Challenge 🔀</a>
+    </div>
   </div>
 
 {% endblock %}
