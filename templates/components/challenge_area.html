@@ -2,16 +2,26 @@
   <div class="challenge-header__title">
     <span>Challenge - {{ name }}</span>
     {%include 'components/badge.html' with context %}
+    <span style="font-weight: 600; margin-left: auto"
+    >🥰 Like type challenges? I also built
+      <a target="_blank" href="https://xylect.app">Xylect</a>, one-click AI-search for
+      Mac</span></span
+    >
   </div>
   <p class="challenge-header__exerpt">
     Complete code following the instructions, so that lines followed by
-    <code># expect-type-error</code> (if any)
-    fail type check, while others can pass.<br>
+    <code># expect-type-error</code> (if any) fail type check, while others can pass.<br />
     Hit the "▶️ Run" button to see result.
   </p>
   <div class="hints-container">
     {% if hints_for_display %}
-      <a id="read-hints" role="button" class="secondary outline" href="javascript:void(0);">💡 Read Hints</a>
+      <a
+        id="read-hints"
+        role="button"
+        class="secondary outline"
+        href="javascript:void(0);"
+      >💡 Read Hints</a
+        >
     {% else %}
       <div id="hints-missing">💡 No Hints Available</div>
     {% endif %}
@@ -23,26 +33,37 @@
   <div class="codemirror-container">
     <div id="editor">
       <a id="playground-link" target="_blank" rel="noopener noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4m-8-2l8-8m0 0v5m0-5h-5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4m-8-2l8-8m0 0v5m0-5h-5"
+          />
         </svg>
         <span>Open Pyright Playground</span>
       </a>
     </div>
     <div class="editor-actions">
-      <p id="answer-link">Stuck? Check out
-        <a target="_blank" rel="noopener noreferrer"
-           href="https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges/{{level}}-{{name}}/solution.py">
+      <p id="answer-link">
+        Stuck? Check out
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/laike9m/Python-Type-Challenges/tree/main/challenges/{{level}}-{{name}}/solution.py"
+        >
           solution
         </a>
       </p>
-      <button id="reset-button" class="secondary">
-        Reset
-      </button>
-      <button id="run-button">
-        ▶️ Run
-      </button>
+      <button id="reset-button" class="secondary">Reset</button>
+      <button id="run-button">▶️ Run</button>
     </div>
   </div>
   <div class="tests-result-container">
@@ -175,6 +196,6 @@
   const challengeArea = document.querySelector(".challenge-area");
 
   challengeArea.addEventListener("click", () => {
-    drawer.classList.remove('open');
+    drawer.classList.remove("open");
   });
 </script>
