@@ -11,12 +11,12 @@ The function `add` accepts two arguments and returns a value, they all have the 
 #
 #
 # def add(a: T, b: T) -> T:
-#     return a
+#     ...
 
 
 # For Python >= 3.12
 def add[T](a: T, b: T) -> T:
-    return a
+    ...
 
 
 ## End of your code ##

@@ -7,7 +7,7 @@ The type can only be str or int (or their subclasses).
 
 
 def add(a, b):
-    return a
+    ...
 
 
 ## End of your code ##
