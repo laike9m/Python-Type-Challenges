@@ -7,7 +7,7 @@ The type can only be int or subclasses of int.
 
 
 def add(a):
-    return a
+    ...
 
 
 ## End of your code ##

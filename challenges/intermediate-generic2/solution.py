@@ -11,12 +11,12 @@ The type can only be str or int (or their subclasses).
 #
 #
 # def add(a: T, b: T) -> T:
-#     return a
+#     ...
 
 
 # For Python >= 3.12
 def add[T: (str, int)](a: T, b: T) -> T:
-    return a
+    ...
 
 
 ## End of your code ##
