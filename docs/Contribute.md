@@ -42,6 +42,7 @@ Once you come up with an idea, go to the next steps.
    - Describe the challenge, make sure people understand what they need to accomplish (i.e. the `TODO:` part)
    - A comment `## End of your code ##`. This is mandatory, just copy and paste it.
    - Several test cases. Add a comment `# expect-type-error` after the lines where type errors should be thrown.
+   - (Optional) Add a comment `## End of test code ##`. Several [pyright-config](https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings) with the format `# pyright: <config_name>=<value>`
 
    `solution.py` contains the right solution, with everything else unchanged.
 

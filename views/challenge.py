@@ -11,6 +11,29 @@ from pathlib import Path
 from typing import ClassVar, Optional, TypeAlias
 
 ROOT_DIR = Path(__file__).parent.parent
+PYRIGHT_BASIC_CONFIG = """
+# pyright: analyzeUnannotatedFunctions=true
+# pyright: strictParameterNoneValue=true
+# pyright: disableBytesTypePromotions=false
+# pyright: strictListInference=false
+# pyright: strictDictionaryInference=false
+# pyright: strictSetInference=false
+# pyright: deprecateTypingAliases=false
+# pyright: enableExperimentalFeatures=false
+# pyright: reportMissingImports=error
+# pyright: reportUndefinedVariable=error
+# pyright: reportGeneralTypeIssues=error
+# pyright: reportOptionalSubscript=error
+# pyright: reportOptionalMemberAccess=error
+# pyright: reportOptionalCall=error
+# pyright: reportOptionalIterable=error
+# pyright: reportOptionalContextManager=error
+# pyright: reportOptionalOperand=error
+# pyright: reportTypedDictNotRequiredAccess=error
+# pyright: reportPrivateImportUsage=error
+# pyright: reportUnboundVariable=error
+# pyright: reportUnusedCoroutine=error
+"""
 
 
 class Level(StrEnum):
@@ -145,13 +168,30 @@ class ChallengeManager:
     # Pyright error messages look like:
     # `<filename>:<line_no>:<col_no> - <error|warning|information>: <message>`
     # Here we only capture the error messages and line numbers
-    PYRIGHT_MESSAGE_REGEX = r"^(?:.+?):(\d+):[\s\-\d]+(error:.+)$"
+    PYRIGHT_MESSAGE_REGEX = (
+        r"^(?:.+?):(?P<line_number>\d+):[\s\-\d]+(?P<message>error:.+)$"
+    )
+
+    @staticmethod
+    def _partition_test_code(test_code: str):
+        TEST_SPLITTER = "\n## End of test code ##\n"
+
+        # PYRIGHT_BASIC_CONFIG aim to limit user to modify the config
+        test_code, end_test_comment, pyright_config = test_code.partition(TEST_SPLITTER)
+        pyright_basic_config = PYRIGHT_BASIC_CONFIG
+
+        # Replace `## End of test code ##` with PYRIGHT_BASIC_CONFIG
+        if end_test_comment:
+            pyright_basic_config += pyright_config
+        return test_code, pyright_basic_config
 
     @classmethod
     def _type_check_with_pyright(
         cls, user_code: str, test_code: str
     ) -> TypeCheckResult:
-        code = f"{user_code}{test_code}"
+        test_code, pyright_basic_config = cls._partition_test_code(test_code)
+
+        code = f"{user_code}{test_code}{pyright_basic_config}"
         buffer = io.StringIO(code)
 
         # This produces a stream of TokenInfos, example:
@@ -187,37 +227,45 @@ class ChallengeManager:
                 return TypeCheckResult(message=stderr, passed=False)
         error_lines: list[str] = []
 
-        # Substract lineno in merged code by lineno_delta, so that the lineno in
+        # Substract lineno in merged code by user_code_line_len, so that the lineno in
         # error message matches those in the test code editor. Fixed #20.
-        lineno_delta = len(user_code.splitlines())
+        user_code_lines_len = len(user_code.splitlines())
         for line in stdout.splitlines():
             m = re.match(cls.PYRIGHT_MESSAGE_REGEX, line)
             if m is None:
                 continue
-            line_number, message = int(m.group(1)), m.group(2)
+            line_number, message = int(m["line_number"]), m["message"]
             if line_number in error_line_seen_in_err_msg:
                 # Each reported error should be attached to a specific line,
                 # If it is commented with # expect-type-error, let it pass.
                 error_line_seen_in_err_msg[line_number] = True
                 continue
             # Error could be thrown from user code too, in which case delta shouldn't be applied.
-            error_lines.append(
-                f"{line_number if line_number <= lineno_delta else line_number - lineno_delta}:{message}"
-            )
+            error_line = f"%s:{message}"
+
+            if line_number <= user_code_lines_len:
+                error_lines.append(error_line % line_number)
+            elif line_number <= user_code_lines_len + len(test_code.splitlines()):
+                error_lines.append(error_line % (line_number - user_code_lines_len))
+            else:
+                error_lines.append(error_line % "[pyright-config]")
 
         # If there are any lines that are expected to fail but not reported by pyright,
         # they should be considered as errors.
         for line_number, seen in error_line_seen_in_err_msg.items():
             if not seen:
                 error_lines.append(
-                    f"{line_number - lineno_delta}: error: Expected type error but instead passed"
+                    f"{line_number - user_code_lines_len}: error: Expected type error but instead passed"
                 )
 
-        passed = len(error_lines) == 0
-        if passed:
-            error_lines.append("\nAll tests passed")
-        else:
-            error_lines.append(f"\nFound {len(error_lines)} errors")
+        # Error for pyright-config will not fail the challenge
+        passed = True
+        for error_line in error_lines:
+            if error_line.startswith("[pyright-config]"):
+                continue
+            passed = False
+
+        error_lines.append(f"\nFound {len(error_lines)} errors")
 
         return TypeCheckResult(message="\n".join(error_lines), passed=passed)
 
