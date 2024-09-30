@@ -2,7 +2,7 @@
 TODO:
 
 The function `add` accepts two arguments and returns a value, they all have the same type.
-The type can only be str or int (or their subclasses).
+The type can only be str or int.
 """
 # For Python < 3.12
 # from typing import TypeVar
