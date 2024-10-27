@@ -12,16 +12,25 @@ Note: you're only requried to add type annotations without implementing transfor
 
 from typing import Callable, Concatenate, Generic, ParamSpec, TypeVar
 
+# # For Python < 3.12
+# R = TypeVar("R")
+# P = ParamSpec("P")
+# 
+# 
+# class Fn(Generic[R, P]):
+#     def __init__(self, f: Callable[P, R]):
+#         self.f = f
+# 
+#     def transform_callable(self) -> Callable[Concatenate[object, P], R]:
+#         ...
 
-R = TypeVar("R")
-P = ParamSpec("P")
 
-
-class Fn(Generic[R, P]):
-    def __init__(self, f: Callable[P, R]):
+# For Python >= 3.12
+class Fn[R, **P]:
+    def __init__(self, f: Callable[P, R]) -> None:
         self.f = f
 
-    def transform_callable(self) -> Callable[Concatenate[object, P], R]:
+    def transform_callable(self) -> Callable[Concatenate[Any, P], R]:
         ...
 
 
