@@ -2,19 +2,17 @@
 name = ""
 version = ""
 description = ""
-authors = [
-    {name = "laike9m", email = "laike9m@gmail.com"},
-]
+authors = [{ name = "laike9m", email = "laike9m@gmail.com" }]
 dependencies = [
-    "flask>=3.0.0",
-    "pyright>=1.1.338",
-    "flask-sitemapper>=1.7.0",
-    "markdown>=3.5.1",
-    "flask-htmx>=0.3.2",
+  "flask>=3.0.0",
+  "pyright>=1.1.338",
+  "flask-sitemapper>=1.7.0",
+  "markdown>=3.5.1",
+  "flask-htmx>=0.3.2",
 ]
-requires-python = ">=3.12"
+requires-python = "~=3.12"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
 [tool.pdm]
 plugins = ["pdm-autoexport"]
@@ -24,16 +22,16 @@ dev = "flask --app app run --debug"
 test = "pytest -n auto"
 run_ruff = "ruff format"
 djhtml.cmd = "djhtml --tabwidth 2 templates"
-djhtml.env = {PYTHONUTF8 = "1"}
-format = {composite = ["run_ruff", "djhtml"]}
+djhtml.env = { PYTHONUTF8 = "1" }
+format = { composite = ["run_ruff", "djhtml"] }
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "pytest>=7.4.3",
-    "djhtml>=3.0.6",
-    "pre-commit>=3.5.0",
-    "pytest-xdist>=3.3.1",
-    "ruff>=0.1.14",
+  "pytest>=7.4.3",
+  "djhtml>=3.0.6",
+  "pre-commit>=3.5.0",
+  "pytest-xdist>=3.3.1",
+  "ruff>=0.1.14",
 ]
 
 [[tool.pdm.autoexport]]

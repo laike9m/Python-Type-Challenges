@@ -15,12 +15,12 @@ from typing import Callable, Concatenate, Generic, ParamSpec, TypeVar
 # # For Python < 3.12
 # R = TypeVar("R")
 # P = ParamSpec("P")
-# 
-# 
+#
+#
 # class Fn(Generic[R, P]):
 #     def __init__(self, f: Callable[P, R]):
 #         self.f = f
-# 
+#
 #     def transform_callable(self) -> Callable[Concatenate[object, P], R]:
 #         ...
 

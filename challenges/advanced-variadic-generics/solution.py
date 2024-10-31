@@ -11,6 +11,7 @@ Define an `Array` type that supports element-wise addition of arrays with identi
 #     def __add__(self, other: "Array[*Ts]") -> "Array[*Ts]":
 #         ...
 
+
 # For Python >= 3.12
 class Array[*Ts]:
     def __add__(self, other: "Array[*Ts]") -> "Array[*Ts]":
