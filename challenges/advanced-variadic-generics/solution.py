@@ -4,13 +4,15 @@ TODO:
 Define an `Array` type that supports element-wise addition of arrays with identical dimensions and types.
 """
 
-from typing import Generic, TypeVar, TypeVarTuple, assert_type
+# For Python < 3.12
+# Ts = TypeVarTuple("Ts")
+#
+# class Array(Generic[*Ts]):
+#     def __add__(self, other: "Array[*Ts]") -> "Array[*Ts]":
+#         ...
 
-T = TypeVar("T")
-Ts = TypeVarTuple("Ts")
-
-
-class Array(Generic[*Ts]):
+# For Python >= 3.12
+class Array[*Ts]:
     def __add__(self, other: "Array[*Ts]") -> "Array[*Ts]":
         ...
 
