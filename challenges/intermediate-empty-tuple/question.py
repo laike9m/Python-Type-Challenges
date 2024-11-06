@@ -11,4 +11,4 @@ def foo(x):
 
 ## End of your code ##
 foo(())
-foo((1))  # expect-type-error
+foo((1,))  # expect-type-error
