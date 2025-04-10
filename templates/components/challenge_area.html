@@ -110,7 +110,7 @@
 
     let playgroundLink = document.getElementById("playground-link");
     playgroundLink.addEventListener('click', function (event) {
-      const code = myCodeMirror.getValue() + testCodeMirror.getValue();
+      const code = myCodeMirror.getValue() + "\n\n" + testCodeMirror.getValue();
       this.href = "https://pyright-play.net/?code=" + LZString.compressToEncodedURIComponent(code);
     });
 
