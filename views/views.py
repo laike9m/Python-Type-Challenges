@@ -59,7 +59,7 @@ def get_challenge(level: str, name: str):
         "level": challenge.level,
         "challenges_groupby_level": challenge_manager.challenges_groupby_level,
         "code_under_test": challenge.user_code,
-        "test_code": challenge.test_code,
+        "test_code": challenge.test_code.partition("\n## End of test code ##\n")[0],
         "hints_for_display": render_hints(challenge.hints) if challenge.hints else None,
         "python_info": platform.python_version(),
     }
