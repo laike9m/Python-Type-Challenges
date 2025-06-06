@@ -6,10 +6,13 @@ TODO:
 
 
 def make_object(cls):
-    return cls()
+    ...
 
 
 ## End of your code ##
+from typing import assert_type
+
+
 class MyClass:
     pass
 
@@ -18,8 +21,9 @@ def f():
     pass
 
 
-c = make_object(MyClass)
-c = make_object(int)
-c = make_object(f)  # expect-type-error
-c = make_object("sss")  # expect-type-error
-c = make_object(["sss"])  # expect-type-error
+assert_type(make_object(MyClass), MyClass)
+assert_type(make_object(int), int)
+
+make_object(f)  # expect-type-error
+make_object("sss")  # expect-type-error
+make_object(["sss"])  # expect-type-error
