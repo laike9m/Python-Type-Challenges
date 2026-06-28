@@ -2,7 +2,7 @@
 
 Master Python typing (type hints) with interactive online exercises!
 
-Click 👉👉 **[HERE](https://python-type-challenges.zeabur.app)** to start
+Click 👉👉 **[HERE](https://python-type-challenges.laike9m.com)** to start
 
 ![](docs/images/usage.gif)
 
@@ -41,10 +41,6 @@ flask run
 For general questions, you can post them in [Discussions](https://github.com/laike9m/Python-Type-Challenges/discussions).
 
 If you met issues or want to suggest a new feature/improvement, feel free to [open a new issue](https://github.com/laike9m/Python-Type-Challenges/issues/new).
-
-## Sponsor
-
-[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-dark.svg)](https://zeabur.com?referralCode=laike9m&utm_source=laike9m&utm_campaign=oss)
 
 ## Credits
 
