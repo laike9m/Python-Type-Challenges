@@ -4,8 +4,11 @@
 [metadata]
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
-lock_version = "4.4.1"
-content_hash = "sha256:78e27a2b56c08429d94b4bb60617a28e5c95d9a5b718193970382e675e414d24"
+lock_version = "4.5.0"
+content_hash = "sha256:661986d159cb088f3d28d903de86c7cd12198a849d8aa9abed3a23b2efebd15d"
+
+[[metadata.targets]]
+requires_python = ">=3.12,<3.13"
 
 [[package]]
 name = "blinker"
