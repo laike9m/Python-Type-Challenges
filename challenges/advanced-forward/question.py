@@ -14,3 +14,6 @@ from typing import assert_type
 
 inst = MyClass(x=1)
 assert_type(inst.copy(), MyClass)
+
+## End of test code ##
+# pyright: analyzeUnannotatedFunctions=false
