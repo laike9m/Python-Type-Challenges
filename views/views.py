@@ -53,13 +53,21 @@ def index():
 @app_views.route("/<level>/<name>", methods=["GET"])
 @validate_challenge
 def get_challenge(level: str, name: str):
+    """
+    Render the challenge page or HTMX component for a given challenge.
+    
+    Builds the template context for the challenge identified by level and name, including the user's code under test, the test code truncated at the "\n## End of test code ##\n" marker, rendered hints (when present), challenges grouped by level, and Python runtime information. Returns the HTMX component template when HTMX is active; otherwise returns the full challenge page template.
+    
+    Returns:
+        Flask response: Rendered HTML response for the requested challenge page or HTMX component.
+    """
     challenge = challenge_manager.get_challenge(ChallengeKey(Level(level), name))
     params = {
         "name": name,
         "level": challenge.level,
         "challenges_groupby_level": challenge_manager.challenges_groupby_level,
         "code_under_test": challenge.user_code,
-        "test_code": challenge.test_code,
+        "test_code": challenge.test_code.partition("\n## End of test code ##\n")[0],
         "hints_for_display": render_hints(challenge.hints) if challenge.hints else None,
         "python_info": platform.python_version(),
     }
