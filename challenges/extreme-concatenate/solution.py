@@ -8,14 +8,21 @@ You cannot modify `foo`, so you decide to write a function `transform`,
 to transform `foo` into the function you want.
 """
 
-from typing import Concatenate, Callable, Any
+from typing import Concatenate, Callable, Any, Protocol
 
 
 class Person:
     pass
 
 
-def transform[T, **P](f: Callable[Concatenate[Any, P], T]):
+# Not required to pass the tests
+class Transformed[T, **P](Protocol):
+    def __call__(self, value: Person, *args: P.args, **kwargs: P.kwargs) -> T:
+        ...
+
+
+# Omitting the return type still passes tests
+def transform[T, **P](f: Callable[Concatenate[Any, P], T]) -> Transformed[T, P]:
     def wrapper(value: Person, *args: P.args, **kwargs: P.kwargs) -> T:
         return f(value, *args, **kwargs)
 
