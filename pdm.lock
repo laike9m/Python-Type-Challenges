@@ -4,7 +4,7 @@
 [metadata]
 groups = ["default", "dev"]
 strategy = []
-lock_version = "4.5.0"
+lock_version = "4.5.1"
 content_hash = "sha256:661986d159cb088f3d28d903de86c7cd12198a849d8aa9abed3a23b2efebd15d"
 
 [[metadata.targets]]
@@ -12,12 +12,12 @@ requires_python = ">=3.12,<3.13"
 
 [[package]]
 name = "blinker"
-version = "1.6.3"
-requires_python = ">=3.7"
+version = "1.9.0"
+requires_python = ">=3.9"
 summary = "Fast, simple object-to-object and broadcast signaling"
 files = [
-    {file = "blinker-1.6.3-py3-none-any.whl", hash = "sha256:296320d6c28b006eb5e32d4712202dbcdcbf5dc482da298c2f44881c43884aaa"},
-    {file = "blinker-1.6.3.tar.gz", hash = "sha256:152090d27c1c5c722ee7e48504b02d76502811ce02e1523553b4cf8c8b3d3a8d"},
+    {file = "blinker-1.9.0-py3-none-any.whl", hash = "sha256:ba0efaa9080b619ff2f3459d1d500c57bddea4a6b424b60a91141db6fd2f08bc"},
+    {file = "blinker-1.9.0.tar.gz", hash = "sha256:b4ce2265a7abece45e7cc896e98dbebe6cead56bcf805a3d23136d145f5445bf"},
 ]
 
 [[package]]
@@ -64,20 +64,21 @@ files = [
 
 [[package]]
 name = "djhtml"
-version = "3.0.6"
+version = "3.0.11"
 summary = "Django/Jinja template indenter"
 files = [
-    {file = "djhtml-3.0.6.tar.gz", hash = "sha256:abfc4d7b4730432ca6a98322fbdf8ae9d6ba254ea57ba3759a10ecb293bc57de"},
+    {file = "djhtml-3.0.11-py3-none-any.whl", hash = "sha256:0013d15d429eb34769aeaf6ea395ad278cf0b8ef35ad19d2cf0c1f214f2843ac"},
+    {file = "djhtml-3.0.11.tar.gz", hash = "sha256:dbaf55684294bda6486a094954e43847a1c0945e521282e008a9aabdac245688"},
 ]
 
 [[package]]
 name = "execnet"
-version = "2.0.2"
-requires_python = ">=3.7"
+version = "2.1.2"
+requires_python = ">=3.8"
 summary = "execnet: rapid multi-Python deployment"
 files = [
-    {file = "execnet-2.0.2-py3-none-any.whl", hash = "sha256:88256416ae766bc9e8895c76a87928c0012183da3cc4fc18016e6f050e025f41"},
-    {file = "execnet-2.0.2.tar.gz", hash = "sha256:cc59bc4423742fd71ad227122eb0dd44db51efb3dc4095b45ac9a08c770096af"},
+    {file = "execnet-2.1.2-py3-none-any.whl", hash = "sha256:67fba928dd5a544b783f6056f449e5e3931a5c378b128bc18501f7ea79e296ec"},
+    {file = "execnet-2.1.2.tar.gz", hash = "sha256:63d83bfdd9a23e35b9c6a3261412324f964c2ec8dcd8d3c6916ee9373e0befcd"},
 ]
 
 [[package]]
@@ -92,46 +93,48 @@ files = [
 
 [[package]]
 name = "flask"
-version = "3.0.1"
-requires_python = ">=3.8"
+version = "3.1.3"
+requires_python = ">=3.9"
 summary = "A simple framework for building complex web applications."
 dependencies = [
-    "Jinja2>=3.1.2",
-    "Werkzeug>=3.0.0",
-    "blinker>=1.6.2",
+    "blinker>=1.9.0",
     "click>=8.1.3",
-    "itsdangerous>=2.1.2",
+    "importlib-metadata>=3.6.0; python_version < \"3.10\"",
+    "itsdangerous>=2.2.0",
+    "jinja2>=3.1.2",
+    "markupsafe>=2.1.1",
+    "werkzeug>=3.1.0",
 ]
 files = [
-    {file = "flask-3.0.1-py3-none-any.whl", hash = "sha256:ca631a507f6dfe6c278ae20112cea3ff54ff2216390bf8880f6b035a5354af13"},
-    {file = "flask-3.0.1.tar.gz", hash = "sha256:6489f51bb3666def6f314e15f19d50a1869a19ae0e8c9a3641ffe66c77d42403"},
+    {file = "flask-3.1.3-py3-none-any.whl", hash = "sha256:f4bcbefc124291925f1a26446da31a5178f9483862233b23c0c96a20701f670c"},
+    {file = "flask-3.1.3.tar.gz", hash = "sha256:0ef0e52b8a9cd932855379197dd8f94047b359ca0a78695144304cb45f87c9eb"},
 ]
 
 [[package]]
 name = "flask-htmx"
-version = "0.3.2"
-requires_python = ">=3.8,<4.0"
+version = "0.4.0"
+requires_python = "<4.0,>=3.8"
 summary = "A Flask extension to work with HTMX."
 dependencies = [
     "Flask<4.0.0,>=2.0.2",
 ]
 files = [
-    {file = "flask_htmx-0.3.2-py3-none-any.whl", hash = "sha256:a1e0071216349197d6669662c2c35a1ab849b6fca28c89dc90932761f7e73c05"},
-    {file = "flask_htmx-0.3.2.tar.gz", hash = "sha256:8def77bb292369ff77513ff7b76d27b06f83e1d8c21165b6714c06c1cc2b9275"},
+    {file = "flask_htmx-0.4.0-py3-none-any.whl", hash = "sha256:ac0ef976638bc635537a47c4ae622c91aef1e69d8bf52880aa9ae0db089ce7d2"},
+    {file = "flask_htmx-0.4.0.tar.gz", hash = "sha256:2d367fb27c8da99d031a0c566b7e562637139722e2d4e8ec67c7f941addb22fd"},
 ]
 
 [[package]]
 name = "flask-sitemapper"
-version = "1.7.0"
-requires_python = ">=3.8,<4.0"
+version = "1.8.2"
+requires_python = ">=3.8"
 summary = "Flask extension for generating XML sitemaps"
 dependencies = [
     "flask>=2.2.2",
-    "jinja2<4.0.0,>=3.1.2",
+    "jinja2>=3.1.3",
 ]
 files = [
-    {file = "flask_sitemapper-1.7.0-py3-none-any.whl", hash = "sha256:289d2d75cf958dbae49cb4b06957d898d0edec3f405ae5c6160cb6985bad4a56"},
-    {file = "flask_sitemapper-1.7.0.tar.gz", hash = "sha256:0dc0bb4ccff30adc2474c14eb7b395822f02812d3541325e9f62b61b13389614"},
+    {file = "flask_sitemapper-1.8.2-py3-none-any.whl", hash = "sha256:e93fececd462a2f7abf45fc1a5932d7a30f1c4011e005c42d31b8f74e6230723"},
+    {file = "flask_sitemapper-1.8.2.tar.gz", hash = "sha256:9a381ca1e1cd71867c7e7819bacd4bab84bc4fa6074ef9b7ce879fe0d816e942"},
 ]
 
 [[package]]
@@ -156,35 +159,35 @@ files = [
 
 [[package]]
 name = "itsdangerous"
-version = "2.1.2"
-requires_python = ">=3.7"
+version = "2.2.0"
+requires_python = ">=3.8"
 summary = "Safely pass data to untrusted environments and back."
 files = [
-    {file = "itsdangerous-2.1.2-py3-none-any.whl", hash = "sha256:2c2349112351b88699d8d4b6b075022c0808887cb7ad10069318a8b0bc88db44"},
-    {file = "itsdangerous-2.1.2.tar.gz", hash = "sha256:5dbbc68b317e5e42f327f9021763545dc3fc3bfe22e6deb96aaf1fc38874156a"},
+    {file = "itsdangerous-2.2.0-py3-none-any.whl", hash = "sha256:c6242fc49e35958c8b15141343aa660db5fc54d4f13a1db01a3f5891b98700ef"},
+    {file = "itsdangerous-2.2.0.tar.gz", hash = "sha256:e0050c0b7da1eea53ffaf149c0cfbb5c6e2e2b69c4bef22c81fa6eb73e5f6173"},
 ]
 
 [[package]]
 name = "jinja2"
-version = "3.1.2"
+version = "3.1.6"
 requires_python = ">=3.7"
 summary = "A very fast and expressive template engine."
 dependencies = [
     "MarkupSafe>=2.0",
 ]
 files = [
-    {file = "Jinja2-3.1.2-py3-none-any.whl", hash = "sha256:6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61"},
-    {file = "Jinja2-3.1.2.tar.gz", hash = "sha256:31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"},
+    {file = "jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"},
+    {file = "jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d"},
 ]
 
 [[package]]
 name = "markdown"
-version = "3.5.2"
-requires_python = ">=3.8"
+version = "3.10.3"
+requires_python = ">=3.10"
 summary = "Python implementation of John Gruber's Markdown."
 files = [
-    {file = "Markdown-3.5.2-py3-none-any.whl", hash = "sha256:d43323865d89fc0cb9b20c75fc8ad313af307cc087e84b657d9eec768eddeadd"},
-    {file = "Markdown-3.5.2.tar.gz", hash = "sha256:e1ac7b3dc550ee80e602e71c1d168002f062e49f1b11e26a36264dafd4df2ef8"},
+    {file = "markdown-3.10.3-py3-none-any.whl", hash = "sha256:fa6c92a00a4a3c98b22728c64a935ae1928250ae65058a6ded814d2cc29a4cea"},
+    {file = "markdown-3.10.3.tar.gz", hash = "sha256:3589362618f743188b4d955b874402bc814f4f83f544dc207719f4baa7d9c45f"},
 ]
 
 [[package]]
@@ -241,18 +244,18 @@ files = [
 
 [[package]]
 name = "pluggy"
-version = "1.3.0"
-requires_python = ">=3.8"
+version = "1.6.0"
+requires_python = ">=3.9"
 summary = "plugin and hook calling mechanisms for python"
 files = [
-    {file = "pluggy-1.3.0-py3-none-any.whl", hash = "sha256:d89c696a773f8bd377d18e5ecda92b7a3793cbe66c87060a6fb58c7b6e1061f7"},
-    {file = "pluggy-1.3.0.tar.gz", hash = "sha256:cf61ae8f126ac6f7c451172cf30e3e43d3ca77615509771b3a984a0730651e12"},
+    {file = "pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"},
+    {file = "pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3"},
 ]
 
 [[package]]
 name = "pre-commit"
-version = "3.6.0"
-requires_python = ">=3.9"
+version = "4.6.2"
+requires_python = ">=3.10"
 summary = "A framework for managing and maintaining multi-language pre-commit hooks."
 dependencies = [
     "cfgv>=2.0.0",
@@ -262,51 +265,65 @@ dependencies = [
     "virtualenv>=20.10.0",
 ]
 files = [
-    {file = "pre_commit-3.6.0-py2.py3-none-any.whl", hash = "sha256:c255039ef399049a5544b6ce13d135caba8f2c28c3b4033277a788f434308376"},
-    {file = "pre_commit-3.6.0.tar.gz", hash = "sha256:d30bad9abf165f7785c15a21a1f46da7d0677cb00ee7ff4c579fd38922efe15d"},
+    {file = "pre_commit-4.6.2-py2.py3-none-any.whl", hash = "sha256:e2dde9a75d3bce11bd3831c26d134df00a2803c1d818be6a0383c3dcda25dc4e"},
+    {file = "pre_commit-4.6.2.tar.gz", hash = "sha256:8f5d7bfb021ecdbcd9d49d89847082dd24172ccde534390081a679ad046e2441"},
+]
+
+[[package]]
+name = "pygments"
+version = "2.21.0"
+requires_python = ">=3.9"
+summary = "Pygments is a syntax highlighting package written in Python."
+files = [
+    {file = "pygments-2.21.0-py3-none-any.whl", hash = "sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"},
+    {file = "pygments-2.21.0.tar.gz", hash = "sha256:610ca751c9bc2492b38eb9a38a7fbc93edbbb2d7182edaf34e66ae493dee5c8c"},
 ]
 
 [[package]]
 name = "pyright"
-version = "1.1.348"
+version = "1.1.411"
 requires_python = ">=3.7"
 summary = "Command line wrapper for pyright"
 dependencies = [
     "nodeenv>=1.6.0",
+    "typing-extensions>=4.1",
 ]
 files = [
-    {file = "pyright-1.1.348-py3-none-any.whl", hash = "sha256:e7d4df504c4c082b5c3725a8c15fc3fda62da5d09fc77994baa77f359a1b62f2"},
-    {file = "pyright-1.1.348.tar.gz", hash = "sha256:1c6994546f7ab130b9da8c357f8b2a99bef268b6d8ae2eae292bde66923aa7af"},
+    {file = "pyright-1.1.411-py3-none-any.whl", hash = "sha256:dc7c72a8e2700c55baa127554040e067041ea53ccfd50bf96308cc4291c7d5d9"},
+    {file = "pyright-1.1.411.tar.gz", hash = "sha256:d885a0551f2e763b089a02702174e7f4ba77548cddabc972ab86d1f7f1b0f998"},
 ]
 
 [[package]]
 name = "pytest"
-version = "7.4.4"
-requires_python = ">=3.7"
+version = "9.1.1"
+requires_python = ">=3.10"
 summary = "pytest: simple powerful testing with Python"
 dependencies = [
-    "colorama; sys_platform == \"win32\"",
-    "iniconfig",
-    "packaging",
-    "pluggy<2.0,>=0.12",
+    "colorama>=0.4; sys_platform == \"win32\"",
+    "exceptiongroup>=1; python_version < \"3.11\"",
+    "iniconfig>=1.0.1",
+    "packaging>=22",
+    "pluggy<2,>=1.5",
+    "pygments>=2.7.2",
+    "tomli>=1; python_version < \"3.11\"",
 ]
 files = [
-    {file = "pytest-7.4.4-py3-none-any.whl", hash = "sha256:b090cdf5ed60bf4c45261be03239c2c1c22df034fbffe691abe93cd80cea01d8"},
-    {file = "pytest-7.4.4.tar.gz", hash = "sha256:2cf0005922c6ace4a3e2ec8b4080eb0d9753fdc93107415332f50ce9e7994280"},
+    {file = "pytest-9.1.1-py3-none-any.whl", hash = "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"},
+    {file = "pytest-9.1.1.tar.gz", hash = "sha256:1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313"},
 ]
 
 [[package]]
 name = "pytest-xdist"
-version = "3.5.0"
-requires_python = ">=3.7"
+version = "3.8.0"
+requires_python = ">=3.9"
 summary = "pytest xdist plugin for distributed testing, most importantly across multiple CPUs"
 dependencies = [
-    "execnet>=1.1",
-    "pytest>=6.2.0",
+    "execnet>=2.1",
+    "pytest>=7.0.0",
 ]
 files = [
-    {file = "pytest-xdist-3.5.0.tar.gz", hash = "sha256:cbb36f3d67e0c478baa57fa4edc8843887e0f6cfc42d677530a36d7472b32d8a"},
-    {file = "pytest_xdist-3.5.0-py3-none-any.whl", hash = "sha256:d075629c7e00b611df89f490a5063944bee7a4362a5ff11c7cc7824a03dfce24"},
+    {file = "pytest_xdist-3.8.0-py3-none-any.whl", hash = "sha256:202ca578cfeb7370784a8c33d6d05bc6e13b4f25b5053c30a152269fd10f0b88"},
+    {file = "pytest_xdist-3.8.0.tar.gz", hash = "sha256:7e578125ec9bc6050861aa93f2d59f1d8d085595d6551c2c90b6f4fad8d3a9f1"},
 ]
 
 [[package]]
@@ -326,27 +343,28 @@ files = [
 
 [[package]]
 name = "ruff"
-version = "0.1.14"
+version = "0.16.3"
 requires_python = ">=3.7"
 summary = "An extremely fast Python linter and code formatter, written in Rust."
 files = [
-    {file = "ruff-0.1.14-py3-none-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl", hash = "sha256:96f76536df9b26622755c12ed8680f159817be2f725c17ed9305b472a757cdbb"},
-    {file = "ruff-0.1.14-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:ab3f71f64498c7241123bb5a768544cf42821d2a537f894b22457a543d3ca7a9"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7060156ecc572b8f984fd20fd8b0fcb692dd5d837b7606e968334ab7ff0090ab"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:a53d8e35313d7b67eb3db15a66c08434809107659226a90dcd7acb2afa55faea"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:bea9be712b8f5b4ebed40e1949379cfb2a7d907f42921cf9ab3aae07e6fba9eb"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:2270504d629a0b064247983cbc495bed277f372fb9eaba41e5cf51f7ba705a6a"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:80258bb3b8909b1700610dfabef7876423eed1bc930fe177c71c414921898efa"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:653230dd00aaf449eb5ff25d10a6e03bc3006813e2cb99799e568f55482e5cae"},
-    {file = "ruff-0.1.14-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:87b3acc6c4e6928459ba9eb7459dd4f0c4bf266a053c863d72a44c33246bfdbf"},
-    {file = "ruff-0.1.14-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:6b3dadc9522d0eccc060699a9816e8127b27addbb4697fc0c08611e4e6aeb8b5"},
-    {file = "ruff-0.1.14-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:1c8eca1a47b4150dc0fbec7fe68fc91c695aed798532a18dbb1424e61e9b721f"},
-    {file = "ruff-0.1.14-py3-none-musllinux_1_2_i686.whl", hash = "sha256:62ce2ae46303ee896fc6811f63d6dabf8d9c389da0f3e3f2bce8bc7f15ef5488"},
-    {file = "ruff-0.1.14-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:b2027dde79d217b211d725fc833e8965dc90a16d0d3213f1298f97465956661b"},
-    {file = "ruff-0.1.14-py3-none-win32.whl", hash = "sha256:722bafc299145575a63bbd6b5069cb643eaa62546a5b6398f82b3e4403329cab"},
-    {file = "ruff-0.1.14-py3-none-win_amd64.whl", hash = "sha256:e3d241aa61f92b0805a7082bd89a9990826448e4d0398f0e2bc8f05c75c63d99"},
-    {file = "ruff-0.1.14-py3-none-win_arm64.whl", hash = "sha256:269302b31ade4cde6cf6f9dd58ea593773a37ed3f7b97e793c8594b262466b67"},
-    {file = "ruff-0.1.14.tar.gz", hash = "sha256:ad3f8088b2dfd884820289a06ab718cde7d38b94972212cc4ba90d5fbc9955f3"},
+    {file = "ruff-0.16.3-py3-none-linux_armv6l.whl", hash = "sha256:0c5710e247a58a4521e66e124ba9a74655b414f61ba3a2e9e3811e11098f48f7"},
+    {file = "ruff-0.16.3-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:fe155130631a2471fd2e14a7a664a4dfbd7194b8229c3d7b2a40b21178639081"},
+    {file = "ruff-0.16.3-py3-none-macosx_11_0_arm64.whl", hash = "sha256:e2ed719e14aa64d895c2ee922594a90a43c861a93f0575a95ff8c47cdbd13eb9"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:9e0b1da805eb043654645d74d5de1e5ce2edc686e40790d2b86f56d71cc06a84"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:a37bdea0bbe21780f590bf437d6412c8c4e1b6cd010f91a65c2c40c5e5f5f870"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:09571e6d1288ed9be475207a3ac04ada404f1cd898104be0f6ab8d7df438575b"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:2c18c5a101eb540010638cc1ff3c84944d3adb3df62b8d98ca8f22ba484d3413"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:8457c44f15033c85ddbb77b15d451df9e24e4bd03b628396dd3610cedc3b8f82"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:294b95c4ae0cda9388525c2047778aa758d6b8d4bb876fd4e9eaa3ebc92343eb"},
+    {file = "ruff-0.16.3-py3-none-manylinux_2_31_riscv64.whl", hash = "sha256:3d0c7c40c87c2a820509c31ba007968da6e1306468c067b2d82fbfdbcd0e8474"},
+    {file = "ruff-0.16.3-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:9f738c0fdfa8eed0b2ce7fb27ee7258208a92a68d7949e62aa15164bc7b389da"},
+    {file = "ruff-0.16.3-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:fb785f0be25abe69d320415cd4f833b59e17ba7613d9ba6a958023b6bceb0a50"},
+    {file = "ruff-0.16.3-py3-none-musllinux_1_2_i686.whl", hash = "sha256:c5536e3acfbf9563085aa2be7b13c629c3077e902afc5b941ac44024dbb9f506"},
+    {file = "ruff-0.16.3-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:a2d85c02f9b8e165d85e6779184d38c4132de12603dab59c51c28e22584f9e4d"},
+    {file = "ruff-0.16.3-py3-none-win32.whl", hash = "sha256:388cdf2166642bd9b13d52b5932d3170f34f8abed7e8d9a855f1d84b83645a0a"},
+    {file = "ruff-0.16.3-py3-none-win_amd64.whl", hash = "sha256:e80a7d69ca2a6d1c4d352ec91458cdca6e56c83cdbcabd93e4abe1e53591d948"},
+    {file = "ruff-0.16.3-py3-none-win_arm64.whl", hash = "sha256:b8ca152da82c1acc1fa8d5874b15951935f0eef46f10e6954c83859011b6178a"},
+    {file = "ruff-0.16.3.tar.gz", hash = "sha256:e76d33a347661a84b5be6d043d0347fdc745dfdcf825a8f4fed64b5e26eebdf2"},
 ]
 
 [[package]]
@@ -357,6 +375,16 @@ summary = "Easily download, build, install, upgrade, and uninstall Python packag
 files = [
     {file = "setuptools-68.2.2-py3-none-any.whl", hash = "sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a"},
     {file = "setuptools-68.2.2.tar.gz", hash = "sha256:4ac1475276d2f1c48684874089fefcd83bd7162ddaafb81fac866ba0db282a87"},
+]
+
+[[package]]
+name = "typing-extensions"
+version = "4.16.0"
+requires_python = ">=3.9"
+summary = "Backported and Experimental Type Hints for Python 3.9+"
+files = [
+    {file = "typing_extensions-4.16.0-py3-none-any.whl", hash = "sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"},
+    {file = "typing_extensions-4.16.0.tar.gz", hash = "sha256:dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"},
 ]
 
 [[package]]
@@ -376,13 +404,13 @@ files = [
 
 [[package]]
 name = "werkzeug"
-version = "3.0.0"
-requires_python = ">=3.8"
+version = "3.1.8"
+requires_python = ">=3.9"
 summary = "The comprehensive WSGI web application library."
 dependencies = [
-    "MarkupSafe>=2.1.1",
+    "markupsafe>=2.1.1",
 ]
 files = [
-    {file = "werkzeug-3.0.0-py3-none-any.whl", hash = "sha256:cbb2600f7eabe51dbc0502f58be0b3e1b96b893b05695ea2b35b43d4de2d9962"},
-    {file = "werkzeug-3.0.0.tar.gz", hash = "sha256:3ffff4dcc32db52ef3cc94dff3000a3c2846890f3a5a51800a27b909c5e770f0"},
+    {file = "werkzeug-3.1.8-py3-none-any.whl", hash = "sha256:63a77fb8892bf28ebc3178683445222aa500e48ebad5ec77b0ad80f8726b1f50"},
+    {file = "werkzeug-3.1.8.tar.gz", hash = "sha256:9bad61a4268dac112f1c5cd4630a56ede601b6ed420300677a869083d70a4c44"},
 ]
