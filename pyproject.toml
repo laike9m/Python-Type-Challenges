@@ -15,6 +15,7 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [tool.pdm]
+distribution = false  # Don't install itself.
 plugins = ["pdm-autoexport"]
 
 [tool.pdm.scripts]
