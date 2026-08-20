@@ -9,6 +9,7 @@ dependencies = [
   "flask-sitemapper>=1.7.0",
   "markdown>=3.5.1",
   "flask-htmx>=0.3.2",
+  "gunicorn>=26.1.0",
 ]
 requires-python = ">=3.14,<3.15"
 readme = "README.md"
@@ -20,6 +21,7 @@ plugins = ["pdm-autoexport"]
 
 [tool.pdm.scripts]
 dev = "flask --app app run --debug"
+prod = "gunicorn -k gthread -w 2 --threads 4 --timeout 15 -b 0.0.0.0:{args:5000} app:app"
 test = "pytest -n auto"
 run_ruff = "ruff format"
 djhtml.cmd = "djhtml --tabwidth 2 templates"
