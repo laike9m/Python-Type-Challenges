@@ -3,7 +3,7 @@ class MyClass:
         self.x = x
 
     # TODO: Fix the type hints of `copy` to make it type check
-    def copy(self) -> MyClass:
+    def copy(self) -> None:
         copied_object = MyClass(x=self.x)
         return copied_object
 

@@ -13,7 +13,7 @@ jobs:
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v3
         with:
-          python-version: 3.12
+          python-version: "3.14"
           cache: true
       - name: Install dependencies
         run: pdm install
@@ -21,7 +21,7 @@ jobs:
         # If we don't do this, each pytest-xdist process will try to install the
         # dependencies of Pyright (Node.js packages, pyi). Each installation assumes
         # it's a clean install, and will error if files already exist.
-        run: pdm run pyright --pythonversion 3.12 challenges/basic-any/solution.py
+        run: pdm run pyright --pythonversion 3.14 challenges/basic-any/solution.py
         continue-on-error: true
       - name: Run tests
         run: pdm run test
